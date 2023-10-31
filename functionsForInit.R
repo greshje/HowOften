@@ -47,6 +47,7 @@ checkPackageVersion <- function(packageName) {
 # installs from cran
 installFromCran("remotes", "2.4.2.1")
 installFromCran("keyring", "1.3.1")
+installFromCran("usethis", "2.2.2")
 installFromCran("DatabaseConnector", "6.2.4")
 
 #installs from github
@@ -55,6 +56,7 @@ installFromGithub("OHDSI/CohortGenerator", "v0.8.1")
 
 library(remotes)
 library(keyring)
+library(usethis)
 library(DatabaseConnector)
 library(Strategus)
 library(CohortGenerator)
@@ -64,7 +66,7 @@ library(CohortGenerator)
 # stratagus keyring stuff
 #
 # Basically, just use usethis::edit_r_environ() to check your .Renviron file.  
-# It should include the following
+# It should include something like the following
 #
 # STRATEGUS_KEYRING_PASSWORD='sos'
 # GITHUB_PAT='ghp_ThisIsMyGithubPersonalAccessTokenM2bgp91'
@@ -92,7 +94,7 @@ storeKeyRing <- function() {
   }
   
   # Create the keyring if it does not exist.
-  keyringName <- "HowOften"
+  keyringName <- keyringName
   allKeyrings <- keyring::keyring_list()
   if (!(keyringName %in% allKeyrings$keyring)) {
     keyring::keyring_create(keyring = keyringName, password = Sys.getenv("STRATEGUS_KEYRING_PASSWORD"))
@@ -145,6 +147,25 @@ createExecutionsSettings <- function() {
 
 # ---
 #
+# function to test the connectionDetails
+#
+# ---
+
+testConnection <- function() {
+  testConnection <- DatabaseConnector::connect(connectionDetails)
+  success <- DatabaseConnector::querySql(testConnection, "select 1 as one")
+  success
+  DatabaseConnector::disconnect(testConnection)
+  
+  if (success != 1) {
+    stop("We were not able to create the database connection for the given connectionDetails.")
+  } else {
+    print("CONNECTION TEST PASSED")
+  }
+}
+
+# ---
+#
 # function to init stratagus
 #
 # ---
@@ -152,6 +173,7 @@ createExecutionsSettings <- function() {
 initStratagus <- function() {
   storeKeyRing()
   executionSettings <- createExecutionsSettings()
+  testConnection()
   return(executionSettings)
 }
 
