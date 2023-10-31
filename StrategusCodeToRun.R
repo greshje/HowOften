@@ -1,57 +1,10 @@
-library(Strategus)
-
-##=========== START OF INPUTS ==========
-keyringName <- "HowOften"
-connectionDetailsReference <- "covid_ohdsi_connection_details"
-workDatabaseSchema <- 'how_often_scratch'
-cdmDatabaseSchema <- 'covid_ohdsi'
-outputLocation <- 'D:/_YES/_STRATEGUS/HowOften/Strategus'
-resultsLocation <- 'D:/_YES/_STRATEGUS/HowOften/Output'
-minCellCount <- 5
-cohortTableName <- "howoften_cohort"
 
 
-##=========== END OF INPUTS ==========
+
+
 ##################################
-# DO NOT MODIFY BELOW THIS POINT
+# DO NOT MODIFY THIS CODE
 ##################################
-
-executionSettings <- Strategus::createCdmExecutionSettings(
-  connectionDetailsReference = connectionDetailsReference,
-  workDatabaseSchema = workDatabaseSchema,
-  cdmDatabaseSchema = cdmDatabaseSchema,
-  cohortTableNames = CohortGenerator::getCohortTableNames(cohortTable = cohortTableName),
-  workFolder = file.path(outputLocation, connectionDetailsReference, "strategusWork"),
-  resultsFolder = file.path(outputLocation, connectionDetailsReference, "strategusOutput"),
-  minCellCount = minCellCount
-)
-
-executeAnalysis <- function(analysisFile, executionSettings, analysisName, outputLocation, resultsLocation, keyringName) {
-  
-  analysisSpecifications <- ParallelLogger::loadSettingsFromJson(
-    fileName = analysisFile
-  )
-  
-  Strategus::execute(
-    analysisSpecifications = analysisSpecifications,
-    executionSettings = executionSettings,
-    executionScriptFolder = file.path(outputLocation, connectionDetailsReference, "strategusExecution"),
-    keyringName = keyringName
-  )
-  
-  # copy Results to final location
-  resultsDir <- file.path(resultsLocation, analysisName, connectionDetailsReference)
-  
-  if (dir.exists(resultsDir)) {
-    unlink(resultsDir, recursive = TRUE)
-  }
-  dir.create(file.path(resultsDir), recursive = TRUE)
-  file.copy(file.path(outputLocation, connectionDetailsReference, "strategusOutput"),
-            file.path(resultsDir), recursive = TRUE)
-  
-  return(NULL)
-  
-}
 
 # Step 1 : Execute Azza Analysis
 executeAnalysis("howoften_azza.json", executionSettings, "azza", outputLocation, resultsLocation, keyringName)

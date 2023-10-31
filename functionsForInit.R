@@ -124,5 +124,72 @@ createDatabaseKeyRing <- function(kr_name, kr_service, kr_username) {
   }
 }
 
+# ---
+#
+# function to create stratagus settings
+#
+# ---
+
+createExecutionsSettings <- function() {
+  executionSettings <- Strategus::createCdmExecutionSettings(
+    connectionDetailsReference = connectionDetailsReference,
+    workDatabaseSchema = workDatabaseSchema,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    cohortTableNames = CohortGenerator::getCohortTableNames(cohortTable = cohortTableName),
+    workFolder = file.path(outputLocation, connectionDetailsReference, "strategusWork"),
+    resultsFolder = file.path(outputLocation, connectionDetailsReference, "strategusOutput"),
+    minCellCount = minCellCount
+  )
+  return(executionSettings)
+}
+
+# ---
+#
+# function to init stratagus
+#
+# ---
+
+initStratagus <- function() {
+  storeKeyRing()
+  executionSettings <- createExecutionsSettings()
+  return(executionSettings)
+}
+
+# ---
+#
+# function to execute stratagus
+#
+# ---
+
+executeAnalysis <- function (
+    analysisFile, 
+    executionSettings, 
+    analysisName, 
+    outputLocation, 
+    resultsLocation, 
+    keyringName) {
+  analysisSpecifications <- ParallelLogger::loadSettingsFromJson(
+    fileName = analysisFile
+  )
+  # execute stratagus
+  Strategus::execute(
+    analysisSpecifications = analysisSpecifications,
+    executionSettings = executionSettings,
+    executionScriptFolder = file.path(outputLocation, connectionDetailsReference, "strategusExecution"),
+    keyringName = keyringName
+  )
+  # copy Results to final location
+  resultsDir <- file.path(resultsLocation, analysisName, connectionDetailsReference)
+  if (dir.exists(resultsDir)) {
+    unlink(resultsDir, recursive = TRUE)
+  }
+  dir.create(file.path(resultsDir), recursive = TRUE)
+  file.copy(
+    file.path(outputLocation, connectionDetailsReference, "strategusOutput"),
+    file.path(resultsDir), recursive = TRUE
+  )
+  return(NULL)
+}
+
 
 
