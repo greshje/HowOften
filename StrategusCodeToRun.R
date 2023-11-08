@@ -121,8 +121,8 @@ executionSettings <- initStratagus()
 
 # executeAnalysis("howoften_azza.json", executionSettings, "azza", outputLocation, resultsLocation, keyringName)
 
-executeAnalysis("flouroquinolone_COMPLETE.json", executionSettings, "flouro", outputLocation, resultsLocation, keyringName)
+# executeAnalysis("flouroquinolone_COMPLETE.json", executionSettings, "flouro", outputLocation, resultsLocation, keyringName)
 
-# executeAnalysis("nachc-covid-homeless.json", executionSettings, "covid-nachc-test-01", outputLocation, resultsLocation, keyringName)
+executeAnalysis("nachc-covid-homeless-test-02", executionSettings, "covid-nachc-test-01", outputLocation, resultsLocation, keyringName)
 
 
