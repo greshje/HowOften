@@ -123,6 +123,14 @@ executionSettings <- initStratagus()
 
 # executeAnalysis("flouroquinolone_COMPLETE.json", executionSettings, "flouro", outputLocation, resultsLocation, keyringName)
 
-executeAnalysis("nachc-covid-homeless-test-02", executionSettings, "covid-nachc-test-01", outputLocation, resultsLocation, keyringName)
+# executeAnalysis("nachc-covid-homeless-test-01.json", executionSettings, "covid-nachc-test-01", outputLocation, resultsLocation, keyringName)
+
+# executeAnalysis("nachc-covid-homeless-test-02.json", executionSettings, "covid-nachc-test-02", outputLocation, resultsLocation, keyringName)
+
+# executeAnalysis("./test-resources/01a-single-cohort.json", executionSettings, "test-01a", outputLocation, resultsLocation, keyringName)
+executeAnalysis("./test-resources/01b-single-cohort-with-neg.json", executionSettings, "test-01b", outputLocation, resultsLocation, keyringName)
+# executeAnalysis("./test-resources/02-single-covid-cohort.json", executionSettings, "test-02", outputLocation, resultsLocation, keyringName)
+# executeAnalysis("./test-resources/03-all-covid-cohorts.json", executionSettings, "test-03", outputLocation, resultsLocation, keyringName)
+# executeAnalysis("./test-resources/04-all-covid-cohorts-with-neg.json", executionSettings, "test-03", outputLocation, resultsLocation, keyringName)
 
 

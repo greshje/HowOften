@@ -19,7 +19,7 @@
         }
       ],
       "attr_class": ["CohortDefinitionSharedResources", "SharedResources"]
-    },
+		},
     {
       "negativeControlOutcomes": {
         "negativeControlOutcomeCohortSet": [
@@ -59,7 +59,7 @@
       },
       "attr_class": ["NegativeControlOutcomeSharedResources", "SharedResources"]
     }
-  ],
+	],
   "moduleSpecifications": [
     {
       "module": "CohortGeneratorModule",
