@@ -1,0 +1,23 @@
+year = sub('.*(2[[:digit:]]{3})-.*', '\\1', meta$Date, perl = TRUE)
+vers = paste('R package version', meta$Version)
+if (length(year) == 0) year = format(Sys.Date(), '%Y')
+
+bibentry(
+  'manual',
+  title = paste('bookdown:', meta$Title),
+  author = Filter(function(p) 'aut' %in% p$role, as.person(meta$Author)),
+  year = year,
+  note = vers,
+  url = strsplit(meta$URL, ',')[[1]][1]
+)
+
+bibentry(
+  'book',
+  title = 'bookdown: Authoring Books and Technical Documents with {R} Markdown',
+  author = 'Yihui Xie',
+  publisher = 'Chapman and Hall/CRC',
+  address = 'Boca Raton, Florida',
+  year = '2016',
+  note = 'ISBN 978-1138700109',
+  url = 'https://bookdown.org/yihui/bookdown'
+)

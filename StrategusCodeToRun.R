@@ -10,6 +10,14 @@ source("functionsForInit.R")
 
 # ---
 #
+# Optional code: run the following lines to reset the environement.  
+#
+# -- 
+
+# removePackagesInstalledHere()
+
+# ---
+#
 # stratagus keyring stuff
 #
 # Basically, just use usethis::edit_r_environ() to check your .Renviron file.  
@@ -39,7 +47,7 @@ if(
 # ---
 
 # file locations
-outputLocation <- 'D:/_YES/_STRATEGUS/HowOften/Strategus'
+outputLocation <- 'D:/_YES/_STRATEGUS/HowOften'
 resultsLocation <- 'D:/_YES/_STRATEGUS/HowOften/Output'
 # database schemas
 workDatabaseSchema <- 'how_often_scratch'
@@ -53,7 +61,7 @@ dbms = "spark"
 pathToDriver="D:\\_YES_2023-05-28\\workspace\\SosExamples\\_COVID\\02-data-diagnostics\\drivers\\databricks\\"
 # references to stored values (these can be anything)
 keyringName <- "HowOften"
-connectionDetailsReference <- "covid_ohdsi_connection_details"
+connectionDetailsReference <- "local-modules"
 
 # ---
 #
@@ -111,6 +119,10 @@ executionSettings <- initStratagus()
 #
 # ---
 
-executeAnalysis("howoften_azza.json", executionSettings, "azza", outputLocation, resultsLocation, keyringName)
+# executeAnalysis("howoften_azza.json", executionSettings, "azza", outputLocation, resultsLocation, keyringName)
+
+executeAnalysis("flouroquinolone_COMPLETE.json", executionSettings, "flouro", outputLocation, resultsLocation, keyringName)
+
+# executeAnalysis("nachc-covid-homeless.json", executionSettings, "covid-nachc-test-01", outputLocation, resultsLocation, keyringName)
 
 

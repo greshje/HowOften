@@ -1,0 +1,2925 @@
+{
+  "id": 2,
+  "name": "Population Level Estimation Analysis for Effect of Homelessness on COVID Vaccination",
+  "version": "v2.7.0",
+  "organizationName": "OHDSI",
+  "packageName": null,
+  "skeletonType": "ComparativeEffectStudy",
+  "skeletonVersion": "v0.0.1",
+  "cohortDefinitions": [
+    {
+      "id": 4,
+      "name": "Vaccinated",
+      "description": null,
+      "expression": {
+        "cdmVersionRange": ">=5.0.0",
+        "Title": null,
+        "PrimaryCriteria": {
+          "CriteriaList": [
+            {
+              "VisitOccurrence": {
+                "CorrelatedCriteria": null,
+                "CodesetId": null,
+                "First": null,
+                "OccurrenceStartDate": null,
+                "OccurrenceEndDate": null,
+                "VisitType": null,
+                "VisitTypeExclude": false,
+                "VisitSourceConcept": null,
+                "VisitLength": null,
+                "Age": null,
+                "Gender": null,
+                "ProviderSpecialty": null,
+                "PlaceOfService": null,
+                "PlaceOfServiceLocation": null
+              }
+            }
+          ],
+          "ObservationWindow": {
+            "PriorDays": 0,
+            "PostDays": 0
+          },
+          "PrimaryCriteriaLimit": {
+            "Type": "First"
+          }
+        },
+        "AdditionalCriteria": {
+          "Type": "ALL",
+          "Count": null,
+          "CriteriaList": [
+            {
+              "Criteria": {
+                "VisitOccurrence": {
+                  "CorrelatedCriteria": null,
+                  "CodesetId": null,
+                  "First": null,
+                  "OccurrenceStartDate": {
+                    "Value": "2020-01-01",
+                    "Op": "gte",
+                    "Extent": null
+                  },
+                  "OccurrenceEndDate": null,
+                  "VisitType": null,
+                  "VisitTypeExclude": false,
+                  "VisitSourceConcept": null,
+                  "VisitLength": null,
+                  "Age": null,
+                  "Gender": null,
+                  "ProviderSpecialty": null,
+                  "PlaceOfService": null,
+                  "PlaceOfServiceLocation": null
+                }
+              },
+              "StartWindow": {
+                "Start": {
+                  "Days": null,
+                  "Coeff": -1
+                },
+                "End": {
+                  "Days": null,
+                  "Coeff": 1
+                },
+                "UseIndexEnd": false,
+                "UseEventEnd": false
+              },
+              "EndWindow": null,
+              "RestrictVisit": false,
+              "IgnoreObservationPeriod": false,
+              "Occurrence": {
+                "Type": 2,
+                "Count": 1,
+                "IsDistinct": false,
+                "CountColumn": null
+              }
+            }
+          ],
+          "DemographicCriteriaList": [],
+          "Groups": []
+        },
+        "ConceptSets": [
+          {
+            "id": 0,
+            "name": "Homeless - 2023-07-12 (ALL CONCEPTS)",
+            "expression": {
+              "items": [
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4053088,
+                    "CONCEPT_NAME": "Lives in sheltered housing",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "160729004",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4147554,
+                    "CONCEPT_NAME": "Sheltered housing",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "310207003",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Location"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40519180,
+                    "CONCEPT_NAME": "[V]Lack of housing",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "316362003",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Context-dependent"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 44794577,
+                    "CONCEPT_NAME": "[V]Lack of housing",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "398341000000102",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Context-dependent"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40519187,
+                    "CONCEPT_NAME": "[V]Sheltered housing",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "316369007",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Context-dependent"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 44812921,
+                    "CONCEPT_NAME": "[V]Sheltered housing",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "431521000000106",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Context-dependent"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40329696,
+                    "CONCEPT_NAME": "(Housing lack) or (homeless)",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "160699002",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 21498856,
+                    "CONCEPT_NAME": "Homeless",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "LA20561-9",
+                    "DOMAIN_ID": "Meas Value",
+                    "VOCABULARY_ID": "LOINC",
+                    "CONCEPT_CLASS_ID": "Answer"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4139934,
+                    "CONCEPT_NAME": "Homeless",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "32911000",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40299198,
+                    "CONCEPT_NAME": "Homeless",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "138087002",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3552499,
+                    "CONCEPT_NAME": "Homeless - enhanced service completed",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "165571000000100",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Undefined"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3552820,
+                    "CONCEPT_NAME": "Homeless - enhanced service completed",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "171301000000107",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Undefined"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3552819,
+                    "CONCEPT_NAME": "Homeless - enhanced services administration",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "171291000000108",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Undefined"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3553101,
+                    "CONCEPT_NAME": "Homeless - enhanced services administration",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "175961000000109",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Undefined"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 8672,
+                    "CONCEPT_NAME": "Homeless Shelter",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "04",
+                    "DOMAIN_ID": "Visit",
+                    "VOCABULARY_ID": "CMS Place of Service",
+                    "CONCEPT_CLASS_ID": "Visit"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 42628011,
+                    "CONCEPT_NAME": "Homeless Shelter",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "1021866",
+                    "DOMAIN_ID": "Visit",
+                    "VOCABULARY_ID": "CPT4",
+                    "CONCEPT_CLASS_ID": "Visit"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 44788302,
+                    "CONCEPT_NAME": "Homeless enhanced service completed",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "166461000000103",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 44788283,
+                    "CONCEPT_NAME": "Homeless enhanced services administration",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "166301000000107",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4019973,
+                    "CONCEPT_NAME": "Homeless family",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "105526001",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40299199,
+                    "CONCEPT_NAME": "Homeless family",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "138088007",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4190815,
+                    "CONCEPT_NAME": "Homeless mental health care",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "390818002",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4307308,
+                    "CONCEPT_NAME": "Homeless mental health care - 3-5 contacts/week",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "391195008",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4192297,
+                    "CONCEPT_NAME": "Homeless mental health care - Daily intensive",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "391194007",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4307307,
+                    "CONCEPT_NAME": "Homeless mental health care - Full day : day care",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "391191004",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4193277,
+                    "CONCEPT_NAME": "Homeless mental health care - Part day : day care",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "391192006",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40299200,
+                    "CONCEPT_NAME": "Homeless single person",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "138089004",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4052051,
+                    "CONCEPT_NAME": "Homeless single person",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "160700001",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 35225199,
+                    "CONCEPT_NAME": "Homelessness",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "Z59.0",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "ICD10CM",
+                    "CONCEPT_CLASS_ID": "4-char nonbill code"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 36309593,
+                    "CONCEPT_NAME": "I'm homeless or threatened with eviction",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "LA29213-8",
+                    "DOMAIN_ID": "Meas Value",
+                    "VOCABULARY_ID": "LOINC",
+                    "CONCEPT_CLASS_ID": "Answer"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 36310234,
+                    "CONCEPT_NAME": "Patient is homeless",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "LA18835-1",
+                    "DOMAIN_ID": "Meas Value",
+                    "VOCABULARY_ID": "LOINC",
+                    "CONCEPT_CLASS_ID": "Answer"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 36662349,
+                    "CONCEPT_NAME": "Person does not have a permanent home or is homeless.",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "LA30928-8",
+                    "DOMAIN_ID": "Meas Value",
+                    "VOCABULARY_ID": "LOINC",
+                    "CONCEPT_CLASS_ID": "Answer"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 45765559,
+                    "CONCEPT_NAME": "Under care of homeless advocacy service",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "702526004",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 44810341,
+                    "CONCEPT_NAME": "Under care of homeless advocacy service",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "887461000000108",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3560142,
+                    "CONCEPT_NAME": "Under care of homeless advocacy service",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "887471000000101",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Undefined"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40329696,
+                    "CONCEPT_NAME": "(Housing lack) or (homeless)",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "160699002",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3557438,
+                    "CONCEPT_NAME": "Awaiting housing NOS",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "553841000000107",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40318572,
+                    "CONCEPT_NAME": "Awaiting housing NOS",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "154138002",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4091008,
+                    "CONCEPT_NAME": "Awaiting housing NOS",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "185962009",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4137393,
+                    "CONCEPT_NAME": "Discharge to sheltered housing",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "306697004",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4144274,
+                    "CONCEPT_NAME": "Housing lack",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "266935003",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3557354,
+                    "CONCEPT_NAME": "Housing lack NOS",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "542821000000105",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40299203,
+                    "CONCEPT_NAME": "Housing lack NOS",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "138091007",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4058157,
+                    "CONCEPT_NAME": "Housing lack NOS",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "160704005",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 37079289,
+                    "CONCEPT_NAME": "I do not have housing (staying with others, in a hotel, in a shelter, living outside on the street, on a beach, in a car, or in a park)",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "LA30190-5",
+                    "DOMAIN_ID": "Meas Value",
+                    "VOCABULARY_ID": "LOINC",
+                    "CONCEPT_CLASS_ID": "Answer"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 44831984,
+                    "CONCEPT_NAME": "Lack of housing",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "V60.0",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "ICD9CM",
+                    "CONCEPT_CLASS_ID": "4-dig billing V code"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 766510,
+                    "CONCEPT_NAME": "Homelessness unspecified",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "Z59.00",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "ICD10CM",
+                    "CONCEPT_CLASS_ID": "5-char billing code"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 766511,
+                    "CONCEPT_NAME": "Sheltered homelessness",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "Z59.01",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "ICD10CM",
+                    "CONCEPT_CLASS_ID": "5-char billing code"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 766512,
+                    "CONCEPT_NAME": "Unsheltered homelessness",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "Z59.02",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "ICD10CM",
+                    "CONCEPT_CLASS_ID": "5-char billing code"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 36309067,
+                    "CONCEPT_NAME": "Street",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "LA28897-9",
+                    "DOMAIN_ID": "Meas Value",
+                    "VOCABULARY_ID": "LOINC",
+                    "CONCEPT_CLASS_ID": "Answer"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                }
+              ]
+            }
+          },
+          {
+            "id": 1,
+            "name": "Vaccinated",
+            "expression": {
+              "items": [
+                {
+                  "concept": {
+                    "CONCEPT_ID": 35897994,
+                    "CONCEPT_NAME": "COVID-19 vaccine Injectable Solution",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "OMOP5042233",
+                    "DOMAIN_ID": "Drug",
+                    "VOCABULARY_ID": "RxNorm Extension",
+                    "CONCEPT_CLASS_ID": "Clinical Drug Form"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": false,
+                  "includeMapped": false
+                }
+              ]
+            }
+          }
+        ],
+        "QualifiedLimit": {
+          "Type": "First"
+        },
+        "ExpressionLimit": {
+          "Type": "First"
+        },
+        "InclusionRules": [
+          {
+            "name": "Visit 6 months after first visit",
+            "description": "Patient has at least one visit 6 months or more after their first visit after 2020-01-01",
+            "expression": {
+              "Type": "ALL",
+              "Count": null,
+              "CriteriaList": [
+                {
+                  "Criteria": {
+                    "VisitOccurrence": {
+                      "CorrelatedCriteria": null,
+                      "CodesetId": null,
+                      "First": null,
+                      "OccurrenceStartDate": null,
+                      "OccurrenceEndDate": null,
+                      "VisitType": null,
+                      "VisitTypeExclude": false,
+                      "VisitSourceConcept": null,
+                      "VisitLength": null,
+                      "Age": null,
+                      "Gender": null,
+                      "ProviderSpecialty": null,
+                      "PlaceOfService": null,
+                      "PlaceOfServiceLocation": null
+                    }
+                  },
+                  "StartWindow": {
+                    "Start": {
+                      "Days": 0,
+                      "Coeff": -1
+                    },
+                    "End": {
+                      "Days": 180,
+                      "Coeff": 1
+                    },
+                    "UseIndexEnd": false,
+                    "UseEventEnd": false
+                  },
+                  "EndWindow": null,
+                  "RestrictVisit": false,
+                  "IgnoreObservationPeriod": true,
+                  "Occurrence": {
+                    "Type": 2,
+                    "Count": 1,
+                    "IsDistinct": false,
+                    "CountColumn": null
+                  }
+                }
+              ],
+              "DemographicCriteriaList": [],
+              "Groups": []
+            }
+          },
+          {
+            "name": "Vaccinated",
+            "description": "Patient has a lease one vaccination after their first visit within 180 days after the first visit",
+            "expression": {
+              "Type": "ALL",
+              "Count": null,
+              "CriteriaList": [
+                {
+                  "Criteria": {
+                    "DrugExposure": {
+                      "CorrelatedCriteria": null,
+                      "CodesetId": 1,
+                      "First": null,
+                      "OccurrenceStartDate": null,
+                      "OccurrenceEndDate": null,
+                      "DrugType": null,
+                      "DrugTypeExclude": false,
+                      "StopReason": null,
+                      "Refills": null,
+                      "Quantity": null,
+                      "DaysSupply": null,
+                      "RouteConcept": null,
+                      "EffectiveDrugDose": null,
+                      "DoseUnit": null,
+                      "LotNumber": null,
+                      "DrugSourceConcept": null,
+                      "Age": null,
+                      "Gender": null,
+                      "ProviderSpecialty": null,
+                      "VisitType": null
+                    }
+                  },
+                  "StartWindow": {
+                    "Start": {
+                      "Days": 0,
+                      "Coeff": -1
+                    },
+                    "End": {
+                      "Days": 180,
+                      "Coeff": 1
+                    },
+                    "UseIndexEnd": false,
+                    "UseEventEnd": false
+                  },
+                  "EndWindow": null,
+                  "RestrictVisit": false,
+                  "IgnoreObservationPeriod": true,
+                  "Occurrence": {
+                    "Type": 2,
+                    "Count": 1,
+                    "IsDistinct": false,
+                    "CountColumn": null
+                  }
+                }
+              ],
+              "DemographicCriteriaList": [],
+              "Groups": []
+            }
+          }
+        ],
+        "EndStrategy": {
+          "DateOffset": {
+            "DateField": "StartDate",
+            "Offset": 180
+          }
+        },
+        "CensoringCriteria": [],
+        "CollapseSettings": {
+          "CollapseType": "ERA",
+          "EraPad": 0
+        },
+        "CensorWindow": {
+          "StartDate": null,
+          "EndDate": null
+        }
+      },
+      "expressionType": "SIMPLE_EXPRESSION",
+      "createdBy": null,
+      "createdDate": null,
+      "modifiedBy": null,
+      "modifiedDate": null
+    },
+    {
+      "id": 5,
+      "name": "Not Vaccinated",
+      "description": null,
+      "expression": {
+        "cdmVersionRange": ">=5.0.0",
+        "Title": null,
+        "PrimaryCriteria": {
+          "CriteriaList": [
+            {
+              "VisitOccurrence": {
+                "CorrelatedCriteria": null,
+                "CodesetId": null,
+                "First": null,
+                "OccurrenceStartDate": null,
+                "OccurrenceEndDate": null,
+                "VisitType": null,
+                "VisitTypeExclude": false,
+                "VisitSourceConcept": null,
+                "VisitLength": null,
+                "Age": null,
+                "Gender": null,
+                "ProviderSpecialty": null,
+                "PlaceOfService": null,
+                "PlaceOfServiceLocation": null
+              }
+            }
+          ],
+          "ObservationWindow": {
+            "PriorDays": 0,
+            "PostDays": 0
+          },
+          "PrimaryCriteriaLimit": {
+            "Type": "First"
+          }
+        },
+        "AdditionalCriteria": {
+          "Type": "ALL",
+          "Count": null,
+          "CriteriaList": [
+            {
+              "Criteria": {
+                "VisitOccurrence": {
+                  "CorrelatedCriteria": null,
+                  "CodesetId": null,
+                  "First": null,
+                  "OccurrenceStartDate": {
+                    "Value": "2020-01-01",
+                    "Op": "gte",
+                    "Extent": null
+                  },
+                  "OccurrenceEndDate": null,
+                  "VisitType": null,
+                  "VisitTypeExclude": false,
+                  "VisitSourceConcept": null,
+                  "VisitLength": null,
+                  "Age": null,
+                  "Gender": null,
+                  "ProviderSpecialty": null,
+                  "PlaceOfService": null,
+                  "PlaceOfServiceLocation": null
+                }
+              },
+              "StartWindow": {
+                "Start": {
+                  "Days": null,
+                  "Coeff": -1
+                },
+                "End": {
+                  "Days": null,
+                  "Coeff": 1
+                },
+                "UseIndexEnd": false,
+                "UseEventEnd": false
+              },
+              "EndWindow": null,
+              "RestrictVisit": false,
+              "IgnoreObservationPeriod": false,
+              "Occurrence": {
+                "Type": 2,
+                "Count": 1,
+                "IsDistinct": false,
+                "CountColumn": null
+              }
+            }
+          ],
+          "DemographicCriteriaList": [],
+          "Groups": []
+        },
+        "ConceptSets": [
+          {
+            "id": 0,
+            "name": "Homeless - 2023-07-12 (ALL CONCEPTS)",
+            "expression": {
+              "items": [
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4053088,
+                    "CONCEPT_NAME": "Lives in sheltered housing",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "160729004",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4147554,
+                    "CONCEPT_NAME": "Sheltered housing",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "310207003",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Location"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40519180,
+                    "CONCEPT_NAME": "[V]Lack of housing",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "316362003",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Context-dependent"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 44794577,
+                    "CONCEPT_NAME": "[V]Lack of housing",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "398341000000102",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Context-dependent"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40519187,
+                    "CONCEPT_NAME": "[V]Sheltered housing",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "316369007",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Context-dependent"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 44812921,
+                    "CONCEPT_NAME": "[V]Sheltered housing",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "431521000000106",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Context-dependent"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40329696,
+                    "CONCEPT_NAME": "(Housing lack) or (homeless)",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "160699002",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 21498856,
+                    "CONCEPT_NAME": "Homeless",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "LA20561-9",
+                    "DOMAIN_ID": "Meas Value",
+                    "VOCABULARY_ID": "LOINC",
+                    "CONCEPT_CLASS_ID": "Answer"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4139934,
+                    "CONCEPT_NAME": "Homeless",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "32911000",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40299198,
+                    "CONCEPT_NAME": "Homeless",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "138087002",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3552499,
+                    "CONCEPT_NAME": "Homeless - enhanced service completed",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "165571000000100",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Undefined"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3552820,
+                    "CONCEPT_NAME": "Homeless - enhanced service completed",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "171301000000107",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Undefined"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3552819,
+                    "CONCEPT_NAME": "Homeless - enhanced services administration",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "171291000000108",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Undefined"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3553101,
+                    "CONCEPT_NAME": "Homeless - enhanced services administration",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "175961000000109",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Undefined"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 8672,
+                    "CONCEPT_NAME": "Homeless Shelter",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "04",
+                    "DOMAIN_ID": "Visit",
+                    "VOCABULARY_ID": "CMS Place of Service",
+                    "CONCEPT_CLASS_ID": "Visit"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 42628011,
+                    "CONCEPT_NAME": "Homeless Shelter",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "1021866",
+                    "DOMAIN_ID": "Visit",
+                    "VOCABULARY_ID": "CPT4",
+                    "CONCEPT_CLASS_ID": "Visit"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 44788302,
+                    "CONCEPT_NAME": "Homeless enhanced service completed",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "166461000000103",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 44788283,
+                    "CONCEPT_NAME": "Homeless enhanced services administration",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "166301000000107",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4019973,
+                    "CONCEPT_NAME": "Homeless family",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "105526001",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40299199,
+                    "CONCEPT_NAME": "Homeless family",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "138088007",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4190815,
+                    "CONCEPT_NAME": "Homeless mental health care",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "390818002",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4307308,
+                    "CONCEPT_NAME": "Homeless mental health care - 3-5 contacts/week",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "391195008",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4192297,
+                    "CONCEPT_NAME": "Homeless mental health care - Daily intensive",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "391194007",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4307307,
+                    "CONCEPT_NAME": "Homeless mental health care - Full day : day care",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "391191004",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4193277,
+                    "CONCEPT_NAME": "Homeless mental health care - Part day : day care",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "391192006",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40299200,
+                    "CONCEPT_NAME": "Homeless single person",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "138089004",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4052051,
+                    "CONCEPT_NAME": "Homeless single person",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "160700001",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 35225199,
+                    "CONCEPT_NAME": "Homelessness",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "Z59.0",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "ICD10CM",
+                    "CONCEPT_CLASS_ID": "4-char nonbill code"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 36309593,
+                    "CONCEPT_NAME": "I'm homeless or threatened with eviction",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "LA29213-8",
+                    "DOMAIN_ID": "Meas Value",
+                    "VOCABULARY_ID": "LOINC",
+                    "CONCEPT_CLASS_ID": "Answer"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 36310234,
+                    "CONCEPT_NAME": "Patient is homeless",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "LA18835-1",
+                    "DOMAIN_ID": "Meas Value",
+                    "VOCABULARY_ID": "LOINC",
+                    "CONCEPT_CLASS_ID": "Answer"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 36662349,
+                    "CONCEPT_NAME": "Person does not have a permanent home or is homeless.",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "LA30928-8",
+                    "DOMAIN_ID": "Meas Value",
+                    "VOCABULARY_ID": "LOINC",
+                    "CONCEPT_CLASS_ID": "Answer"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 45765559,
+                    "CONCEPT_NAME": "Under care of homeless advocacy service",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "702526004",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 44810341,
+                    "CONCEPT_NAME": "Under care of homeless advocacy service",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "887461000000108",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3560142,
+                    "CONCEPT_NAME": "Under care of homeless advocacy service",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "887471000000101",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Undefined"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40329696,
+                    "CONCEPT_NAME": "(Housing lack) or (homeless)",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "160699002",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3557438,
+                    "CONCEPT_NAME": "Awaiting housing NOS",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "553841000000107",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40318572,
+                    "CONCEPT_NAME": "Awaiting housing NOS",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "154138002",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4091008,
+                    "CONCEPT_NAME": "Awaiting housing NOS",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "185962009",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4137393,
+                    "CONCEPT_NAME": "Discharge to sheltered housing",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "306697004",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Procedure"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4144274,
+                    "CONCEPT_NAME": "Housing lack",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "266935003",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 3557354,
+                    "CONCEPT_NAME": "Housing lack NOS",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "D",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "542821000000105",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 40299203,
+                    "CONCEPT_NAME": "Housing lack NOS",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "138091007",
+                    "DOMAIN_ID": "Condition",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 4058157,
+                    "CONCEPT_NAME": "Housing lack NOS",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "U",
+                    "INVALID_REASON_CAPTION": "Invalid",
+                    "CONCEPT_CODE": "160704005",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "SNOMED",
+                    "CONCEPT_CLASS_ID": "Clinical Finding"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 37079289,
+                    "CONCEPT_NAME": "I do not have housing (staying with others, in a hotel, in a shelter, living outside on the street, on a beach, in a car, or in a park)",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "LA30190-5",
+                    "DOMAIN_ID": "Meas Value",
+                    "VOCABULARY_ID": "LOINC",
+                    "CONCEPT_CLASS_ID": "Answer"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 44831984,
+                    "CONCEPT_NAME": "Lack of housing",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "V60.0",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "ICD9CM",
+                    "CONCEPT_CLASS_ID": "4-dig billing V code"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 766510,
+                    "CONCEPT_NAME": "Homelessness unspecified",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "Z59.00",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "ICD10CM",
+                    "CONCEPT_CLASS_ID": "5-char billing code"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 766511,
+                    "CONCEPT_NAME": "Sheltered homelessness",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "Z59.01",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "ICD10CM",
+                    "CONCEPT_CLASS_ID": "5-char billing code"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 766512,
+                    "CONCEPT_NAME": "Unsheltered homelessness",
+                    "STANDARD_CONCEPT": "N",
+                    "STANDARD_CONCEPT_CAPTION": "Non-Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "Z59.02",
+                    "DOMAIN_ID": "Observation",
+                    "VOCABULARY_ID": "ICD10CM",
+                    "CONCEPT_CLASS_ID": "5-char billing code"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                },
+                {
+                  "concept": {
+                    "CONCEPT_ID": 36309067,
+                    "CONCEPT_NAME": "Street",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "LA28897-9",
+                    "DOMAIN_ID": "Meas Value",
+                    "VOCABULARY_ID": "LOINC",
+                    "CONCEPT_CLASS_ID": "Answer"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": true,
+                  "includeMapped": false
+                }
+              ]
+            }
+          },
+          {
+            "id": 1,
+            "name": "Vaccinated",
+            "expression": {
+              "items": [
+                {
+                  "concept": {
+                    "CONCEPT_ID": 35897994,
+                    "CONCEPT_NAME": "COVID-19 vaccine Injectable Solution",
+                    "STANDARD_CONCEPT": "S",
+                    "STANDARD_CONCEPT_CAPTION": "Standard",
+                    "INVALID_REASON": "V",
+                    "INVALID_REASON_CAPTION": "Valid",
+                    "CONCEPT_CODE": "OMOP5042233",
+                    "DOMAIN_ID": "Drug",
+                    "VOCABULARY_ID": "RxNorm Extension",
+                    "CONCEPT_CLASS_ID": "Clinical Drug Form"
+                  },
+                  "isExcluded": false,
+                  "includeDescendants": false,
+                  "includeMapped": false
+                }
+              ]
+            }
+          }
+        ],
+        "QualifiedLimit": {
+          "Type": "First"
+        },
+        "ExpressionLimit": {
+          "Type": "First"
+        },
+        "InclusionRules": [
+          {
+            "name": "Visit 6 months after first visit",
+            "description": "Patient has at least one visit 6 months or more after their first visit after 2020-01-01",
+            "expression": {
+              "Type": "ALL",
+              "Count": null,
+              "CriteriaList": [
+                {
+                  "Criteria": {
+                    "VisitOccurrence": {
+                      "CorrelatedCriteria": null,
+                      "CodesetId": null,
+                      "First": null,
+                      "OccurrenceStartDate": null,
+                      "OccurrenceEndDate": null,
+                      "VisitType": null,
+                      "VisitTypeExclude": false,
+                      "VisitSourceConcept": null,
+                      "VisitLength": null,
+                      "Age": null,
+                      "Gender": null,
+                      "ProviderSpecialty": null,
+                      "PlaceOfService": null,
+                      "PlaceOfServiceLocation": null
+                    }
+                  },
+                  "StartWindow": {
+                    "Start": {
+                      "Days": 0,
+                      "Coeff": -1
+                    },
+                    "End": {
+                      "Days": 180,
+                      "Coeff": 1
+                    },
+                    "UseIndexEnd": false,
+                    "UseEventEnd": false
+                  },
+                  "EndWindow": null,
+                  "RestrictVisit": false,
+                  "IgnoreObservationPeriod": true,
+                  "Occurrence": {
+                    "Type": 2,
+                    "Count": 1,
+                    "IsDistinct": false,
+                    "CountColumn": null
+                  }
+                }
+              ],
+              "DemographicCriteriaList": [],
+              "Groups": []
+            }
+          },
+          {
+            "name": "Not Vaccinated",
+            "description": "Patient has a lease one vaccination after their first visit within 180 days after the first visit",
+            "expression": {
+              "Type": "ALL",
+              "Count": null,
+              "CriteriaList": [
+                {
+                  "Criteria": {
+                    "DrugExposure": {
+                      "CorrelatedCriteria": null,
+                      "CodesetId": 1,
+                      "First": null,
+                      "OccurrenceStartDate": null,
+                      "OccurrenceEndDate": null,
+                      "DrugType": null,
+                      "DrugTypeExclude": false,
+                      "StopReason": null,
+                      "Refills": null,
+                      "Quantity": null,
+                      "DaysSupply": null,
+                      "RouteConcept": null,
+                      "EffectiveDrugDose": null,
+                      "DoseUnit": null,
+                      "LotNumber": null,
+                      "DrugSourceConcept": null,
+                      "Age": null,
+                      "Gender": null,
+                      "ProviderSpecialty": null,
+                      "VisitType": null
+                    }
+                  },
+                  "StartWindow": {
+                    "Start": {
+                      "Days": 0,
+                      "Coeff": -1
+                    },
+                    "End": {
+                      "Days": 180,
+                      "Coeff": 1
+                    },
+                    "UseIndexEnd": false,
+                    "UseEventEnd": false
+                  },
+                  "EndWindow": null,
+                  "RestrictVisit": false,
+                  "IgnoreObservationPeriod": true,
+                  "Occurrence": {
+                    "Type": 0,
+                    "Count": 0,
+                    "IsDistinct": false,
+                    "CountColumn": null
+                  }
+                }
+              ],
+              "DemographicCriteriaList": [],
+              "Groups": []
+            }
+          }
+        ],
+        "EndStrategy": {
+          "DateOffset": {
+            "DateField": "StartDate",
+            "Offset": 180
+          }
+        },
+        "CensoringCriteria": [],
+        "CollapseSettings": {
+          "CollapseType": "ERA",
+          "EraPad": 0
+        },
+        "CensorWindow": {
+          "StartDate": null,
+          "EndDate": null
+        }
+      },
+      "expressionType": "SIMPLE_EXPRESSION",
+      "createdBy": null,
+      "createdDate": null,
+      "modifiedBy": null,
+      "modifiedDate": null
+    }
+  ],
+  "conceptSets": [
+    {
+      "id": 6,
+      "name": "Negative Control",
+      "expression": {
+        "items": [
+          {
+            "concept": {
+              "CONCEPT_ID": 320128,
+              "CONCEPT_NAME": "Essential hypertension",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "CONCEPT_CODE": "59621000",
+              "DOMAIN_ID": "Condition",
+              "VOCABULARY_ID": "SNOMED",
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "VALID_START_DATE": 1012435200000,
+              "VALID_END_DATE": 4102358400000
+            },
+            "isExcluded": false,
+            "includeDescendants": true,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 432867,
+              "CONCEPT_NAME": "Hyperlipidemia",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "CONCEPT_CODE": "55822004",
+              "DOMAIN_ID": "Condition",
+              "VOCABULARY_ID": "SNOMED",
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "VALID_START_DATE": 1012435200000,
+              "VALID_END_DATE": 4102358400000
+            },
+            "isExcluded": false,
+            "includeDescendants": true,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 437663,
+              "CONCEPT_NAME": "Fever",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "CONCEPT_CODE": "386661006",
+              "DOMAIN_ID": "Condition",
+              "VOCABULARY_ID": "SNOMED",
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "VALID_START_DATE": 1043971200000,
+              "VALID_END_DATE": 4102358400000
+            },
+            "isExcluded": false,
+            "includeDescendants": true,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 78232,
+              "CONCEPT_NAME": "Shoulder joint pain",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "CONCEPT_CODE": "267949000",
+              "DOMAIN_ID": "Condition",
+              "VOCABULARY_ID": "SNOMED",
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "VALID_START_DATE": 1012435200000,
+              "VALID_END_DATE": 4102358400000
+            },
+            "isExcluded": false,
+            "includeDescendants": true,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 4174262,
+              "CONCEPT_NAME": "Polyneuropathy",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "CONCEPT_CODE": "42345000",
+              "DOMAIN_ID": "Condition",
+              "VOCABULARY_ID": "SNOMED",
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "VALID_START_DATE": 1012435200000,
+              "VALID_END_DATE": 4102358400000
+            },
+            "isExcluded": false,
+            "includeDescendants": true,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 4195085,
+              "CONCEPT_NAME": "Nasal congestion",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "CONCEPT_CODE": "68235000",
+              "DOMAIN_ID": "Condition",
+              "VOCABULARY_ID": "SNOMED",
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "VALID_START_DATE": 1012435200000,
+              "VALID_END_DATE": 4102358400000
+            },
+            "isExcluded": false,
+            "includeDescendants": true,
+            "includeMapped": false
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "Vaccinated",
+      "expression": {
+        "items": [
+          {
+            "concept": {
+              "CONCEPT_ID": 35897994,
+              "CONCEPT_NAME": "COVID-19 vaccine Injectable Solution",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "CONCEPT_CODE": "OMOP5042233",
+              "DOMAIN_ID": "Drug",
+              "VOCABULARY_ID": "RxNorm Extension",
+              "CONCEPT_CLASS_ID": "Clinical Drug Form",
+              "VALID_START_DATE": 1612137600000,
+              "VALID_END_DATE": 4102358400000
+            },
+            "isExcluded": false,
+            "includeDescendants": false,
+            "includeMapped": false
+          }
+        ]
+      }
+    }
+  ],
+  "conceptSetCrossReference": [
+    {
+      "conceptSetId": 6,
+      "targetName": "negativeControlOutcomes",
+      "targetIndex": 0,
+      "propertyName": "outcomeId"
+    },
+    {
+      "conceptSetId": 5,
+      "targetName": "estimationAnalysisSettings.analysisSpecification.targetComparatorOutcomes",
+      "targetIndex": 0,
+      "propertyName": "excludedCovariateConceptIds"
+    },
+    {
+      "conceptSetId": 5,
+      "targetName": "estimationAnalysisSettings.analysisSpecification.cohortMethodAnalysisList.getDbCohortMethodDataArgs.covariateSettings",
+      "targetIndex": 0,
+      "propertyName": "excludedCovariateConceptIds"
+    }
+  ],
+  "negativeControls": [
+    {
+      "targetId": 4,
+      "comparatorId": 5,
+      "outcomeId": 320128,
+      "outcomeName": "Essential hypertension",
+      "type": "outcome"
+    },
+    {
+      "targetId": 4,
+      "comparatorId": 5,
+      "outcomeId": 432867,
+      "outcomeName": "Hyperlipidemia",
+      "type": "outcome"
+    },
+    {
+      "targetId": 4,
+      "comparatorId": 5,
+      "outcomeId": 437663,
+      "outcomeName": "Fever",
+      "type": "outcome"
+    },
+    {
+      "targetId": 4,
+      "comparatorId": 5,
+      "outcomeId": 78232,
+      "outcomeName": "Shoulder joint pain",
+      "type": "outcome"
+    },
+    {
+      "targetId": 4,
+      "comparatorId": 5,
+      "outcomeId": 4174262,
+      "outcomeName": "Polyneuropathy",
+      "type": "outcome"
+    },
+    {
+      "targetId": 4,
+      "comparatorId": 5,
+      "outcomeId": 4195085,
+      "outcomeName": "Nasal congestion",
+      "type": "outcome"
+    }
+  ],
+  "doPositiveControlSynthesis": false,
+  "positiveControlSynthesisArgs": {
+    "modelType": "survival",
+    "minOutcomeCountForModel": 50,
+    "minOutcomeCountForInjection": 25,
+    "covariateSettings": {
+      "attr_class": "covariateSettings",
+      "temporal": false,
+      "DemographicsGender": true,
+      "DemographicsAge": false,
+      "DemographicsAgeGroup": true,
+      "DemographicsRace": true,
+      "DemographicsEthnicity": true,
+      "DemographicsIndexYear": true,
+      "DemographicsIndexMonth": true,
+      "DemographicsPriorObservationTime": false,
+      "DemographicsPostObservationTime": false,
+      "DemographicsTimeInCohort": false,
+      "DemographicsIndexYearMonth": false,
+      "ConditionOccurrenceAnyTimePrior": false,
+      "ConditionOccurrenceLongTerm": false,
+      "ConditionOccurrenceMediumTerm": false,
+      "ConditionOccurrenceShortTerm": false,
+      "ConditionOccurrencePrimaryInpatientAnyTimePrior": false,
+      "ConditionOccurrencePrimaryInpatientLongTerm": false,
+      "ConditionOccurrencePrimaryInpatientMediumTerm": false,
+      "ConditionOccurrencePrimaryInpatientShortTerm": false,
+      "ConditionEraAnyTimePrior": false,
+      "ConditionEraLongTerm": false,
+      "ConditionEraMediumTerm": false,
+      "ConditionEraShortTerm": false,
+      "ConditionEraOverlapping": false,
+      "ConditionEraStartLongTerm": false,
+      "ConditionEraStartMediumTerm": false,
+      "ConditionEraStartShortTerm": false,
+      "ConditionGroupEraAnyTimePrior": false,
+      "ConditionGroupEraLongTerm": true,
+      "ConditionGroupEraMediumTerm": false,
+      "ConditionGroupEraShortTerm": true,
+      "ConditionGroupEraOverlapping": false,
+      "ConditionGroupEraStartLongTerm": false,
+      "ConditionGroupEraStartMediumTerm": false,
+      "ConditionGroupEraStartShortTerm": false,
+      "DrugExposureAnyTimePrior": false,
+      "DrugExposureLongTerm": false,
+      "DrugExposureMediumTerm": false,
+      "DrugExposureShortTerm": false,
+      "DrugEraAnyTimePrior": false,
+      "DrugEraLongTerm": false,
+      "DrugEraMediumTerm": false,
+      "DrugEraShortTerm": false,
+      "DrugEraOverlapping": false,
+      "DrugEraStartLongTerm": false,
+      "DrugEraStartMediumTerm": false,
+      "DrugEraStartShortTerm": false,
+      "DrugGroupEraAnyTimePrior": false,
+      "DrugGroupEraLongTerm": true,
+      "DrugGroupEraMediumTerm": false,
+      "DrugGroupEraShortTerm": true,
+      "DrugGroupEraOverlapping": true,
+      "DrugGroupEraStartLongTerm": false,
+      "DrugGroupEraStartMediumTerm": false,
+      "DrugGroupEraStartShortTerm": false,
+      "ProcedureOccurrenceAnyTimePrior": false,
+      "ProcedureOccurrenceLongTerm": true,
+      "ProcedureOccurrenceMediumTerm": false,
+      "ProcedureOccurrenceShortTerm": true,
+      "DeviceExposureAnyTimePrior": false,
+      "DeviceExposureLongTerm": true,
+      "DeviceExposureMediumTerm": false,
+      "DeviceExposureShortTerm": true,
+      "MeasurementAnyTimePrior": false,
+      "MeasurementLongTerm": true,
+      "MeasurementMediumTerm": false,
+      "MeasurementShortTerm": true,
+      "MeasurementValueAnyTimePrior": false,
+      "MeasurementValueLongTerm": false,
+      "MeasurementValueMediumTerm": false,
+      "MeasurementValueShortTerm": false,
+      "MeasurementRangeGroupAnyTimePrior": false,
+      "MeasurementRangeGroupLongTerm": true,
+      "MeasurementRangeGroupMediumTerm": false,
+      "MeasurementRangeGroupShortTerm": false,
+      "ObservationAnyTimePrior": false,
+      "ObservationLongTerm": true,
+      "ObservationMediumTerm": false,
+      "ObservationShortTerm": true,
+      "CharlsonIndex": true,
+      "Dcsi": true,
+      "Chads2": true,
+      "Chads2Vasc": true,
+      "DistinctConditionCountLongTerm": false,
+      "DistinctConditionCountMediumTerm": false,
+      "DistinctConditionCountShortTerm": false,
+      "DistinctIngredientCountLongTerm": false,
+      "DistinctIngredientCountMediumTerm": false,
+      "DistinctIngredientCountShortTerm": false,
+      "DistinctProcedureCountLongTerm": false,
+      "DistinctProcedureCountMediumTerm": false,
+      "DistinctProcedureCountShortTerm": false,
+      "DistinctMeasurementCountLongTerm": false,
+      "DistinctMeasurementCountMediumTerm": false,
+      "DistinctMeasurementCountShortTerm": false,
+      "DistinctObservationCountLongTerm": false,
+      "DistinctObservationCountMediumTerm": false,
+      "DistinctObservationCountShortTerm": false,
+      "VisitCountLongTerm": false,
+      "VisitCountMediumTerm": false,
+      "VisitCountShortTerm": false,
+      "VisitConceptCountLongTerm": false,
+      "VisitConceptCountMediumTerm": false,
+      "VisitConceptCountShortTerm": false,
+      "longTermStartDays": -365,
+      "mediumTermStartDays": -180,
+      "shortTermStartDays": -30,
+      "endDays": 0,
+      "includedCovariateConceptIds": [],
+      "addDescendantsToInclude": false,
+      "excludedCovariateConceptIds": [],
+      "addDescendantsToExclude": false,
+      "includedCovariateIds": [],
+      "attr_fun": "getDbDefaultCovariateData"
+    },
+    "prior": {
+      "attr_class": "cyclopsPrior",
+      "priorType": "laplace",
+      "variance": [
+        1
+      ],
+      "exclude": [
+        0
+      ],
+      "graph": null,
+      "neighborhood": null,
+      "useCrossValidation": true,
+      "forceIntercept": false
+    },
+    "control": {
+      "attr_class": "cyclopsControl",
+      "maxIterations": 1000,
+      "tolerance": 0.000001,
+      "convergenceType": "gradient",
+      "cvType": "auto",
+      "fold": 10,
+      "lowerLimit": 0.01,
+      "upperLimit": 20,
+      "gridSteps": 10,
+      "cvRepetitions": 1,
+      "minCVData": 100,
+      "noiseLevel": "quiet",
+      "threads": 1,
+      "seed": 1,
+      "resetCoefficients": false,
+      "startingVariance": 0.01,
+      "useKKTSwindle": false,
+      "tuneSwindle": 10,
+      "selectorType": "auto",
+      "initialBound": 2,
+      "maxBoundCount": 5,
+      "autoSearch": true,
+      "algorithm": "ccd"
+    },
+    "firstExposureOnly": true,
+    "washoutPeriod": 365,
+    "riskWindowStart": 0,
+    "riskWindowEnd": 30,
+    "addExposureDaysToEnd": true,
+    "firstOutcomeOnly": true,
+    "removePeopleWithPriorOutcomes": true,
+    "maxSubjectsForModel": 250000,
+    "effectSizes": [
+      1.5,
+      2,
+      4
+    ],
+    "precision": 0.01,
+    "outputIdOffset": 10000
+  },
+  "negativeControlOutcomeCohortDefinition": {
+    "occurrenceType": "all",
+    "detectOnDescendants": true,
+    "domains": [
+      "condition",
+      "procedure"
+    ]
+  },
+  "negativeControlExposureCohortDefinition": {},
+  "estimationAnalysisSettings": {
+    "estimationType": "ComparativeCohortAnalysis",
+    "analysisSpecification": {
+      "targetComparatorOutcomes": [
+        {
+          "targetId": 4,
+          "outcomeIds": [
+            4
+          ],
+          "comparatorId": 5,
+          "excludedCovariateConceptIds": [
+            35897994
+          ],
+          "includedCovariateConceptIds": []
+        }
+      ],
+      "cohortMethodAnalysisList": [
+        {
+          "getDbCohortMethodDataArgs": {
+            "attr_class": "args",
+            "studyStartDate": null,
+            "studyEndDate": null,
+            "excludeDrugsFromCovariates": false,
+            "firstExposureOnly": false,
+            "removeDuplicateSubjects": "keep all",
+            "restrictToCommonPeriod": false,
+            "washoutPeriod": 0,
+            "maxCohortSize": 0,
+            "covariateSettings": {
+              "attr_class": "covariateSettings",
+              "temporal": false,
+              "DemographicsGender": true,
+              "DemographicsAge": false,
+              "DemographicsAgeGroup": true,
+              "DemographicsRace": true,
+              "DemographicsEthnicity": true,
+              "DemographicsIndexYear": true,
+              "DemographicsIndexMonth": true,
+              "DemographicsPriorObservationTime": false,
+              "DemographicsPostObservationTime": false,
+              "DemographicsTimeInCohort": false,
+              "DemographicsIndexYearMonth": false,
+              "ConditionOccurrenceAnyTimePrior": false,
+              "ConditionOccurrenceLongTerm": false,
+              "ConditionOccurrenceMediumTerm": false,
+              "ConditionOccurrenceShortTerm": false,
+              "ConditionOccurrencePrimaryInpatientAnyTimePrior": false,
+              "ConditionOccurrencePrimaryInpatientLongTerm": false,
+              "ConditionOccurrencePrimaryInpatientMediumTerm": false,
+              "ConditionOccurrencePrimaryInpatientShortTerm": false,
+              "ConditionEraAnyTimePrior": false,
+              "ConditionEraLongTerm": false,
+              "ConditionEraMediumTerm": false,
+              "ConditionEraShortTerm": false,
+              "ConditionEraOverlapping": false,
+              "ConditionEraStartLongTerm": false,
+              "ConditionEraStartMediumTerm": false,
+              "ConditionEraStartShortTerm": false,
+              "ConditionGroupEraAnyTimePrior": false,
+              "ConditionGroupEraLongTerm": true,
+              "ConditionGroupEraMediumTerm": false,
+              "ConditionGroupEraShortTerm": true,
+              "ConditionGroupEraOverlapping": false,
+              "ConditionGroupEraStartLongTerm": false,
+              "ConditionGroupEraStartMediumTerm": false,
+              "ConditionGroupEraStartShortTerm": false,
+              "DrugExposureAnyTimePrior": false,
+              "DrugExposureLongTerm": false,
+              "DrugExposureMediumTerm": false,
+              "DrugExposureShortTerm": false,
+              "DrugEraAnyTimePrior": false,
+              "DrugEraLongTerm": false,
+              "DrugEraMediumTerm": false,
+              "DrugEraShortTerm": false,
+              "DrugEraOverlapping": false,
+              "DrugEraStartLongTerm": false,
+              "DrugEraStartMediumTerm": false,
+              "DrugEraStartShortTerm": false,
+              "DrugGroupEraAnyTimePrior": false,
+              "DrugGroupEraLongTerm": true,
+              "DrugGroupEraMediumTerm": false,
+              "DrugGroupEraShortTerm": true,
+              "DrugGroupEraOverlapping": true,
+              "DrugGroupEraStartLongTerm": false,
+              "DrugGroupEraStartMediumTerm": false,
+              "DrugGroupEraStartShortTerm": false,
+              "ProcedureOccurrenceAnyTimePrior": false,
+              "ProcedureOccurrenceLongTerm": true,
+              "ProcedureOccurrenceMediumTerm": false,
+              "ProcedureOccurrenceShortTerm": true,
+              "DeviceExposureAnyTimePrior": false,
+              "DeviceExposureLongTerm": true,
+              "DeviceExposureMediumTerm": false,
+              "DeviceExposureShortTerm": true,
+              "MeasurementAnyTimePrior": false,
+              "MeasurementLongTerm": true,
+              "MeasurementMediumTerm": false,
+              "MeasurementShortTerm": true,
+              "MeasurementValueAnyTimePrior": false,
+              "MeasurementValueLongTerm": false,
+              "MeasurementValueMediumTerm": false,
+              "MeasurementValueShortTerm": false,
+              "MeasurementRangeGroupAnyTimePrior": false,
+              "MeasurementRangeGroupLongTerm": true,
+              "MeasurementRangeGroupMediumTerm": false,
+              "MeasurementRangeGroupShortTerm": false,
+              "ObservationAnyTimePrior": false,
+              "ObservationLongTerm": true,
+              "ObservationMediumTerm": false,
+              "ObservationShortTerm": true,
+              "CharlsonIndex": true,
+              "Dcsi": true,
+              "Chads2": true,
+              "Chads2Vasc": true,
+              "DistinctConditionCountLongTerm": false,
+              "DistinctConditionCountMediumTerm": false,
+              "DistinctConditionCountShortTerm": false,
+              "DistinctIngredientCountLongTerm": false,
+              "DistinctIngredientCountMediumTerm": false,
+              "DistinctIngredientCountShortTerm": false,
+              "DistinctProcedureCountLongTerm": false,
+              "DistinctProcedureCountMediumTerm": false,
+              "DistinctProcedureCountShortTerm": false,
+              "DistinctMeasurementCountLongTerm": false,
+              "DistinctMeasurementCountMediumTerm": false,
+              "DistinctMeasurementCountShortTerm": false,
+              "DistinctObservationCountLongTerm": false,
+              "DistinctObservationCountMediumTerm": false,
+              "DistinctObservationCountShortTerm": false,
+              "VisitCountLongTerm": false,
+              "VisitCountMediumTerm": false,
+              "VisitCountShortTerm": false,
+              "VisitConceptCountLongTerm": false,
+              "VisitConceptCountMediumTerm": false,
+              "VisitConceptCountShortTerm": false,
+              "longTermStartDays": -365,
+              "mediumTermStartDays": -180,
+              "shortTermStartDays": -30,
+              "endDays": 0,
+              "includedCovariateConceptIds": [],
+              "addDescendantsToInclude": false,
+              "excludedCovariateConceptIds": [
+                35897994
+              ],
+              "addDescendantsToExclude": false,
+              "includedCovariateIds": [],
+              "attr_fun": "getDbDefaultCovariateData"
+            }
+          },
+          "attr_class": "cmAnalysis",
+          "analysisId": 1,
+          "description": "New analysis 1",
+          "targetType": null,
+          "comparatorType": null,
+          "createStudyPopArgs": {
+            "attr_class": "args",
+            "firstExposureOnly": false,
+            "restrictToCommonPeriod": false,
+            "washoutPeriod": 0,
+            "removeDuplicateSubjects": "keep all",
+            "removeSubjectsWithPriorOutcome": false,
+            "priorOutcomeLookback": 99999,
+            "minDaysAtRisk": 1,
+            "riskWindowStart": 0,
+            "addExposureDaysToStart": false,
+            "riskWindowEnd": 0,
+            "addExposureDaysToEnd": true,
+            "censorAtNewRiskWindow": false
+          },
+          "createPs": true,
+          "createPsArgs": {
+            "attr_class": "args",
+            "excludeCovariateIds": [],
+            "includeCovariateIds": [],
+            "maxCohortSizeForFitting": 250000,
+            "errorOnHighCorrelation": true,
+            "stopOnError": true,
+            "prior": {
+              "attr_class": "cyclopsPrior",
+              "priorType": "laplace",
+              "variance": [
+                1
+              ],
+              "exclude": [
+                0
+              ],
+              "graph": null,
+              "neighborhood": null,
+              "useCrossValidation": true,
+              "forceIntercept": false
+            },
+            "control": {
+              "attr_class": "cyclopsControl",
+              "maxIterations": 1000,
+              "tolerance": 2e-7,
+              "convergenceType": "gradient",
+              "cvType": "auto",
+              "fold": 10,
+              "lowerLimit": 0.01,
+              "upperLimit": 20,
+              "gridSteps": 10,
+              "cvRepetitions": 10,
+              "minCVData": 100,
+              "noiseLevel": "silent",
+              "threads": 1,
+              "seed": 1,
+              "resetCoefficients": false,
+              "startingVariance": 0.01,
+              "useKKTSwindle": false,
+              "tuneSwindle": 10,
+              "selectorType": "auto",
+              "initialBound": 2,
+              "maxBoundCount": 5,
+              "autoSearch": true,
+              "algorithm": "ccd"
+            }
+          },
+          "trimByPs": false,
+          "trimByPsArgs": {
+            "attr_class": "args",
+            "trimFraction": 0.05
+          },
+          "trimByPsToEquipoise": false,
+          "trimByPsToEquipoiseArgs": {
+            "attr_class": "args",
+            "bounds": [
+              0.25,
+              0.75
+            ]
+          },
+          "matchOnPs": false,
+          "matchOnPsArgs": {
+            "attr_class": "args",
+            "caliper": 0.2,
+            "caliperScale": "standardized logit",
+            "maxRatio": 1,
+            "stratificationColumns": []
+          },
+          "matchOnPsAndCovariates": false,
+          "matchOnPsAndCovariatesArgs": {
+            "attr_class": "args",
+            "caliper": 0.2,
+            "caliperScale": "standardized logit",
+            "maxRatio": 1,
+            "covariateIds": []
+          },
+          "stratifyByPs": true,
+          "stratifyByPsArgs": {
+            "attr_class": "args",
+            "numberOfStrata": 5,
+            "baseSelection": "all",
+            "stratificationColumns": []
+          },
+          "stratifyByPsAndCovariates": false,
+          "stratifyByPsAndCovariatesArgs": {
+            "attr_class": "args",
+            "numberOfStrata": 5,
+            "baseSelection": "all",
+            "covariateIds": []
+          },
+          "fitOutcomeModel": true,
+          "fitOutcomeModelArgs": {
+            "attr_class": "args",
+            "modelType": "logistic",
+            "stratified": true,
+            "useCovariates": false,
+            "inversePtWeighting": false,
+            "interactionCovariateIds": [],
+            "excludeCovariateIds": [],
+            "includeCovariateIds": [],
+            "prior": {
+              "attr_class": "cyclopsPrior",
+              "priorType": "laplace",
+              "variance": [
+                1
+              ],
+              "exclude": [
+                0
+              ],
+              "graph": null,
+              "neighborhood": null,
+              "useCrossValidation": true,
+              "forceIntercept": false
+            },
+            "control": {
+              "attr_class": "cyclopsControl",
+              "maxIterations": 1000,
+              "tolerance": 2e-7,
+              "convergenceType": "gradient",
+              "cvType": "auto",
+              "fold": 10,
+              "lowerLimit": 0.01,
+              "upperLimit": 20,
+              "gridSteps": 10,
+              "cvRepetitions": 10,
+              "minCVData": 100,
+              "noiseLevel": "quiet",
+              "threads": 1,
+              "seed": 1,
+              "resetCoefficients": false,
+              "startingVariance": 0.01,
+              "useKKTSwindle": false,
+              "tuneSwindle": 10,
+              "selectorType": "auto",
+              "initialBound": 2,
+              "maxBoundCount": 5,
+              "autoSearch": true,
+              "algorithm": "ccd"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

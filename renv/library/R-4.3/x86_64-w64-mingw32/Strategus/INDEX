@@ -1,0 +1,27 @@
+addModuleSpecifications
+                        Add module specifications to analysis
+                        specifications
+addSharedResources      Add shared resources to analysis specifications
+createCdmExecutionSettings
+                        Create CDM execution settings
+createEmptyAnalysisSpecificiations
+                        Create an empty analysis specifications object.
+createResultDataModels
+                        Create Result Data Models
+createResultsExecutionSettings
+                        Create Results execution settings
+ensureAllModulesInstantiated
+                        Ensure all modules are instantiated
+execute                 Execute analysis specifications.
+getModuleList           Provides a list of HADES modules to run through
+                        Strategus
+retrieveConnectionDetails
+                        Retrieve connection details from the secure
+                        location
+runSchemaCreation       Create module(s) result data model
+storeConnectionDetails
+                        Store connection details in a secure location
+unlockKeyring           Helper function to unlock a keyring
+withModuleRenv          Load module execution space inside and renv
+                        inspired by targets::tar_script but allowing
+                        custom variable execution

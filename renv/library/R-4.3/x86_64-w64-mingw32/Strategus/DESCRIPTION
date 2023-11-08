@@ -1,0 +1,35 @@
+Package: Strategus
+Type: Package
+Title: Coordinating and Executing Analytics Using HADES Modules
+Version: 0.1.0
+Date: 2023-10-04
+Authors@R: c(
+	person("Martijn", "Schuemie", email = "schuemie@ohdsi.org", role = c("aut")),
+	person("Anthony", "Sena", email = "sena@ohdsi.org", role = c("aut", "cre")),
+	person("Jamie", "Gilbert", role = c("aut")),
+	person("Observational Health Data Science and Informatics", role = c("cph"))
+  )
+Maintainer: Anthony Sena <sena@ohdsi.org>
+Description: An R package for coordinating and executing analytics using HADES modules.
+License: Apache License 2.0
+URL: https://ohdsi.github.io/Strategus,
+        https://github.com/OHDSI/Strategus
+BugReports: https://github.com/OHDSI/Strategus/issues
+Depends: R (>= 4.2.0), CohortGenerator (>= 0.8.0), DatabaseConnector
+        (>= 6.2.3)
+Imports: targets, renv (>= 1.0.0), ParallelLogger (>= 3.1.0), dplyr,
+        checkmate, keyring, rlang, utils, R.utils, digest, methods,
+        tibble, ResultModelManager (>= 0.3.0), SqlRender (>= 1.11.0)
+Suggests: testthat (>= 3.0.0), fs, knitr, rmarkdown, Eunomia, withr
+Remotes: ohdsi/CohortGenerator, ohdsi/ResultModelManager, ohdsi/Eunomia
+VignetteBuilder: knitr
+NeedsCompilation: no
+RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
+Encoding: UTF-8
+Config/testthat/edition: 3
+Author: Martijn Schuemie [aut],
+  Anthony Sena [aut, cre],
+  Jamie Gilbert [aut],
+  Observational Health Data Science and Informatics [cph]
+Built: R 4.3.2; ; 2023-11-05 01:22:38 UTC; windows

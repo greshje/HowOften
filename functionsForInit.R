@@ -21,14 +21,24 @@ getwd()
 # ---
 
 installFromCran <- function(pkgName, pkgVersion) {
-  if (!requireNamespace(pkgName, quietly = TRUE) || packageVersion(pkgName) != pkgVersion) {
-    remotes::install_version(pkgName, version = pkgVersion)
+  if (requireNamespace(pkgName, quietly = TRUE) == TRUE && packageVersion(pkgName) == pkgVersion) {
+    print(paste("Correct version of package already installed: ", pkgName, pkgVersion, sep = " "))
+  } else {  
+    print(paste("* * * Installing from CRAN:", pkgName, pkgVersion, sep = " "))
+    if(pkgName == "remotes") {
+      install.packages("remotes", INSTALL_opts = "--no-multiarch")  
+    } else {
+      remotes::install_version(pkgName, version = pkgVersion, upgrade = FALSE, INSTALL_opts = "--no-multiarch", )
+    }
   }
 }
 
 installFromGithub <- function(pkgName, pkgVersion) {
-  if (!requireNamespace(pkgName, quietly = TRUE) || packageVersion(pkgName) != pkgVersion) {
-    remotes::install_github(pkgName, ref=pkgVersion)
+  if (requireNamespace(pkgName, quietly = TRUE) == TRUE && packageVersion(pkgName) == pkgVersion) {
+    print(paste("Correct version of package already installed: ", pkgName, pkgVersion, sep = " "))
+  } else {  
+    print(paste("* * * Installing from GitHub:", pkgName, pkgVersion, sep = " "))
+    remotes::install_github(pkgName, ref=pkgVersion, upgrade = FALSE, INSTALL_opts = "--no-multiarch")
   }
 }
 
@@ -36,6 +46,32 @@ checkPackageVersion <- function(packageName) {
   available_packages <- available.packages()
   latest_keyring_version <- available_packages[packageName, "Version"]
   print(latest_keyring_version)  
+}
+
+removePackage <- function(pkgName) {
+  required <- requireNamespace(pkgName, quietly = TRUE)
+  print(paste(pkgName, required, sep = ": "))
+  if (required) {
+    remove.packages(pkgName)
+  }
+}
+
+# ---
+#
+# detach
+# A function to remove the packages that are installed here.  
+#
+# ---
+
+removePackagesInstalledHere <- function() {
+  # from cran
+  removePackage("keyring")
+  removePackage("usethis")
+  removePackage("DatabaseConnector")
+  # from github
+  removePackage("Strategus")
+  removePackage("CohortGenerator")
+  removePackage("CirceR")
 }
 
 # ---
@@ -50,16 +86,20 @@ installFromCran("keyring", "1.3.1")
 installFromCran("usethis", "2.2.2")
 installFromCran("DatabaseConnector", "6.2.4")
 
-#installs from github
+# installs from github
 installFromGithub("OHDSI/Strategus", "v0.1.0")
 installFromGithub("OHDSI/CohortGenerator", "v0.8.1")
+installFromGithub("OHDSI/CirceR", "v1.3.1")
 
 library(remotes)
 library(keyring)
 library(usethis)
-library(DatabaseConnector)
 library(Strategus)
+library(DatabaseConnector)
 library(CohortGenerator)
+
+# show the module list
+Strategus::getModuleList()
 
 # ---
 #
