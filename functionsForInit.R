@@ -224,15 +224,15 @@ initStratagus <- function() {
 # ---
 
 executeAnalysis <- function (
-    analysisFile, 
-    executionSettings, 
-    analysisName, 
-    outputLocation, 
-    resultsLocation, 
-    keyringName) {
-  analysisSpecifications <- ParallelLogger::loadSettingsFromJson(
-    fileName = analysisFile
-  )
+      analysisFile, 
+      executionSettings, 
+      analysisName, 
+      outputLocation, 
+      resultsLocation, 
+      keyringName) {
+  
+  analysisSpecifications <- ParallelLogger::loadSettingsFromJson(fileName = analysisFile)
+      
   # execute stratagus
   Strategus::execute(
     analysisSpecifications = analysisSpecifications,
@@ -240,6 +240,7 @@ executeAnalysis <- function (
     executionScriptFolder = file.path(outputLocation, connectionDetailsReference, "strategusExecution"),
     keyringName = keyringName
   )
+  
   # copy Results to final location
   resultsDir <- file.path(resultsLocation, analysisName, connectionDetailsReference)
   if (dir.exists(resultsDir)) {
