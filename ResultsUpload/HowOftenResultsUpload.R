@@ -32,13 +32,13 @@ resultsFolderRoot <- 'D:/projects/HowOften'
 # This will then upload all analyses results found in each
 # analysis directory
 howOftenAnalysesFilterList <- c(
-  "andreas",
-  "azza",
-  "evan",
-  "george",
-  "gowza",
-  "joel",
-  "overall"
+  #  "andreas",
+  #  "azza",
+  #  "evan",
+  #  "george",
+  #  "gowza",
+  #  "joel",
+  #  "overall"
 )
 
 # Set this to c() if not using the database filtering.
@@ -61,12 +61,14 @@ databaseFilterList <- c(
 
 # Traverse results to obtain list of results for upload ------------------------
 dfResultsFolders <- data.frame()
+
 # Get the list of analyses directories in the results
-analysesInResults <- list.dirs(
+analysesInResults <- list.dirs (
   path = file.path(resultsFolderRoot, "Results"),
   recursive = FALSE,
   full.names = FALSE
 )
+
 if (length(howOftenAnalysesFilterList) > 0) {
   howOftenAnalysesFiltered <- intersect(
     x = analysesInResults, 
@@ -137,6 +139,7 @@ resultsDatabaseConnectionDetails <- DatabaseConnector::createConnectionDetails(
   user = Sys.getenv("OHDSI_HO_USER"),
   password = Sys.getenv("OHDSI_HO_PASSWORD")
 )
+
 connection <- DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
 
 # Upload results -----------------
