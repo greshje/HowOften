@@ -111,14 +111,14 @@ dvo$executionSettings <- StrategusRunnerUtil$initStratagus(dvo)
 #
 # ---
 
-StrategusRunnerUtil$executeAnalysis(
-  "./RunStrategusStudy/json/FromNachc/nachc-covid-homeless.json", 
-  dvo$executionSettings, 
-  "covid-nachc-test-02", 
-  dvo$outputLocation, 
-  dvo$resultsLocation, 
-  dvo$keyringName
-)
+#StrategusRunnerUtil$executeAnalysis(
+#  "./RunStrategusStudy/json/FromNachc/nachc-covid-homeless.json", 
+#  dvo$executionSettings, 
+#  "covid-nachc-test-02", 
+#  dvo$outputLocation, 
+#  dvo$resultsLocation, 
+#  dvo$keyringName
+#)
 
 
 
