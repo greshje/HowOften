@@ -6,36 +6,6 @@
 
 StrategusRunnerUtil <- {}
 
-# sqlRenderer temp emulation schema
-StrategusRunnerUtil$setSqlRendererTempEmulationSchema <- function(schemaName) {
-  options(sqlRenderTempEmulationSchema = schemaName)
-}
-
-# file locations
-StrategusRunnerUtil$resultsLocation <- NULL
-StrategusRunnerUtil$outputLocation <- NULL
-StrategusRunnerUtil$loggingOutputLocation <- NULL
-
-# database schemas
-StrategusRunnerUtil$workDatabaseSchema <- NULL
-StrategusRunnerUtil$cohortTableName <- NULL
-StrategusRunnerUtil$cdmDatabaseSchema <- NULL
-
-# minimum number of cells
-StrategusRunnerUtil$minCellCount <- NULL
-
-# connection info
-StrategusRunnerUtil$dbms = NULL
-StrategusRunnerUtil$pathToDriver = NULL
-
-# references to stored values (these can be anything)
-StrategusRunnerUtil$keyringName <- NULL
-StrategusRunnerUtil$connectionDetailsReference <- NULL
-
-# connection and execution details
-StrategusRunnerUtil$connectionDetails <- NULL
-StrategusRunnerUtil$executionSettings <- NULL
-
 # ---
 #
 # show versions
@@ -121,6 +91,7 @@ StrategusRunnerUtil$initLibs <- function() {
   StrategusRunnerUtil$installFromCran("remotes", "2.4.2.1")
   StrategusRunnerUtil$installFromCran("keyring", "1.3.1")
   StrategusRunnerUtil$installFromCran("usethis", "2.2.2")
+  StrategusRunnerUtil$installFromCran("R6", "2.5.1")
   StrategusRunnerUtil$installFromCran("DatabaseConnector", "6.2.4")
   
   # installs from github
@@ -133,6 +104,7 @@ StrategusRunnerUtil$initLibs <- function() {
   library(usethis)
   library(Strategus)
   library(DatabaseConnector)
+  library(R6)
   library(CohortGenerator)
 }
 
@@ -155,7 +127,8 @@ StrategusRunnerUtil$initLibs <- function() {
 #
 # ---
 
-StrategusRunnerUtil$storeKeyRing <- function() {
+StrategusRunnerUtil$storeKeyRing <- function(dvo) {
+  class(dvo) <- "StrategusRunnerDvo"
   if (Sys.getenv("STRATEGUS_KEYRING_PASSWORD") == "") {
     # set keyring password by adding STRATEGUS_KEYRING_PASSWORD='sos' to renviron
     usethis::edit_r_environ()
@@ -175,7 +148,7 @@ StrategusRunnerUtil$storeKeyRing <- function() {
   }
   
   # Create the keyring if it does not exist.
-  keyringName <- StrategusRunnerUtil$keyringName
+  keyringName <- dvo$keyringName
   allKeyrings <- keyring::keyring_list()
   if (!(keyringName %in% allKeyrings$keyring)) {
     keyring::keyring_create(keyring = keyringName, password = Sys.getenv("STRATEGUS_KEYRING_PASSWORD"))
@@ -185,8 +158,8 @@ StrategusRunnerUtil$storeKeyRing <- function() {
   
   # excecute this for each connectionDetails/ConnectionDetailsReference you are going to use
   Strategus::storeConnectionDetails(
-    connectionDetails = StrategusRunnerUtil$connectionDetails,
-    connectionDetailsReference = StrategusRunnerUtil$connectionDetailsReference,
+    connectionDetails = dvo$connectionDetails,
+    connectionDetailsReference = dvo$connectionDetailsReference,
     keyringName = keyringName
   )
   
@@ -218,15 +191,16 @@ StrategusRunnerUtil$createDatabaseKeyRing <- function(kr_name, kr_service, kr_us
 #
 # ---
 
-StrategusRunnerUtil$createExecutionsSettings <- function() {
+StrategusRunnerUtil$createExecutionsSettings <- function(dvo) {
+  class(dvo) <- "StrategusRunnerDvo"
   executionSettings <- Strategus::createCdmExecutionSettings(
-    connectionDetailsReference = StrategusRunnerUtil$connectionDetailsReference,
-    workDatabaseSchema = StrategusRunnerUtil$workDatabaseSchema,
-    cdmDatabaseSchema = StrategusRunnerUtil$cdmDatabaseSchema,
-    cohortTableNames = CohortGenerator::getCohortTableNames(cohortTable = StrategusRunnerUtil$cohortTableName),
-    workFolder = file.path(StrategusRunnerUtil$outputLocation, StrategusRunnerUtil$connectionDetailsReference, "strategusWork"),
-    resultsFolder = file.path(StrategusRunnerUtil$outputLocation, StrategusRunnerUtil$connectionDetailsReference, "strategusOutput"),
-    minCellCount = StrategusRunnerUtil$minCellCount
+    connectionDetailsReference = dvo$connectionDetailsReference,
+    workDatabaseSchema = dvo$workDatabaseSchema,
+    cdmDatabaseSchema = dvo$cdmDatabaseSchema,
+    cohortTableNames = CohortGenerator::getCohortTableNames(cohortTable = dvo$cohortTableName),
+    workFolder = file.path(dvo$outputLocation, dvo$connectionDetailsReference, "strategusWork"),
+    resultsFolder = file.path(dvo$outputLocation, dvo$connectionDetailsReference, "strategusOutput"),
+    minCellCount = dvo$minCellCount
   )
   return(executionSettings)
 }
@@ -237,8 +211,9 @@ StrategusRunnerUtil$createExecutionsSettings <- function() {
 #
 # ---
 
-StrategusRunnerUtil$testConnection <- function() {
-  testConnection <- DatabaseConnector::connect(StrategusRunnerUtil$connectionDetails)
+StrategusRunnerUtil$testConnection <- function(dvo) {
+  class(dvo) <- "StrategusRunnerDvo"
+  testConnection <- DatabaseConnector::connect(dvo$connectionDetails)
   success <- DatabaseConnector::querySql(testConnection, "select 1 as one")
   success
   DatabaseConnector::disconnect(testConnection)
@@ -255,11 +230,12 @@ StrategusRunnerUtil$testConnection <- function() {
 #
 # ---
 
-StrategusRunnerUtil$initStratagus <- function() {
-  StrategusRunnerUtil$storeKeyRing()
-  StrategusRunnerUtil$executionSettings <- StrategusRunnerUtil$createExecutionsSettings()
-  StrategusRunnerUtil$testConnection()
-  return(StrategusRunnerUtil$executionSettings)
+StrategusRunnerUtil$initStratagus <- function(dvo) {
+  class(dvo) <- "StrategusRunnerDvo"
+  StrategusRunnerUtil$storeKeyRing(dvo)
+  dvo$executionSettings <- StrategusRunnerUtil$createExecutionsSettings(dvo)
+  StrategusRunnerUtil$testConnection(dvo)
+  return(dvo$executionSettings)
 }
 
 # ---
@@ -302,15 +278,15 @@ StrategusRunnerUtil$executeAnalysis <- function (
     resultsLocation, 
     keyringName) {
   
-  StrategusRunnerUtil$analysisSpecifications <- ParallelLogger::loadSettingsFromJson(fileName = analysisFile)
+  analysisSpecifications <- ParallelLogger::loadSettingsFromJson(fileName = analysisFile)
   
   # execute stratagus
   Strategus::execute(
-    analysisSpecifications = StrategusRunnerUtil$analysisSpecifications,
-    executionSettings = StrategusRunnerUtil$executionSettings,
+    analysisSpecifications = analysisSpecifications,
+    executionSettings = dvo$executionSettings,
     executionScriptFolder = file.path(
-      StrategusRunnerUtil$outputLocation, 
-      StrategusRunnerUtil$connectionDetailsReference, 
+      dvo$outputLocation, 
+      dvo$connectionDetailsReference, 
       "strategusExecution"),
     keyringName = keyringName
   )
@@ -319,13 +295,13 @@ StrategusRunnerUtil$executeAnalysis <- function (
   resultsDir <- file.path(
     resultsLocation, 
     analysisName, 
-    StrategusRunnerUtil$connectionDetailsReference)
+    dvo$connectionDetailsReference)
   if (dir.exists(resultsDir)) {
     unlink(resultsDir, recursive = TRUE)
   }
   dir.create(file.path(resultsDir), recursive = TRUE)
   file.copy(
-    file.path(StrategusRunnerUtil$outputLocation, StrategusRunnerUtil$connectionDetailsReference, "strategusOutput"),
+    file.path(dvo$outputLocation, dvo$connectionDetailsReference, "strategusOutput"),
     file.path(resultsDir), recursive = TRUE
   )
   return(NULL)

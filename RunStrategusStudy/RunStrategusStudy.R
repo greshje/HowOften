@@ -5,13 +5,19 @@
 # 
 # ---
 
+# imports
 source("./Util/StrategusRunnerUtil.R")
-# StrategusRunnerUtil$initLibs()
+source("./Util/StrategusRunnerDvo.R")
+
+# initialize libraries
+StrategusRunnerUtil$initLibs()
+
+# set strategus keyring stuff
 StrategusRunnerUtil$checkstrategusKeyring()
 
 # ---
 #
-# Optional code: run the following lines to reset the environement.  
+# Optional code: run the following lines to reset the environment.  
 #
 # -- 
 
@@ -23,29 +29,31 @@ StrategusRunnerUtil$checkstrategusKeyring()
 #
 # ---
 
+dvo <- StrategusRunnerDvo$new()
+
 # file locations
-StrategusRunnerUtil$resultsLocation <- "D:/_YES/_STRATEGUS/HowOften/Output"
-StrategusRunnerUtil$outputLocation <- "D:/_YES/_STRATEGUS/HowOften"
-StrategusRunnerUtil$loggingOutputLocation <- "D:/_YES/_STRATEGUS/HowOften"
+dvo$resultsLocation <- "D:/_YES/_STRATEGUS/HowOften/Output"
+dvo$outputLocation <- "D:/_YES/_STRATEGUS/HowOften"
+dvo$loggingOutputLocation <- "D:/_YES/_STRATEGUS/HowOften"
 
 # database schemas
-StrategusRunnerUtil$workDatabaseSchema <- "how_often_scratch"
-StrategusRunnerUtil$cohortTableName <- "howoften_cohort"
-StrategusRunnerUtil$cdmDatabaseSchema <- "covid_ohdsi"
+dvo$workDatabaseSchema <- "how_often_scratch"
+dvo$cohortTableName <- "howoften_cohort"
+dvo$cdmDatabaseSchema <- "covid_ohdsi"
 
 # minimum number of cells
-StrategusRunnerUtil$minCellCount <- 5
+dvo$minCellCount <- 5
 
 # connection info
-StrategusRunnerUtil$dbms = "spark"
-StrategusRunnerUtil$pathToDriver="D:\\_YES_2023-05-28\\workspace\\SosExamples\\_COVID\\02-data-diagnostics\\drivers\\databricks\\"
+dvo$dbms = "spark"
+dvo$pathToDriver="D:\\_YES_2023-05-28\\workspace\\SosExamples\\_COVID\\02-data-diagnostics\\drivers\\databricks\\"
 
 # references to stored values (these can be anything)
-StrategusRunnerUtil$keyringName <- "HowOften"
-StrategusRunnerUtil$connectionDetailsReference <- "ERGASIA"
+dvo$keyringName <- "HowOften"
+dvo$connectionDetailsReference <- "ERGASIA"
 
 # set temp emulation schema using options
-StrategusRunnerUtil$setSqlRendererTempEmulationSchema("how_often_temp")
+dvo$setSqlRendererTempEmulationSchema("how_often_temp")
 
 # ---
 #
@@ -88,14 +96,14 @@ getUrl <- function () {
 }
 
 # create your connection details
-StrategusRunnerUtil$connectionDetails <- DatabaseConnector::createConnectionDetails (
-  dbms = StrategusRunnerUtil$dbms,
-  pathToDriver = StrategusRunnerUtil$pathToDriver,
+dvo$connectionDetails <- DatabaseConnector::createConnectionDetails (
+  dbms = dvo$dbms,
+  pathToDriver = dvo$pathToDriver,
   connectionString = getUrl()
 )
 
 # init the environment (see functionsForInit.R file for details)
-StrategusRunnerUtil$executionSettings <- StrategusRunnerUtil$initStratagus()
+dvo$executionSettings <- StrategusRunnerUtil$initStratagus(dvo)
 
 # ---
 #
@@ -105,12 +113,16 @@ StrategusRunnerUtil$executionSettings <- StrategusRunnerUtil$initStratagus()
 
 StrategusRunnerUtil$executeAnalysis(
   "./RunStrategusStudy/json/FromNachc/nachc-covid-homeless.json", 
-  StrategusRunnerUtil$executionSettings, 
+  dvo$executionSettings, 
   "covid-nachc-test-02", 
-  StrategusRunnerUtil$outputLocation, 
-  StrategusRunnerUtil$resultsLocation, 
-  StrategusRunnerUtil$keyringName
+  dvo$outputLocation, 
+  dvo$resultsLocation, 
+  dvo$keyringName
 )
+
+
+
+
 
 
 
