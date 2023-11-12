@@ -8,6 +8,7 @@ StrategusRunnerUtil <- {}
 
 source("./Util/lib/StrategusRunnerLibUtil.R")
 source("./Util/keyring/StrategusRunnerKeyringUtil.R")
+source("./Util/database/StrategusConnectionDetailsFactory.R")
 
 # ---
 #
@@ -31,25 +32,6 @@ StrategusRunnerUtil$createExecutionsSettings <- function(dvo) {
 
 # ---
 #
-# function to test the connectionDetails
-#
-# ---
-
-StrategusRunnerUtil$testConnection <- function(dvo) {
-  class(dvo) <- "StrategusRunnerDvo"
-  testConnection <- DatabaseConnector::connect(dvo$connectionDetails)
-  success <- DatabaseConnector::querySql(testConnection, "select 1 as one")
-  success
-  DatabaseConnector::disconnect(testConnection)
-  if (success != 1) {
-    stop("We were not able to create the database connection for the given connectionDetails.")
-  } else {
-    print("CONNECTION TEST PASSED")
-  }
-}
-
-# ---
-#
 # function to init stratagus
 #
 # ---
@@ -60,32 +42,6 @@ StrategusRunnerUtil$initStratagus <- function(dvo) {
   dvo$executionSettings <- StrategusRunnerUtil$createExecutionsSettings(dvo)
   StrategusRunnerUtil$testConnection(dvo)
   return(dvo$executionSettings)
-}
-
-# ---
-#
-# stratagus keyring stuff
-#
-# Basically, just use usethis::edit_r_environ() to check your .Renviron file.  
-# It should include something like the following
-#
-# STRATEGUS_KEYRING_PASSWORD='sos'
-# GITHUB_PAT='ghp_ThisIsMyGithubPersonalAccessTokenM2bgp91'
-# INSTANTIATED_MODULES_FOLDER='C:/_YES/_STRATEGUS/HowOften/Modules'
-#
-# Restart R after editing .Renviron for the changes to take effect.  
-#
-# ---
-
-StrategusRunnerUtil$checkstrategusKeyring <- function() {
-  if(
-    Sys.getenv("STRATEGUS_KEYRING_PASSWORD") == "" || 
-    Sys.getenv("INSTANTIATED_MODULES_FOLDER") == "" || 
-    Sys.getenv("GITHUB_PAT") == ""
-  ) {
-    usethis::edit_r_environ()
-    stop("Set .Renviron before running this script")
-  }
 }
 
 # ---
@@ -130,6 +86,26 @@ StrategusRunnerUtil$executeAnalysis <- function (
   )
   return(NULL)
 }
+
+# ---
+#
+# function to test the connectionDetails
+#
+# ---
+
+StrategusRunnerUtil$testConnection <- function(dvo) {
+  class(dvo) <- "StrategusRunnerDvo"
+  testConnection <- DatabaseConnector::connect(dvo$connectionDetails)
+  success <- DatabaseConnector::querySql(testConnection, "select 1 as one")
+  success
+  DatabaseConnector::disconnect(testConnection)
+  if (success != 1) {
+    stop("We were not able to create the database connection for the given connectionDetails.")
+  } else {
+    print("CONNECTION TEST PASSED")
+  }
+}
+
 
 
 

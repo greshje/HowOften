@@ -1,6 +1,6 @@
 # ---
 #
-# stratagus keyring stuff
+# stratagus .Renv stuff
 #
 # Basically, just use usethis::edit_r_environ() to check your .Renviron file.  
 # It should include something like the following
@@ -9,7 +9,20 @@
 # GITHUB_PAT='ghp_ThisIsMyGithubPersonalAccessTokenM2bgp91'
 # INSTANTIATED_MODULES_FOLDER='C:/_YES/_STRATEGUS/HowOften/Modules'
 #
+# Restart R after editing .Renviron for the changes to take effect.  
+#
 # ---
+
+StrategusRunnerUtil$checkstrategusKeyring <- function() {
+  if(
+    Sys.getenv("STRATEGUS_KEYRING_PASSWORD") == "" || 
+    Sys.getenv("INSTANTIATED_MODULES_FOLDER") == "" || 
+    Sys.getenv("GITHUB_PAT") == ""
+  ) {
+    usethis::edit_r_environ()
+    stop("Set .Renviron before running this script")
+  }
+}
 
 # ---
 #
@@ -53,25 +66,5 @@ StrategusRunnerUtil$storeKeyRing <- function(dvo) {
     keyringName = keyringName
   )
   
-}
-
-# --- 
-#
-# create a database keyring if it doesn't exist
-# 
-# ---
-
-StrategusRunnerUtil$createDatabaseKeyRing <- function(kr_name, kr_service, kr_username) {
-  kb <- keyring::backend_file$new()
-  # Get a list of existing keyrings
-  existing_keyrings <- kb$keyring_list()
-  # Check if the keyring already exists
-  if (!(kr_name %in% existing_keyrings$keyring)) {
-    kb$keyring_create(kr_name)
-    kb$set(kr_service, username = kr_username, keyring = kr_name)
-    kb$keyring_lock(kr_name)
-  } else {
-    print(paste("Keyring already exists for: ", kr_name))
-  }
 }
 
