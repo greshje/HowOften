@@ -1,6 +1,6 @@
 # ---
 #
-# stratagus .Renv stuff
+# stratagus .Renviron stuff
 #
 # Basically, just use usethis::edit_r_environ() to check your .Renviron file.  
 # It should include something like the following
@@ -37,7 +37,8 @@ StrategusRunnerConnectionCacheUtil$checkEnv <- function () {
     msg <- paste(msg, "*   INSTANTIATED_MODULES_FOLDER='C:/path/to/where/you/want/to/store/modules'\n")
     msg <- paste(msg, "*   STRATEGUS_KEYRING_PASSWORD='sos'\n")
     msg <- paste(msg, "* \n")
-    msg <- paste(msg, "*   To set the parameters run the following to edit the contents of the .Renviron file:\n")
+    msg <- paste(msg, "*   To set the parameters run the following to edit the contents of the .Renviron file.\n")
+    msg <- paste(msg, "*   Restart R after editing .Renviron for the changes to take effect.\n")
     msg <- paste(msg, "*   usethis::edit_r_environ()\n")
     msg <- paste(msg, "* \n")
     msg <- paste(msg, "* ----------------------------- \n")
@@ -49,31 +50,22 @@ StrategusRunnerConnectionCacheUtil$checkEnv <- function () {
 
 # ---
 #
-# store keyring
+# list existing keyrings
 #
 # ---
 
-StrategusRunnerUtil$storeKeyRing <- function(dvo) {
-  class(dvo) <- "StrategusRunnerDvo"
-  if (Sys.getenv("STRATEGUS_KEYRING_PASSWORD") == "") {
-    # set keyring password by adding STRATEGUS_KEYRING_PASSWORD='sos' to renviron
-    usethis::edit_r_environ()
-    # then add STRATEGUS_KEYRING_PASSWORD='yourPassword', save and close
-    # Restart your R Session to confirm it worked
-    stop("Please add STRATEGUS_KEYRING_PASSWORD='yourPassword' to your .Renviron file
-       via usethis::edit_r_environ() as instructed, save and then restart R session")
-  }
-  
-  if (Sys.getenv("INSTANTIATED_MODULES_FOLDER") == "") {
-    # set a env var to a path to cache Strategus modules
-    usethis::edit_r_environ()
-    # then add INSTANTIATED_MODULES_FOLDER='path/to/module/cache', save and close
-    # Restart your R Session to confirm it worked
-    stop("Please add INSTANTIATED_MODULES_FOLDER='{path to module cache folder}' to your .Renviron file
-       via usethis::edit_r_environ() as instructed, save and then restart R session")
-  }
-  
-  # Create the keyring if it does not exist.
+StrategusRunnerConnectionCacheUtil$getExistingKeyrings <- function () {
+  return(keyring::keyring_list())
+}
+
+# ---
+#
+# create the keyring if it does not exist
+#
+# ---
+
+StrategusRunnerConnectionCacheUtil$createKeyring <- function () {
+  # create the keyring if it does not exist.
   keyringName <- dvo$keyringName
   allKeyrings <- keyring::keyring_list()
   if (!(keyringName %in% allKeyrings$keyring)) {
@@ -81,12 +73,25 @@ StrategusRunnerUtil$storeKeyRing <- function(dvo) {
   } else {
     print("Keyring already exists. You do not need to create it again.")
   }
-  
+}
+
+# ---
+#
+# store connection details
+#
+# ---
+
+StrategusRunnerConnectionCacheUtil$storeConnectionDetails <- function(dvo) {
+
+  class(dvo) <- "StrategusRunnerDvo"
+  StrategusRunnerConnectionCacheUtil$checkEnv()
+  StrategusRunnerConnectionCacheUtil$getExistingKeyrings()
+
   # excecute this for each connectionDetails/ConnectionDetailsReference you are going to use
   Strategus::storeConnectionDetails(
     connectionDetails = dvo$connectionDetails,
     connectionDetailsReference = dvo$connectionDetailsReference,
-    keyringName = keyringName
+    keyringName = "HowOften"
   )
   
 }

@@ -20,7 +20,7 @@ StrategusRunnerUtil$initLibs()
 # StrategusRunnerUtil$removePackagesInstalledHere()
 
 # set strategus keyring stuff
-StrategusRunnerUtil$checkstrategusKeyring()
+StrategusRunnerUtil$checkEnv()
 
 # ---
 #

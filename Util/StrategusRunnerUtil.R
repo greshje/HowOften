@@ -7,7 +7,7 @@
 StrategusRunnerUtil <- {}
 
 source("./Util/lib/StrategusRunnerLibUtil.R")
-source("./Util/keyring/StrategusRunnerKeyringUtil.R")
+source("./Util/connectioncache/StrategusRunnerConnectionCacheUtil.R")
 source("./Util/database/StrategusRunnerConnectionDetailsFactory.R")
 source("./Util/database/StrategusRunnerConnectionKeyringFactory.R")
 
@@ -23,6 +23,16 @@ StrategusRunnerUtil$addUserToKeyring <- srkf$addUserToKeyring
 StrategusRunnerUtil$deleteKeyring <- srkf$deleteKeyring
 StrategusRunnerUtil$getExistingKeyrings <- srkf$getExistingKeyrings
 StrategusRunnerUtil$getPasswordFromKeyring <- srkf$getPassword
+
+# ---
+#
+# connection cache
+#
+# ---
+
+srccu <- StrategusRunnerConnectionCacheUtil
+StrategusRunnerUtil$storeConnectionDetails <- srccu$storeConnectionDetails
+StrategusRunnerUtil$checkEnv <- srccu$checkEnv
 
 # ---
 #
@@ -52,7 +62,7 @@ StrategusRunnerUtil$createExecutionsSettings <- function(dvo) {
 
 StrategusRunnerUtil$initStratagus <- function(dvo) {
   class(dvo) <- "StrategusRunnerDvo"
-  StrategusRunnerUtil$storeKeyRing(dvo)
+  StrategusRunnerUtil$storeConnectionDetails(dvo)
   dvo$executionSettings <- StrategusRunnerUtil$createExecutionsSettings(dvo)
   StrategusRunnerUtil$testConnection(dvo)
   return(dvo$executionSettings)
