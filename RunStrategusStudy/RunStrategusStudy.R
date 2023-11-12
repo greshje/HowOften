@@ -45,7 +45,6 @@ dvo$minCellCount <- 5
 dvo$dbms = "spark"
 dvo$pathToDriver="D:\\_YES_2023-05-28\\workspace\\SosExamples\\_COVID\\02-data-diagnostics\\drivers\\databricks\\"
 # references to stored values (these can be anything)
-dvo$keyringName <- "HowOften"
 dvo$connectionDetailsReference <- "ERGASIA"
 
 # after all of the parameters have been set, run the init method
@@ -74,8 +73,7 @@ StrategusRunnerUtil$executeAnalysis(
   dvo$executionSettings, 
   "covid-nachc-test-02", 
   dvo$outputLocation, 
-  dvo$resultsLocation, 
-  dvo$keyringName
+  dvo$resultsLocation
 )
 
 

@@ -64,16 +64,28 @@ StrategusRunnerConnectionCacheUtil$getExistingKeyrings <- function () {
 #
 # ---
 
-StrategusRunnerConnectionCacheUtil$createKeyring <- function () {
+StrategusRunnerConnectionCacheUtil$createKeyring <- function (keyringName) {
   # create the keyring if it does not exist.
-  keyringName <- dvo$keyringName
+  class(dvo) <- "StrategusRunnerDvo"
   allKeyrings <- keyring::keyring_list()
   if (!(keyringName %in% allKeyrings$keyring)) {
+    print(paste("Keyring not found, creating it now: ", keyringName))
     keyring::keyring_create(keyring = keyringName, password = Sys.getenv("STRATEGUS_KEYRING_PASSWORD"))
+    print(paste("Keyring created: ", keyringName))
   } else {
     print("Keyring already exists. You do not need to create it again.")
   }
 }
+
+# ---
+#
+# delete a keyring
+#
+# ---
+
+StrategusRunnerConnectionCacheUtil$deleteKeyring <- function (keyringName) {
+  keyring::keyring_delete(keyringName)
+}    
 
 # ---
 #
@@ -84,14 +96,17 @@ StrategusRunnerConnectionCacheUtil$createKeyring <- function () {
 StrategusRunnerConnectionCacheUtil$storeConnectionDetails <- function(dvo) {
 
   class(dvo) <- "StrategusRunnerDvo"
+  keyringName = StrategusRunnerUtil$keyringName
+  
   StrategusRunnerConnectionCacheUtil$checkEnv()
+  StrategusRunnerConnectionCacheUtil$createKeyring(keyringName)
   StrategusRunnerConnectionCacheUtil$getExistingKeyrings()
-
+  
   # excecute this for each connectionDetails/ConnectionDetailsReference you are going to use
   Strategus::storeConnectionDetails(
     connectionDetails = dvo$connectionDetails,
     connectionDetailsReference = dvo$connectionDetailsReference,
-    keyringName = "HowOften"
+    keyringName = keyringName
   )
   
 }

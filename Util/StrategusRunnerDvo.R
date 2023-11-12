@@ -35,7 +35,6 @@ StrategusRunnerDvo <- R6Class(
     pathToDriver = NULL,
     
     # references to stored values (these can be anything)
-    keyringName = NULL,
     connectionDetailsReference = NULL,
     
     # connection and execution details

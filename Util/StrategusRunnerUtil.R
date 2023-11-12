@@ -13,6 +13,14 @@ source("./Util/database/StrategusRunnerConnectionKeyringFactory.R")
 
 # ---
 #
+# global variables
+#
+# ---
+
+StrategusRunnerUtil$keyringName <- "org.ohdsi.strategus.ergasia"
+
+# ---
+#
 # database keyring stuff
 #
 # ---
@@ -79,8 +87,7 @@ StrategusRunnerUtil$executeAnalysis <- function (
     executionSettings, 
     analysisName, 
     outputLocation, 
-    resultsLocation, 
-    keyringName) {
+    resultsLocation) {
   
   analysisSpecifications <- ParallelLogger::loadSettingsFromJson(fileName = analysisFile)
   
@@ -92,7 +99,7 @@ StrategusRunnerUtil$executeAnalysis <- function (
       dvo$outputLocation, 
       dvo$connectionDetailsReference, 
       "strategusExecution"),
-    keyringName = keyringName
+    keyringName = StrategusRunnerUtil$keyringName
   )
   
   # copy Results to final location
