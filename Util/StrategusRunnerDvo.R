@@ -25,6 +25,7 @@ StrategusRunnerDvo <- R6Class(
     workDatabaseSchema = NULL,
     cohortTableName = NULL,
     cdmDatabaseSchema = NULL,
+    sqlRenderTempEmulationSchema = NULL,
     
     # minimum number of cells
     minCellCount = NULL,
@@ -41,10 +42,11 @@ StrategusRunnerDvo <- R6Class(
     connectionDetails = NULL,
     executionSettings = NULL,
     
-    # sqlRenderer temp emulation schema
-    setSqlRendererTempEmulationSchema = function(schemaName) {
-      options(sqlRenderTempEmulationSchema = schemaName)
+    # init
+    init = function(schemaName) {
+      options(sqlRenderTempEmulationSchema = self$sqlRenderTempEmulationSchema)
     }
+    
   )
 )
 

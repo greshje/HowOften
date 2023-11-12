@@ -38,6 +38,7 @@ dvo$loggingOutputLocation <- "D:/_YES/_STRATEGUS/HowOften"
 dvo$workDatabaseSchema <- "how_often_scratch"
 dvo$cohortTableName <- "howoften_cohort"
 dvo$cdmDatabaseSchema <- "covid_ohdsi"
+dvo$sqlRenderTempEmulationSchema <- "how_often_temp"
 # minimum number of cells
 dvo$minCellCount <- 5
 # connection info
@@ -47,9 +48,8 @@ dvo$pathToDriver="D:\\_YES_2023-05-28\\workspace\\SosExamples\\_COVID\\02-data-d
 dvo$keyringName <- "HowOften"
 dvo$connectionDetailsReference <- "ERGASIA"
 
-# FIX THIS
-# set temp emulation schema using options
-dvo$setSqlRendererTempEmulationSchema("how_often_temp")
+# after all of the parameters have been set, run the init method
+dvo$init()
 
 # ---
 #
