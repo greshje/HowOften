@@ -8,7 +8,21 @@ StrategusRunnerUtil <- {}
 
 source("./Util/lib/StrategusRunnerLibUtil.R")
 source("./Util/keyring/StrategusRunnerKeyringUtil.R")
-source("./Util/database/StrategusConnectionDetailsFactory.R")
+source("./Util/database/StrategusRunnerConnectionDetailsFactory.R")
+source("./Util/database/StrategusRunnerConnectionKeyringFactory.R")
+
+# ---
+#
+# database keyring stuff
+#
+# ---
+
+srkf <- StrategusRunnerConnectionKeyringFactory
+StrategusRunnerUtil$createDatabaseKeyRing <- srkf$createDatabaseKeyRing
+StrategusRunnerUtil$addUserToKeyring <- srkf$addUserToKeyring
+StrategusRunnerUtil$deleteKeyring <- srkf$deleteKeyring
+StrategusRunnerUtil$getExistingKeyrings <- srkf$getExistingKeyrings
+StrategusRunnerUtil$getPasswordFromKeyring <- srkf$getPassword
 
 # ---
 #
@@ -72,7 +86,7 @@ StrategusRunnerUtil$executeAnalysis <- function (
   )
   
   # copy Results to final location
-  resultsDir <- file.path(
+  resultsDir <- file.path (
     resultsLocation, 
     analysisName, 
     dvo$connectionDetailsReference)

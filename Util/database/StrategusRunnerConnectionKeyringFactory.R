@@ -1,12 +1,23 @@
 # ---
 #
-# code related to database connection keyring
+# StrategusRunnerConnectionKeyringFactory
+#
+# Code related to database connection keyring.
+#
+# More on the function to get database token and url. 
+# https://ohdsi.github.io/DatabaseOnSpark/developer-how-tos_gen_dev_keyring.html
 #
 # ---
 
-StrategusConnectionKeyringFactory <- {}
+StrategusRunnerConnectionKeyringFactory <- {}
 
-StrategusConnectionKeyringFactory$createDatabaseKeyRing <- function(keyringName, keyringService, keyringUsername) {
+# ---
+#
+# create a new keyring if it does not exist already
+#
+# ---
+
+StrategusRunnerConnectionKeyringFactory$createDatabaseKeyRing <- function(keyringName, keyringService, keyringUsername) {
   kb <- keyring::backend_file$new()
   # Get a list of existing keyrings
   existing_keyrings <- kb$keyring_list()
@@ -20,7 +31,13 @@ StrategusConnectionKeyringFactory$createDatabaseKeyRing <- function(keyringName,
   }
 }
 
-StrategusConnectionKeyringFactory$addUser <- function(keyringName, keyringService, keyringUsername) {
+# ---
+#
+# add a user to an existing keyring
+#
+# ---
+
+StrategusRunnerConnectionKeyringFactory$addUserToKeyring <- function(keyringName, keyringService, keyringUsername) {
   kb <- keyring::backend_file$new()
   
   # Check if the keyring exists
@@ -34,7 +51,13 @@ StrategusConnectionKeyringFactory$addUser <- function(keyringName, keyringServic
   }
 }
 
-StrategusConnectionKeyringFactory$deleteKeyring <- function (name) {
+# ---
+#
+# delete a key ring
+#
+# ---
+
+StrategusRunnerConnectionKeyringFactory$deleteKeyring <- function (name) {
   print(paste("DELETING KEYRING: ", name))
   kb <- keyring::backend_file$new()
   # Get a list of existing keyrings
@@ -48,13 +71,25 @@ StrategusConnectionKeyringFactory$deleteKeyring <- function (name) {
   }
 }
 
-StrategusConnectionKeyringFactory$getExistingKeyrings <- function () {
+# ---
+#
+# get a list of the existing keyrings
+#
+# ---
+
+StrategusRunnerConnectionKeyringFactory$getExistingKeyrings <- function () {
   kb <- keyring::backend_file$new()
   keyringList <- kb$keyring_list()
   return(keyringList)
 }
 
-StrategusConnectionKeyringFactory$getPassword <- function (keyringName, service, user) {
+# ---
+#
+# get a password from a keyring
+#
+# ---
+
+StrategusRunnerConnectionKeyringFactory$getPassword <- function (keyringName, service, user) {
   keyring::backend_file$new()$get (
     keyring = keyringName,
     service = service,
