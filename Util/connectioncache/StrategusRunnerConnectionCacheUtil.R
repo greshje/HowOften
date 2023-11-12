@@ -13,13 +13,36 @@
 #
 # ---
 
-StrategusRunnerUtil$checkstrategusKeyring <- function() {
+StrategusRunnerConnectionCacheUtil <- {}
+
+# ---
+#
+# check everything we need is in the .renv file
+#
+# ---
+
+StrategusRunnerConnectionCacheUtil$checkEnv <- function () {
   if(
     Sys.getenv("STRATEGUS_KEYRING_PASSWORD") == "" || 
     Sys.getenv("INSTANTIATED_MODULES_FOLDER") == "" || 
     Sys.getenv("GITHUB_PAT") == ""
   ) {
-    usethis::edit_r_environ()
+    msg <- "\n"
+    msg <- paste(msg, "* ----------------------------- \n")
+    msg <- paste(msg, "* \n")
+    msg <- paste(msg, "* ENVIRONMENT NOT CORRECTLY CONFIGURED: \n")
+    msg <- paste(msg, "* \n")
+    msg <- paste(msg, "* The following parameters need to be set in .Renviron \n")
+    msg <- paste(msg, "*   GITHUB_PAT='ghp_ThisIsMyGithubPersonalAccessTokenM2bgp91'\n")
+    msg <- paste(msg, "*   INSTANTIATED_MODULES_FOLDER='C:/path/to/where/you/want/to/store/modules'\n")
+    msg <- paste(msg, "*   STRATEGUS_KEYRING_PASSWORD='sos'\n")
+    msg <- paste(msg, "* \n")
+    msg <- paste(msg, "*   To set the parameters run the following to edit the contents of the .Renviron file:\n")
+    msg <- paste(msg, "*   usethis::edit_r_environ()\n")
+    msg <- paste(msg, "* \n")
+    msg <- paste(msg, "* ----------------------------- \n")
+    writeLines(msg)
+    usethis::edit_r_environ() 
     stop("Set .Renviron before running this script")
   }
 }
