@@ -1,16 +1,8 @@
 # ---
 #
-# stratagus .Renviron stuff
-#
-# Basically, just use usethis::edit_r_environ() to check your .Renviron file.  
-# It should include something like the following
-#
-# STRATEGUS_KEYRING_PASSWORD='sos'
-# GITHUB_PAT='ghp_ThisIsMyGithubPersonalAccessTokenM2bgp91'
-# INSTANTIATED_MODULES_FOLDER='C:/_YES/_STRATEGUS/HowOften/Modules'
-#
-# Restart R after editing .Renviron for the changes to take effect.  
-#
+# StrategusRunnerConnectionCacheUtil
+# Code to deal with .Renviron stuff and storing of connectionDetails for Strategus.  
+# 
 # ---
 
 StrategusRunnerConnectionCacheUtil <- {}
