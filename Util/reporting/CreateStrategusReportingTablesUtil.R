@@ -1,14 +1,34 @@
 
 # source("./Util/database/ReportingConnectionDetailsFactory.R")
 
-HowOftenResultsUpload <- function() {
-  
-  resultsTableFolderRoot <- "C:/_YES/_STRATEGUS/HowOften/Output/covid-nachc-test-02/ERGASIA/strategusOutput"
-  resultsDatabaseSchemaCreationLogFolder <- "C:/temp/_DELETE_ME"
-  resultsDatabaseSchemaSuffixList <- c(
-    "ERGASIA"
-  )
-  
+CreateStrategusReportingTablesUtil <- {}
+
+csrtu <- CreateStrategusReportingTablesUtil
+
+# ---
+#
+# drop and create schema functions
+#
+# ---
+
+csrtu$dropSchema <- function(schemaName, connection) {
+  writeLines(paste("Droping schema if exists: ", schemaName))
+  sqlString <- paste("drop schema if exists ", schemaName, " cascade")
+  DatabaseConnector::executeSql(connection, sqlString)
+}
+
+csrtu$createSchema <- function(schemaName, connection) {
+  writeLines(paste("Creating schema: ", schemaName))
+  sqlString <- paste("create schema ", schemaName)
+  DatabaseConnector::executeSql(connection, sqlString)
+}  
+
+csrtu$dropAndRecreateSchema <- function(schemaName, connection) {
+  csrtu$dropSchema(schemaName, connection)
+  csrtu$createSchema(schemaName, connection)
+}
+
+csrtu$initLogging <- function(resultsDatabaseSchemaCreationLogFolder) {
   # Setup logging ----------------------------------------------------------------
   ParallelLogger::clearLoggers()
   ParallelLogger::addDefaultFileLogger(
@@ -19,16 +39,30 @@ HowOftenResultsUpload <- function() {
     fileName = file.path(resultsDatabaseSchemaCreationLogFolder, 'results-schema-setup-errorReport.txt'),
     name = "RESULTS_SCHEMA_SETUP_ERROR_LOGGER"
   )
-  
-  # Connect to the database ------------------------------------------------------
+}
+
+csrtu$getConnection <- function() {
   resultsDatabaseConnectionDetails <- DatabaseConnector::createConnectionDetails(
     dbms = "postgresql",
     connectionString = "jdbc:postgresql://localhost:5432/OHDSI_RESULTS_DB?user=postgres&password=ohdsi&currentSchema=OHDSI_RESULTS_DB",
     pathToDriver = "D:/_YES/databases/postgres/drivers/42.3.3"
   )
-  
   connection <- DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
+}
+
+HowOftenResultsUpload <- function() {
   
+  # init parameters
+  resultsTableFolderRoot <- "C:/_YES/_STRATEGUS/HowOften/Output/covid-nachc-test-02/ERGASIA/strategusOutput"
+  resultsDatabaseSchemaCreationLogFolder <- "C:/temp/_DELETE_ME"
+  resultsDatabaseSchemaSuffixList <- c("ERGASIA")
+  
+  # init logging
+  csrtu$initLogging(resultsDatabaseSchemaCreationLogFolder)
+  
+  # get a database connection
+  connection <- csrtu$getConnection()
+    
   # Create the tables ------------------------
   moduleFolders <- list.dirs(path = resultsTableFolderRoot, recursive = FALSE)
   isModuleComplete <- function(moduleFolder) {
@@ -43,6 +77,11 @@ HowOftenResultsUpload <- function() {
     message("Creating result tables based on definitions found in ", resultsTableFolderRoot)
     for (schemaSuffix in resultsDatabaseSchemaSuffixList) {
       resultsDatabaseSchema <- paste0("howoften_", schemaSuffix)
+      
+      writeLines(paste("DROPPING DATABASE SCHEMA: ", resultsDatabaseSchema))
+      csrtu$dropAndRecreateSchema(resultsDatabaseSchema, connection)
+      writeLines(paste("DROPPED DATABASE SCHEMA:  ", resultsDatabaseSchema))
+      
       # Skip over table creation if there are already tables created in
       # the resultsDatabaseSchema
       tables <- DatabaseConnector::getTableNames(
