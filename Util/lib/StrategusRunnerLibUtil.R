@@ -1,10 +1,18 @@
 # ---
 #
-# library functions
+# functions to load and install libraries/packages
 #
 # ---
 
-StrategusRunnerUtil$showVersions <- function() {
+StrategusRunnerLibUtil <- {}
+
+StrategusRunnerLibUtil$setIsInit <- function (isInit) {
+  StrategusRunnerLibUtil$isInit <<- isInit
+}
+
+StrategusRunnerLibUtil$setIsInit (FALSE)
+  
+StrategusRunnerLibUtil$showVersions <- function() {
   # show versions
   R.Version()
   system("java -version")
@@ -13,8 +21,19 @@ StrategusRunnerUtil$showVersions <- function() {
   Strategus::getModuleList()
 }
 
-StrategusRunnerUtil$installFromCran <- function(pkgName, pkgVersion) {
-  if (requireNamespace(pkgName, quietly = TRUE) == TRUE && packageVersion(pkgName) == pkgVersion) {
+StrategusRunnerLibUtil$packageVersionExists <- function (pkgName, pkgVersion) {
+  tryCatch (
+    {
+      return(packageVersion(pkgName) == pkgVersion)
+    },
+    error = function(e) {
+      return(FALSE)
+    }
+  )
+}
+
+StrategusRunnerLibUtil$installFromCran <- function(pkgName, pkgVersion) {
+  if (requireNamespace(pkgName, quietly = TRUE) == TRUE && StrategusRunnerLibUtil$packageVersionExists(pkgName, pkgVersion)) {
     print(paste("Correct version of package already installed: ", pkgName, pkgVersion, sep = " "))
   } else {  
     print(paste("* * * Installing from CRAN:", pkgName, pkgVersion, sep = " "))
@@ -26,8 +45,8 @@ StrategusRunnerUtil$installFromCran <- function(pkgName, pkgVersion) {
   }
 }
 
-StrategusRunnerUtil$installFromGithub <- function(pkgName, pkgVersion) {
-  if (requireNamespace(pkgName, quietly = TRUE) == TRUE && packageVersion(pkgName) == pkgVersion) {
+StrategusRunnerLibUtil$installFromGithub <- function(pkgName, pkgVersion) {
+  if (requireNamespace(pkgName, quietly = TRUE) == TRUE && StrategusRunnerLibUtil$packageVersionExists(pkgName, pkgVersion)) {
     print(paste("Correct version of package already installed: ", pkgName, pkgVersion, sep = " "))
   } else {  
     print(paste("* * * Installing from GitHub:", pkgName, pkgVersion, sep = " "))
@@ -35,13 +54,13 @@ StrategusRunnerUtil$installFromGithub <- function(pkgName, pkgVersion) {
   }
 }
 
-StrategusRunnerUtil$checkPackageVersion <- function(packageName) {
+StrategusRunnerLibUtil$checkPackageVersion <- function(packageName) {
   available_packages <- available.packages()
   latest_keyring_version <- available_packages[packageName, "Version"]
   print(latest_keyring_version)  
 }
 
-StrategusRunnerUtil$removePackage <- function(pkgName) {
+StrategusRunnerLibUtil$removePackage <- function(pkgName) {
   required <- requireNamespace(pkgName, quietly = TRUE)
   print(paste(pkgName, required, sep = ": "))
   if (required) {
@@ -55,15 +74,17 @@ StrategusRunnerUtil$removePackage <- function(pkgName) {
 #
 # ---
 
-StrategusRunnerUtil$removePackagesInstalledHere <- function() {
+StrategusRunnerLibUtil$removePackagesInstalledHere <- function() {
   # from cran
-  StrategusRunnerUtil$removePackage("keyring")
-  StrategusRunnerUtil$removePackage("usethis")
-  StrategusRunnerUtil$removePackage("DatabaseConnector")
+  StrategusRunnerLibUtil$removePackage("keyring")
+  StrategusRunnerLibUtil$removePackage("usethis")
+  StrategusRunnerLibUtil$removePackage("DatabaseConnector")
   # from github
-  StrategusRunnerUtil$removePackage("Strategus")
-  StrategusRunnerUtil$removePackage("CohortGenerator")
-  StrategusRunnerUtil$removePackage("CirceR")
+  StrategusRunnerLibUtil$removePackage("Strategus")
+  StrategusRunnerLibUtil$removePackage("CohortGenerator")
+  StrategusRunnerLibUtil$removePackage("CirceR")
+  # done
+  StrategusRunnerLibUtil$isInit <- FALSE
 }
 
 # ---
@@ -72,29 +93,51 @@ StrategusRunnerUtil$removePackagesInstalledHere <- function() {
 #
 # ---
 
-StrategusRunnerUtil$initLibs <- function() {
+StrategusRunnerLibUtil$initLibs <- function() {
 
+  doInstall <- function() {
     # installs from cran
-  StrategusRunnerUtil$installFromCran("remotes", "2.4.2.1")
-  StrategusRunnerUtil$installFromCran("keyring", "1.3.1")
-  StrategusRunnerUtil$installFromCran("usethis", "2.2.2")
-  StrategusRunnerUtil$installFromCran("R6", "2.5.1")
-  StrategusRunnerUtil$installFromCran("DatabaseConnector", "6.2.4")
-  
-  # installs from github
-  StrategusRunnerUtil$installFromGithub("OHDSI/Strategus", "v0.1.0")
-  StrategusRunnerUtil$installFromGithub("OHDSI/CohortGenerator", "v0.8.1")
-  StrategusRunnerUtil$installFromGithub("OHDSI/CirceR", "v1.3.1")
-  
-  # from cran
-  library(remotes)
-  library(keyring)
-  library(usethis)
-  library(R6)
-  library(DatabaseConnector)
-  # from github
-  library(Strategus)
-  library(CohortGenerator)
-  library(CirceR)
+    StrategusRunnerLibUtil$installFromCran("remotes", "2.4.2.1")
+    StrategusRunnerLibUtil$installFromCran("keyring", "1.3.1")
+    StrategusRunnerLibUtil$installFromCran("usethis", "2.2.2")
+    StrategusRunnerLibUtil$installFromCran("R6", "2.5.1")
+    StrategusRunnerLibUtil$installFromCran("DatabaseConnector", "6.2.4")
+    
+    # installs from github
+    StrategusRunnerLibUtil$installFromGithub("OHDSI/Strategus", "v0.1.0")
+    StrategusRunnerLibUtil$installFromGithub("OHDSI/CohortGenerator", "v0.8.1")
+    StrategusRunnerLibUtil$installFromGithub("OHDSI/CirceR", "v1.3.1")
+    
+    # from cran
+    library(remotes)
+    library(keyring)
+    library(usethis)
+    library(R6)
+    library(DatabaseConnector)
+    # from github
+    library(Strategus)
+    library(CohortGenerator)
+    library(CirceR)
+    
+    # done
+    StrategusRunnerLibUtil$setIsInit(TRUE) 
+    print("Done with doInstall()")
+  }
 
+  if(StrategusRunnerLibUtil$isInit == FALSE) {
+    print("INITIALIZAING LIBRARIES...")
+    doInstall()
+    print("DONE INITIALIZING LIBRARIES.")
+  } else {
+    print("LIBRARIES ALREADY INITIALIZED, SKIPPING INITIALIZATION.")
+  }
+  
 }
+
+# ---
+#
+# initialize the libraries
+#
+# ---
+
+StrategusRunnerLibUtil$initLibs()

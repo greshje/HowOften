@@ -1,6 +1,17 @@
+# ---
+# 
+# StrategusRunnerConnectionDetailsUtil
+# This script creates the DatabaseConnector connectionDetails objects
+# used for the cdm and for the reporting of the results of Strategus runs. 
+# Use this code as is or substitute with your own. 
+#
+# ---
+
 source("./Util/database/StrategusRunnerConnectionKeyringFactory.R")
 
-StrategusRunnerUtil$createConnectionDetails <- function() {
+StrategusRunnerConnectionDetailsUtil <- {}
+
+StrategusRunnerConnectionDetailsUtil$createCdmConnectionDetails <- function() {
 
   # create connection details params
   url <- "jdbc:databricks://nachc-databricks.cloud.databricks.com:443/default;transportMode=http;ssl=1;httpPath=sql/protocolv1/o/3956472157536757/0123-223459-leafy532;AuthMech=3;UseNativeQuery=1;UID=token;PWD="

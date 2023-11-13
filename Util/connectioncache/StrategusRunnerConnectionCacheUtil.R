@@ -94,20 +94,18 @@ StrategusRunnerConnectionCacheUtil$deleteKeyring <- function (keyringName) {
 # ---
 
 StrategusRunnerConnectionCacheUtil$storeConnectionDetails <- function(dvo) {
-
+  # get the dvo and the keyringName
   class(dvo) <- "StrategusRunnerDvo"
   keyringName = StrategusRunnerUtil$keyringName
-  
+  # set up the keyring
   StrategusRunnerConnectionCacheUtil$checkEnv()
   StrategusRunnerConnectionCacheUtil$createKeyring(keyringName)
   StrategusRunnerConnectionCacheUtil$getExistingKeyrings()
-  
-  # excecute this for each connectionDetails/ConnectionDetailsReference you are going to use
+  # save the cdm connection details for strategus
   Strategus::storeConnectionDetails(
-    connectionDetails = dvo$connectionDetails,
-    connectionDetailsReference = dvo$connectionDetailsReference,
+    connectionDetails = dvo$cdmConnectionDetails,
+    connectionDetailsReference = dvo$cdmConnectionDetailsReference,
     keyringName = keyringName
   )
-  
 }
 
