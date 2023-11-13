@@ -27,6 +27,10 @@ StrategusRunnerUtil <- {}
 
 StrategusRunnerUtil$keyringName <- "org.ohdsi.strategus.ergasia"
 
+# ------------------------------------------------------------------------------
+# functionality from util classes
+# ------------------------------------------------------------------------------
+
 # ---
 #
 # libraries functionality
@@ -75,9 +79,13 @@ srccu <- StrategusRunnerConnectionCacheUtil
 StrategusRunnerUtil$storeConnectionDetails <- srccu$storeConnectionDetails
 StrategusRunnerUtil$checkEnv <- srccu$checkEnv
 
+# ------------------------------------------------------------------------------
+# implementation
+# ------------------------------------------------------------------------------
+
 # ---
 #
-# execution
+# initialize configuration for the run
 #
 # ---
 
