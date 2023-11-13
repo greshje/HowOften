@@ -23,7 +23,6 @@ ReportingConnectionDetailsUtil$createConnectionDetails <- function() {
   return(rtn)
 }
 
-
 ReportingConnectionDetailsUtil$testConnection <- function() {
   testConnection <- DatabaseConnector::connect(ReportingConnectionDetailsUtil$createConnectionDetails())
   success <- DatabaseConnector::querySql(testConnection, "select 1 as one")
