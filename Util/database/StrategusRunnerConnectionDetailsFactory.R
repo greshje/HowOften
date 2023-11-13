@@ -11,7 +11,7 @@ source("./Util/database/StrategusRunnerConnectionKeyringFactory.R")
 StrategusRunnerConnectionDetailsUtil <- {}
 
 StrategusRunnerConnectionDetailsUtil$createCdmConnectionDetails <- function() {
-
+  
   # create connection details params
   url <- "jdbc:databricks://nachc-databricks.cloud.databricks.com:443/default;transportMode=http;ssl=1;httpPath=sql/protocolv1/o/3956472157536757/0123-223459-leafy532;AuthMech=3;UseNativeQuery=1;UID=token;PWD="
   keyringName <- "databricks_keyring"
@@ -20,12 +20,12 @@ StrategusRunnerConnectionDetailsUtil$createCdmConnectionDetails <- function() {
   
   # alias for keyring functions
   srkf <- StrategusRunnerConnectionKeyringFactory
-
+  
   # get the token from the keyring
   getToken <- function () {
     return(srkf$getPassword(keyringName,serviceName,userName))
   }
-
+  
   # concatinate the url and the token
   getUrl <- function () {
     url <- url
