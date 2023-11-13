@@ -7,6 +7,16 @@ csrtu <- CreateStrategusReportingTablesUtil
 
 # ---
 #
+# configuration
+#
+# ---
+
+csrtu$resultsTableFolderRoot <- "C:/_YES/_STRATEGUS/HowOften/Output/covid-nachc-test-02/ERGASIA/strategusOutput"
+csrtu$resultsDatabaseSchemaCreationLogFolder <- "C:/temp/_DELETE_ME"
+csrtu$resultsDatabaseSchemaSuffixList <- c("ERGASIA")
+
+# ---
+#
 # drop and create schema functions
 #
 # ---
@@ -50,13 +60,36 @@ csrtu$getConnection <- function() {
   connection <- DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
 }
 
+csrtu$isModuleComplete <- function(moduleFolder) {
+  doneFileFound <- (length(list.files(path = moduleFolder, pattern = "done")) > 0)
+  isDatabaseMetaDataFolder <- basename(moduleFolder) == "DatabaseMetaData"
+  return(doneFileFound || isDatabaseMetaDataFolder)
+}
+
+csrtu$createModuleTable <- function(moduleName, moduleFolder, resultsDatabaseSchema, connection) {
+  message("- Creating results for module ", moduleName)
+  rdmsFile <- file.path(moduleFolder, "resultsDataModelSpecification.csv")
+  if (file.exists(rdmsFile) == FALSE) {
+    stop("resultsDataModelSpecification.csv not found in ", moduleFolder)
+  } else {
+    specification <- CohortGenerator::readCsv(file = rdmsFile)
+    sql <- ResultModelManager::generateSqlSchema(csvFilepath = rdmsFile)
+    sql <- SqlRender::render(
+      sql = sql,
+      database_schema = resultsDatabaseSchema
+    )
+    DatabaseConnector::executeSql(connection = connection, sql = sql)
+  }
+}
+
+
 HowOftenResultsUpload <- function() {
   
   # init parameters
-  resultsTableFolderRoot <- "C:/_YES/_STRATEGUS/HowOften/Output/covid-nachc-test-02/ERGASIA/strategusOutput"
-  resultsDatabaseSchemaCreationLogFolder <- "C:/temp/_DELETE_ME"
-  resultsDatabaseSchemaSuffixList <- c("ERGASIA")
-  
+  resultsTableFolderRoot <- csrtu$resultsTableFolderRoot
+  resultsDatabaseSchemaCreationLogFolder <- csrtu$resultsDatabaseSchemaCreationLogFolder
+  resultsDatabaseSchemaSuffixList <- csrtu$resultsDatabaseSchemaSuffixList
+
   # init logging
   csrtu$initLogging(resultsDatabaseSchemaCreationLogFolder)
   
@@ -65,12 +98,7 @@ HowOftenResultsUpload <- function() {
     
   # Create the tables ------------------------
   moduleFolders <- list.dirs(path = resultsTableFolderRoot, recursive = FALSE)
-  isModuleComplete <- function(moduleFolder) {
-    doneFileFound <- (length(list.files(path = moduleFolder, pattern = "done")) > 0)
-    isDatabaseMetaDataFolder <- basename(moduleFolder) == "DatabaseMetaData"
-    return(doneFileFound || isDatabaseMetaDataFolder)
-  }
-  
+
   tryCatch({
     # Iterate over the results schema suffixes listed in resultsDatabaseSchemaSuffixList
     # and create the tables for each results schema
@@ -92,22 +120,10 @@ HowOftenResultsUpload <- function() {
         message("Creating results tables in schema: ", resultsDatabaseSchema)
         for (moduleFolder in moduleFolders) {
           moduleName <- basename(moduleFolder)
-          if (!isModuleComplete(moduleFolder)) {
+          if (csrtu$isModuleComplete(moduleFolder) == FALSE) {
             warning("Module ", moduleName, " did not complete. Skipping table creation")
           } else {
-            message("- Creating results for module ", moduleName)
-            rdmsFile <- file.path(moduleFolder, "resultsDataModelSpecification.csv")
-            if (!file.exists(rdmsFile)) {
-              stop("resultsDataModelSpecification.csv not found in ", resumoduleFolderltsFolder)
-            } else {
-              specification <- CohortGenerator::readCsv(file = rdmsFile)
-              sql <- ResultModelManager::generateSqlSchema(csvFilepath = rdmsFile)
-              sql <- SqlRender::render(
-                sql = sql,
-                database_schema = resultsDatabaseSchema
-              )
-              DatabaseConnector::executeSql(connection = connection, sql = sql)
-            }
+            csrtu$createModuleTable(moduleName, moduleFolder, resultsDatabaseSchema, connection)
           }
         }
         message("Creating empty characterization tables in schema: ", resultsDatabaseSchema)
