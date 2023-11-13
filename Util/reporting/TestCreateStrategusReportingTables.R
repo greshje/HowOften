@@ -8,3 +8,4 @@ resultsDatabaseSchema <- "DELETE_ME"
 configureLogging(loggingDir)
 
 CreateStrategusReportingTablesUtil$createTables(rootDir, loggingDir, resultsDatabaseSchema)
+
