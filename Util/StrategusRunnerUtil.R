@@ -15,6 +15,7 @@ source("./Util/connectioncache/StrategusRunnerConnectionCacheUtil.R")
 source("./Util/database/StrategusRunnerConnectionDetailsFactory.R")
 source("./Util/database/StrategusRunnerConnectionKeyringFactory.R")
 source("./Util/dvo/StrategusRunnerDvo.R")
+source("./RunStrategusStudy/RunStrategusConfiguration.R")
 
 StrategusRunnerUtil <- {}
 
@@ -76,6 +77,24 @@ StrategusRunnerUtil$checkEnv <- srccu$checkEnv
 
 # ---
 #
+# execution
+#
+# ---
+
+StrategusRunnerUtil$initRun <- function() {
+  # initialize libraries/packages
+  StrategusRunnerUtil$initLibs()
+  # init strategus keyring stuff
+  StrategusRunnerUtil$checkEnv()
+  # configuration
+  dvo <- StrategusRunnerDvo$new()
+  dvo <- RunStrategusConfiguration$configure(dvo)
+  dvo$init()
+  return(dvo)
+}
+
+# ---
+#
 # function to create stratagus settings
 #
 # ---
@@ -116,11 +135,14 @@ StrategusRunnerUtil$initStratagus <- function(dvo) {
 
 StrategusRunnerUtil$executeAnalysis <- function (
     analysisFile, 
-    executionSettings, 
     analysisName, 
-    outputLocation, 
-    resultsLocation) {
-  
+    dvo) {
+
+  class(dvo) <- "StrategusRunnerDvo"
+  executionSettings <- dvo$executionSettings
+  outputLocation <- dvo$outputLocation
+  resultsLocation <- dvo$resultsLocation
+    
   # create the connection details
   dvo$cdmConnectionDetails <- StrategusRunnerUtil$createCdmConnectionDetails()
   # init the environment (see functionsForInit.R file for details)
@@ -152,9 +174,9 @@ StrategusRunnerUtil$executeAnalysis <- function (
     file.path(dvo$outputLocation, dvo$cdmConnectionDetailsReference, "strategusOutput"),
     file.path(resultsDir), recursive = TRUE
   )
-
+  
   return("Execution completed ! ! !")
-
+  
 }
 
 # ---
@@ -175,6 +197,7 @@ StrategusRunnerUtil$testConnection <- function(dvo) {
     print("CONNECTION TEST PASSED")
   }
 }
+
 
 
 

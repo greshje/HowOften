@@ -3,6 +3,7 @@
 # One of three touch points to run strategus:
 #
 # - Update this file to use your parameters
+#   (only change values between the START CONFIGURATION and END CONFIGURATION comments)
 # - Update ./Util/database/StrategusRunnerConnectionDetailsFactory.R
 # - Update ./Util/database/StrategusRunnerReportingConnectionDetailsFactory.R
 #   (this step is only required if you are uploading results data)
@@ -16,6 +17,11 @@ RunStrategusConfiguration <- {}
 RunStrategusConfiguration$configure <- function (dvo) {
   # set the type of the data value object
   class(dvo) <- "StrategusRunnerDvo"
+
+  # *************************************
+  # *** START CONFIGURATION           ***
+  # *************************************
+  
   # file locations
   dvo$resultsLocation <- "D:/_YES/_STRATEGUS/HowOften/Output"
   dvo$outputLocation <- "D:/_YES/_STRATEGUS/HowOften"
@@ -32,6 +38,11 @@ RunStrategusConfiguration$configure <- function (dvo) {
   dvo$pathToDriver="D:\\_YES_2023-05-28\\workspace\\SosExamples\\_COVID\\02-data-diagnostics\\drivers\\databricks\\"
   # references to stored values (these can be anything)
   dvo$cdmConnectionDetailsReference <- "ERGASIA"
+  
+  # *************************************
+  # *** END CONFIGURATION             ***
+  # *************************************
+  
   # return the configured dvo
   return(dvo)
 }

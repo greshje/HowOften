@@ -42,6 +42,6 @@ StrategusRunnerConnectionDetailsUtil$createCdmConnectionDetails <- function() {
   )
   
   return(rtn)
-
+  
 }
 

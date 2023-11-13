@@ -1,23 +1,21 @@
 # ---
 #
-# Initialize the session: this deals with all of the library loading and declarations
-# including setting all of the versions and loads the functions used below. 
+# RunStrategusStudy.R
+# A script to execute your Strategus study. 
+#
+# Before running this script:
+#   - Update ./RunStrategusStudy/RunStrategusConfiguration.R
+#   - Update ./Util/database/StrategusRunnerConnectionDetailsFactory.R
+#   - Update ./Util/database/StrategusRunnerReportingConnectionDetailsFactory.R
+#     (this step is only required if you are uploading results data)
+#   - Update the call to StrategusRunnerUtil$executeAnalysis below 
+#     to use your json file and the name you want for the output folder.  
 # 
 # ---
 
-# imports and installs
+# setup the run
 source("./Util/StrategusRunnerUtil.R")
-source("./Util/dvo/StrategusRunnerDvo.R")
-source("./RunStrategusStudy/RunStrategusConfiguration.R")
-
-# initialize libraries/packages
-StrategusRunnerUtil$initLibs()
-# init strategus keyring stuff
-StrategusRunnerUtil$checkEnv()
-# configuration
-dvo <- StrategusRunnerDvo$new()
-dvo <- RunStrategusConfiguration$configure(dvo)
-dvo$init()
+dvo <- StrategusRunnerUtil$initRun()
 
 # ---
 #
@@ -25,17 +23,5 @@ dvo$init()
 #
 # ---
 
-StrategusRunnerUtil$executeAnalysis(
-  "./RunStrategusStudy/json/FromNachc/nachc-covid-homeless.json", 
-  dvo$executionSettings, 
-  "covid-nachc-test-02", 
-  dvo$outputLocation, 
-  dvo$resultsLocation
-)
-
-
-
-
-
-
+StrategusRunnerUtil$executeAnalysis("./RunStrategusStudy/json/FromNachc/nachc-covid-homeless.json", "covid-nachc-test-02", dvo)
 
