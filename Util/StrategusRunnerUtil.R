@@ -14,6 +14,7 @@ source("./Util/lib/StrategusRunnerLibUtil.R")
 source("./Util/connectioncache/StrategusRunnerConnectionCacheUtil.R")
 source("./Util/database/StrategusRunnerConnectionDetailsFactory.R")
 source("./Util/database/StrategusRunnerConnectionKeyringFactory.R")
+source("./Util/dvo/StrategusRunnerDvo.R")
 
 StrategusRunnerUtil <- {}
 
@@ -120,6 +121,11 @@ StrategusRunnerUtil$executeAnalysis <- function (
     outputLocation, 
     resultsLocation) {
   
+  # create the connection details
+  dvo$cdmConnectionDetails <- StrategusRunnerUtil$createCdmConnectionDetails()
+  # init the environment (see functionsForInit.R file for details)
+  dvo$executionSettings <- StrategusRunnerUtil$initStratagus(dvo)
+  # load the json specification for the study
   analysisSpecifications <- ParallelLogger::loadSettingsFromJson(fileName = analysisFile)
   
   # execute stratagus
@@ -146,7 +152,9 @@ StrategusRunnerUtil$executeAnalysis <- function (
     file.path(dvo$outputLocation, dvo$cdmConnectionDetailsReference, "strategusOutput"),
     file.path(resultsDir), recursive = TRUE
   )
-  return(NULL)
+
+  return("Execution completed ! ! !")
+
 }
 
 # ---

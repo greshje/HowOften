@@ -1,0 +1,38 @@
+# ---
+#
+# One of three touch points to run strategus:
+#
+# - Update this file to use your parameters
+# - Update ./Util/database/StrategusRunnerConnectionDetailsFactory.R
+# - Update ./Util/database/StrategusRunnerReportingConnectionDetailsFactory.R
+#   (this step is only required if you are uploading results data)
+# 
+# ---
+
+source("./Util/dvo/StrategusRunnerDvo.R")
+
+RunStrategusConfiguration <- {}
+
+RunStrategusConfiguration$configure <- function (dvo) {
+  # set the type of the data value object
+  class(dvo) <- "StrategusRunnerDvo"
+  # file locations
+  dvo$resultsLocation <- "D:/_YES/_STRATEGUS/HowOften/Output"
+  dvo$outputLocation <- "D:/_YES/_STRATEGUS/HowOften"
+  dvo$loggingOutputLocation <- "D:/_YES/_STRATEGUS/HowOften"
+  # database schemas
+  dvo$workDatabaseSchema <- "how_often_scratch"
+  dvo$cohortTableName <- "howoften_cohort"
+  dvo$cdmDatabaseSchema <- "covid_ohdsi"
+  dvo$sqlRenderTempEmulationSchema <- "how_often_temp"
+  # minimum number of cells
+  dvo$minCellCount <- 5
+  # connection info
+  dvo$dbms = "spark"
+  dvo$pathToDriver="D:\\_YES_2023-05-28\\workspace\\SosExamples\\_COVID\\02-data-diagnostics\\drivers\\databricks\\"
+  # references to stored values (these can be anything)
+  dvo$cdmConnectionDetailsReference <- "ERGASIA"
+  # return the configured dvo
+  return(dvo)
+}
+

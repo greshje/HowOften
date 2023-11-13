@@ -1,8 +1,7 @@
 # ---
 # 
 # StrategusRunnerConnectionDetailsUtil
-# This script creates the DatabaseConnector connectionDetails objects
-# used for the cdm and for the reporting of the results of Strategus runs. 
+# This script creates the DatabaseConnector connectionDetails objects used for the CDM. 
 # Use this code as is or substitute with your own. 
 #
 # ---

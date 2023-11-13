@@ -7,60 +7,17 @@
 
 # imports and installs
 source("./Util/StrategusRunnerUtil.R")
-source("./Util/StrategusRunnerDvo.R")
+source("./Util/dvo/StrategusRunnerDvo.R")
+source("./RunStrategusStudy/RunStrategusConfiguration.R")
+
+# initialize libraries/packages
 StrategusRunnerUtil$initLibs()
-
-# ---
-#
-# Optional code: run the following lines to reset the environment.  
-# This will unload and re-install all of the libraries installed by this project.  
-#
-# -- 
-
-# StrategusRunnerUtil$removePackagesInstalledHere()
-
-# set strategus keyring stuff
+# init strategus keyring stuff
 StrategusRunnerUtil$checkEnv()
-
-# ---
-#
-# set basic parameters
-#
-# ---
-
+# configuration
 dvo <- StrategusRunnerDvo$new()
-
-# file locations
-dvo$resultsLocation <- "D:/_YES/_STRATEGUS/HowOften/Output"
-dvo$outputLocation <- "D:/_YES/_STRATEGUS/HowOften"
-dvo$loggingOutputLocation <- "D:/_YES/_STRATEGUS/HowOften"
-# database schemas
-dvo$workDatabaseSchema <- "how_often_scratch"
-dvo$cohortTableName <- "howoften_cohort"
-dvo$cdmDatabaseSchema <- "covid_ohdsi"
-dvo$sqlRenderTempEmulationSchema <- "how_often_temp"
-# minimum number of cells
-dvo$minCellCount <- 5
-# connection info
-dvo$dbms = "spark"
-dvo$pathToDriver="D:\\_YES_2023-05-28\\workspace\\SosExamples\\_COVID\\02-data-diagnostics\\drivers\\databricks\\"
-# references to stored values (these can be anything)
-dvo$cdmConnectionDetailsReference <- "ERGASIA"
-
-# after all of the parameters have been set, run the init method
+dvo <- RunStrategusConfiguration$configure(dvo)
 dvo$init()
-
-# ---
-#
-# create the execution environment
-#
-# ---
-
-# create the connection details
-dvo$cdmConnectionDetails <- StrategusRunnerUtil$createCdmConnectionDetails()
-
-# init the environment (see functionsForInit.R file for details)
-dvo$executionSettings <- StrategusRunnerUtil$initStratagus(dvo)
 
 # ---
 #
