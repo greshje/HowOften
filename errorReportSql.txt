@@ -1,0 +1,35 @@
+DBMS:
+postgresql
+
+Error:
+org.postgresql.util.PSQLException: ERROR: schema "delete_me" does not exist
+  Position: 14
+
+SQL:
+CREATE TABLE DELETE_ME.cg_cohort_definition (
+  	 cohort_definition_id BIGINT NOT NULL,
+	 cohort_name VARCHAR,
+	 description VARCHAR,
+	 json TEXT,
+	 sql_command TEXT,
+	 subset_parent BIGINT,
+	 is_subset INT,
+	 subset_definition_id BIGINT
+)
+
+R version:
+R version 4.3.2 (2023-10-31 ucrt)
+
+Platform:
+x86_64-w64-mingw32
+
+Attached base packages:
+- stats
+- graphics
+- grDevices
+- utils
+- datasets
+- methods
+- base
+
+Other attached packages:

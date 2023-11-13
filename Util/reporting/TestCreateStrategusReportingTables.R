@@ -7,5 +7,9 @@ resultsDatabaseSchema <- "DELETE_ME"
 
 configureLogging(loggingDir)
 
+getConnection()
+
+testConnection()
+
 CreateStrategusReportingTablesUtil$createTables(rootDir, loggingDir, resultsDatabaseSchema)
 
