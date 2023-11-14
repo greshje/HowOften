@@ -146,8 +146,6 @@ StrategusRunnerUtil$executeAnalysis <- function (
     analysisName, 
     dvo) {
 
-  browser()
-  
   class(dvo) <- "StrategusRunnerDvo"
   executionSettings <- dvo$executionSettings
   outputLocation <- dvo$outputLocation
@@ -170,8 +168,10 @@ StrategusRunnerUtil$executeAnalysis <- function (
       "strategusExecution"),
     keyringName = StrategusRunnerUtil$keyringName
   )
-  
-  # copy Results to final location
+
+  browser()
+
+    # copy Results to final location
   resultsDir <- file.path (
     resultsLocation, 
     analysisName, 

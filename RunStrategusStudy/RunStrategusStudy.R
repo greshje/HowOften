@@ -4,11 +4,12 @@
 # A script to execute your Strategus study. 
 #
 # Before running this script:
-#   - Update ./RunStrategusStudy/RunStrategusConfiguration.R
-#   - Update ./Util/database/StrategusRunnerConnectionDetailsFactory.R
-#   - Update ./Util/database/StrategusRunnerReportingConnectionDetailsFactory.R
-#     (this step is only required if you are uploading results data)
-#   - Update the call to StrategusRunnerUtil$executeAnalysis below 
+#   - Define your configuration:
+#     Update ./RunStrategusStudy/RunStrategusConfiguration.R
+#   - Define your database connection:
+#     Update ./Util/database/StrategusRunnerConnectionDetailsFactory.R
+#   - Use your study definition:
+#     Update the call to StrategusRunnerUtil$executeAnalysis below 
 #     to use your json file and the name you want for the output folder.  
 # 
 # ---

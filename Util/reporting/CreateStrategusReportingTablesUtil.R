@@ -13,6 +13,7 @@ csrtu <- CreateStrategusReportingTablesUtil
 
 csrtu$resultsTableFolderRoot <- "C:/_YES/_STRATEGUS/HowOften/Output/covid-nachc-test-02/ERGASIA/strategusOutput"
 csrtu$resultsDatabaseSchemaCreationLogFolder <- "C:/temp/_DELETE_ME"
+csrtu$resultsDatabaseSchemaPrefix <- "COVID_HOMELESS_"
 csrtu$resultsDatabaseSchemaSuffixList <- c("NACHC")
 
 # ---
@@ -45,12 +46,13 @@ csrtu$dropAndRecreateSchema <- function(schemaName, connection) {
 # ---
 
 csrtu$initLogging <- function(resultsDatabaseSchemaCreationLogFolder) {
-  # Setup logging ----------------------------------------------------------------
+  # stdout logging
   ParallelLogger::clearLoggers()
   ParallelLogger::addDefaultFileLogger(
     fileName = file.path(resultsDatabaseSchemaCreationLogFolder, "results-schema-setup-log.txt"),
     name = "RESULTS_SCHEMA_SETUP_FILE_LOGGER"
   )
+  # stderr logging
   ParallelLogger::addDefaultErrorReportLogger(
     fileName = file.path(resultsDatabaseSchemaCreationLogFolder, 'results-schema-setup-errorReport.txt'),
     name = "RESULTS_SCHEMA_SETUP_ERROR_LOGGER"
@@ -66,12 +68,30 @@ csrtu$initLogging <- function(resultsDatabaseSchemaCreationLogFolder) {
 csrtu$getConnection <- function() {
   resultsDatabaseConnectionDetails <- DatabaseConnector::createConnectionDetails(
     dbms = "postgresql",
-    connectionString = "jdbc:postgresql://localhost:5432/OHDSI_RESULTS_DB?user=postgres&password=ohdsi&currentSchema=OHDSI_RESULTS_DB",
+    connectionString = "jdbc:postgresql://localhost:5432/OHDSI_HOMELESS_COVID_RESULTS_DB?user=postgres&password=ohdsi&currentSchema=OHDSI_HOMELESS_COVID_RESULTS_DB",
     pathToDriver = "D:/_YES/databases/postgres/drivers/42.3.3"
   )
   connection <- DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
 }
 
+# ---
+#
+# create a table for each module
+#
+# ---
+
+csrtu$createModuleTables <- function(moduleFolders, resultsDatabaseSchema, connection) {
+  message("Creating results tables in schema: ", resultsDatabaseSchema)
+  for (moduleFolder in moduleFolders) {
+    moduleName <- basename(moduleFolder)
+    if (csrtu$isModuleComplete(moduleFolder) == FALSE) {
+      warning("Module ", moduleName, " did not complete. Skipping table creation")
+    } else {
+      csrtu$createModuleTable(moduleName, moduleFolder, resultsDatabaseSchema, connection)
+    }
+  }
+}
+  
 # ---
 #
 # create a table for a module
@@ -92,6 +112,24 @@ csrtu$createModuleTable <- function(moduleName, moduleFolder, resultsDatabaseSch
     )
     DatabaseConnector::executeSql(connection = connection, sql = sql)
   }
+}
+
+# ---
+#
+# create a characterization table
+#
+# ---
+
+csrtu$createCharacterizationTable <- function(resultsDatabaseSchema, connection) {
+  message("Creating empty characterization tables in schema: ", resultsDatabaseSchema)
+  rdmsFile <- "./UploadResults/cc_resultsDataModelSpecification.csv"
+  specification <- CohortGenerator::readCsv(file = rdmsFile)
+  sql <- ResultModelManager::generateSqlSchema(csvFilepath = rdmsFile)
+  sql <- SqlRender::render(
+    sql = sql,
+    database_schema = resultsDatabaseSchema
+  )
+  DatabaseConnector::executeSql(connection = connection, sql = sql)
 }
 
 # ---
@@ -133,6 +171,7 @@ HowOftenResultsUpload <- function() {
   # init parameters
   resultsTableFolderRoot <- csrtu$resultsTableFolderRoot
   resultsDatabaseSchemaCreationLogFolder <- csrtu$resultsDatabaseSchemaCreationLogFolder
+  resultsDatabaseSchemaPrefix <- csrtu$resultsDatabaseSchemaPrefix
   resultsDatabaseSchemaSuffixList <- csrtu$resultsDatabaseSchemaSuffixList
 
   # init logging
@@ -146,42 +185,31 @@ HowOftenResultsUpload <- function() {
 
     # echo status
     message("Creating result tables based on definitions found in ", resultsTableFolderRoot)
-    
+
     # ---
     #
-    # create a module table for each module
-    # 
+    # create a separate schema for each data partner
+    #
     # ---
     
     for (schemaSuffix in resultsDatabaseSchemaSuffixList) {
-
+      resultsDatabaseSchema <- paste(resultsDatabaseSchemaPrefix, schemaSuffix, sep = "")
       # drop and recreate the schema
       writeLines(paste("DROPPING DATABASE SCHEMA: ", resultsDatabaseSchema))
       csrtu$dropAndRecreateSchema(resultsDatabaseSchema, connection)
       writeLines(paste("DROPPED DATABASE SCHEMA:  ", resultsDatabaseSchema))
       
-      # Skip over table creation if there are already tables created in
-      # the resultsDatabaseSchema
+      # ---
+      #
+      # create the data tables if the schema is empty
+      #
+      # ---
       
       if (csrtu$schemaIsEmpty(resultsDatabaseSchema, connection)) {
-        message("Creating results tables in schema: ", resultsDatabaseSchema)
-        for (moduleFolder in moduleFolders) {
-          moduleName <- basename(moduleFolder)
-          if (csrtu$isModuleComplete(moduleFolder) == FALSE) {
-            warning("Module ", moduleName, " did not complete. Skipping table creation")
-          } else {
-            csrtu$createModuleTable(moduleName, moduleFolder, resultsDatabaseSchema, connection)
-          }
-        }
-        message("Creating empty characterization tables in schema: ", resultsDatabaseSchema)
-        rdmsFile <- "./UploadResults/cc_resultsDataModelSpecification.csv"
-        specification <- CohortGenerator::readCsv(file = rdmsFile)
-        sql <- ResultModelManager::generateSqlSchema(csvFilepath = rdmsFile)
-        sql <- SqlRender::render(
-          sql = sql,
-          database_schema = resultsDatabaseSchema
-        )
-        DatabaseConnector::executeSql(connection = connection, sql = sql)
+        # create the module tables
+        csrtu$createModuleTables(moduleFolders, resultsDatabaseSchema, connection)
+        # create the characterization table
+        csrtu$createCharacterizationTable(resultsDatabaseSchema, connection)
       } else {
         message("SKIPPING - Results tables already exist")
       }
