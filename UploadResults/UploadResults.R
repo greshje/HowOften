@@ -27,8 +27,6 @@
 
 source("./Util/database/ReportingConnectionDetailsFactory.R")
 
-browser()
-
 # Set this to root of the results
 resultsFolderRoot <- 'D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy'
 
@@ -221,7 +219,7 @@ tryCatch({
   # to improve performance
   distictAnalyses <- unique(dfResultsFolders$analysis)
   for (analysis in distictAnalyses) {
-    resultsDatabaseSchema <- paste0("howoften_", analysis)
+    resultsDatabaseSchema <- analysis
     message("Analyzing all tables in results schema: ", resultsDatabaseSchema)
     sql <- "ANALYZE @schema.@table_name;"
     tableList <- DatabaseConnector::getTableNames(
