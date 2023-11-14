@@ -10,6 +10,10 @@ library(R6)
 StrategusRunnerDvo <- R6Class (
   classname = "StrategusRunnerDvo",
   public = list(
+
+    # data source
+    dataPartnerName = NULL,
+
     # file locations
     resultsLocation = NULL,
     outputLocation = NULL,
@@ -27,9 +31,8 @@ StrategusRunnerDvo <- R6Class (
     # cdm connection info
     dbms = NULL,
     pathToDriver = NULL,
-    cdmConnectionDetailsReference = NULL,
     cdmConnectionDetails = NULL,
-    
+
     # connection and execution details
     executionSettings = NULL,
     

@@ -23,9 +23,9 @@ RunStrategusConfiguration$configure <- function (dvo) {
   # *************************************
   
   # file locations
-  dvo$resultsLocation <- "D:/_YES/_STRATEGUS/HowOften/Output"
-  dvo$outputLocation <- "D:/_YES/_STRATEGUS/HowOften"
-  dvo$loggingOutputLocation <- "D:/_YES/_STRATEGUS/HowOften"
+  dvo$resultsLocation <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/Output"
+  dvo$outputLocation <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy"
+  dvo$loggingOutputLocation <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/loggingOutput"
   # database schemas
   dvo$workDatabaseSchema <- "how_often_scratch"
   dvo$cohortTableName <- "howoften_cohort"
@@ -36,9 +36,9 @@ RunStrategusConfiguration$configure <- function (dvo) {
   # connection info
   dvo$dbms = "spark"
   dvo$pathToDriver="D:\\_YES_2023-05-28\\workspace\\SosExamples\\_COVID\\02-data-diagnostics\\drivers\\databricks\\"
-  # references to stored values (these can be anything)
-  dvo$cdmConnectionDetailsReference <- "ERGASIA"
-  
+  # data source name
+  dvo$dataPartnerName <- "NACHC"
+
   # *************************************
   # *** END CONFIGURATION             ***
   # *************************************

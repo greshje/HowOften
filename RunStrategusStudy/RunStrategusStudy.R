@@ -23,5 +23,8 @@ dvo <- StrategusRunnerUtil$initRun()
 #
 # ---
 
-StrategusRunnerUtil$executeAnalysis("./RunStrategusStudy/json/FromNachc/nachc-covid-homeless.json", "covid-nachc-test-02", dvo)
+StrategusRunnerUtil$executeAnalysis(
+  "./RunStrategusStudy/json/FromNachc/nachc-covid-homeless.json", 
+  "EFFECT_OF_HOMELESS_ON_COVID_VACCINATIONS", 
+  dvo)
 

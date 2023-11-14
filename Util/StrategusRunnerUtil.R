@@ -110,12 +110,12 @@ StrategusRunnerUtil$initRun <- function() {
 StrategusRunnerUtil$createExecutionsSettings <- function(dvo) {
   class(dvo) <- "StrategusRunnerDvo"
   executionSettings <- Strategus::createCdmExecutionSettings(
-    connectionDetailsReference = dvo$cdmConnectionDetailsReference,
+    connectionDetailsReference = dvo$dataPartnerName,
     workDatabaseSchema = dvo$workDatabaseSchema,
     cdmDatabaseSchema = dvo$cdmDatabaseSchema,
     cohortTableNames = CohortGenerator::getCohortTableNames(cohortTable = dvo$cohortTableName),
-    workFolder = file.path(dvo$outputLocation, dvo$cdmConnectionDetailsReference, "strategusWork"),
-    resultsFolder = file.path(dvo$outputLocation, dvo$cdmConnectionDetailsReference, "strategusOutput"),
+    workFolder = file.path(dvo$outputLocation, dvo$dataPartnerName, "strategusWork"),
+    resultsFolder = file.path(dvo$outputLocation, dvo$dataPartnerName, "strategusOutput"),
     minCellCount = dvo$minCellCount
   )
   return(executionSettings)
@@ -146,6 +146,8 @@ StrategusRunnerUtil$executeAnalysis <- function (
     analysisName, 
     dvo) {
 
+  browser()
+  
   class(dvo) <- "StrategusRunnerDvo"
   executionSettings <- dvo$executionSettings
   outputLocation <- dvo$outputLocation
@@ -164,7 +166,7 @@ StrategusRunnerUtil$executeAnalysis <- function (
     executionSettings = dvo$executionSettings,
     executionScriptFolder = file.path(
       dvo$outputLocation, 
-      dvo$cdmConnectionDetailsReference, 
+      dvo$dataPartnerName, 
       "strategusExecution"),
     keyringName = StrategusRunnerUtil$keyringName
   )
@@ -173,13 +175,13 @@ StrategusRunnerUtil$executeAnalysis <- function (
   resultsDir <- file.path (
     resultsLocation, 
     analysisName, 
-    dvo$cdmConnectionDetailsReference)
+    dvo$dataPartnerName)
   if (dir.exists(resultsDir)) {
     unlink(resultsDir, recursive = TRUE)
   }
   dir.create(file.path(resultsDir), recursive = TRUE)
   file.copy(
-    file.path(dvo$outputLocation, dvo$cdmConnectionDetailsReference, "strategusOutput"),
+    file.path(dvo$outputLocation, dvo$dataPartnerName, "strategusOutput"),
     file.path(resultsDir), recursive = TRUE
   )
   

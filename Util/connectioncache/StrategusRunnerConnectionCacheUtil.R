@@ -96,7 +96,7 @@ StrategusRunnerConnectionCacheUtil$storeConnectionDetails <- function(dvo) {
   # save the cdm connection details for strategus
   Strategus::storeConnectionDetails(
     connectionDetails = dvo$cdmConnectionDetails,
-    connectionDetailsReference = dvo$cdmConnectionDetailsReference,
+    connectionDetailsReference = dvo$dataPartnerName,
     keyringName = keyringName
   )
 }

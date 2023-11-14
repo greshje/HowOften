@@ -13,7 +13,7 @@ csrtu <- CreateStrategusReportingTablesUtil
 
 csrtu$resultsTableFolderRoot <- "C:/_YES/_STRATEGUS/HowOften/Output/covid-nachc-test-02/ERGASIA/strategusOutput"
 csrtu$resultsDatabaseSchemaCreationLogFolder <- "C:/temp/_DELETE_ME"
-csrtu$resultsDatabaseSchemaSuffixList <- c("ERGASIA")
+csrtu$resultsDatabaseSchemaSuffixList <- c("NACHC")
 
 # ---
 #
@@ -38,6 +38,12 @@ csrtu$dropAndRecreateSchema <- function(schemaName, connection) {
   csrtu$createSchema(schemaName, connection)
 }
 
+# ---
+#
+# logging
+# 
+# ---
+
 csrtu$initLogging <- function(resultsDatabaseSchemaCreationLogFolder) {
   # Setup logging ----------------------------------------------------------------
   ParallelLogger::clearLoggers()
@@ -51,6 +57,12 @@ csrtu$initLogging <- function(resultsDatabaseSchemaCreationLogFolder) {
   )
 }
 
+# ---
+#
+# database connection
+# 
+# --
+
 csrtu$getConnection <- function() {
   resultsDatabaseConnectionDetails <- DatabaseConnector::createConnectionDetails(
     dbms = "postgresql",
@@ -60,11 +72,11 @@ csrtu$getConnection <- function() {
   connection <- DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
 }
 
-csrtu$isModuleComplete <- function(moduleFolder) {
-  doneFileFound <- (length(list.files(path = moduleFolder, pattern = "done")) > 0)
-  isDatabaseMetaDataFolder <- basename(moduleFolder) == "DatabaseMetaData"
-  return(doneFileFound || isDatabaseMetaDataFolder)
-}
+# ---
+#
+# create a table for a module
+#
+# ---
 
 csrtu$createModuleTable <- function(moduleName, moduleFolder, resultsDatabaseSchema, connection) {
   message("- Creating results for module ", moduleName)
@@ -82,6 +94,24 @@ csrtu$createModuleTable <- function(moduleName, moduleFolder, resultsDatabaseSch
   }
 }
 
+# ---
+#
+# did the module complete
+#
+# ---
+
+csrtu$isModuleComplete <- function(moduleFolder) {
+  doneFileFound <- (length(list.files(path = moduleFolder, pattern = "done")) > 0)
+  isDatabaseMetaDataFolder <- basename(moduleFolder) == "DatabaseMetaData"
+  return(doneFileFound || isDatabaseMetaDataFolder)
+}
+
+# ---
+#
+# is the schema empty
+#
+# ---
+
 csrtu$schemaIsEmpty <- function(resultsDatabaseSchema, connection) {
   tables <- DatabaseConnector::getTableNames(
     connection = connection,
@@ -94,6 +124,10 @@ csrtu$schemaIsEmpty <- function(resultsDatabaseSchema, connection) {
   }
 }
 
+# ----------------------------------------------------------------------------
+# method to create database tables
+# ----------------------------------------------------------------------------
+
 HowOftenResultsUpload <- function() {
   
   # init parameters
@@ -103,20 +137,25 @@ HowOftenResultsUpload <- function() {
 
   # init logging
   csrtu$initLogging(resultsDatabaseSchemaCreationLogFolder)
-  
   # get a database connection
   connection <- csrtu$getConnection()
-    
-  # Create the tables ------------------------
+  # get the modules (studies)
   moduleFolders <- list.dirs(path = resultsTableFolderRoot, recursive = FALSE)
 
   tryCatch({
-    # Iterate over the results schema suffixes listed in resultsDatabaseSchemaSuffixList
-    # and create the tables for each results schema
+
+    # echo status
     message("Creating result tables based on definitions found in ", resultsTableFolderRoot)
+    
+    # ---
+    #
+    # create a module table for each module
+    # 
+    # ---
+    
     for (schemaSuffix in resultsDatabaseSchemaSuffixList) {
-      resultsDatabaseSchema <- paste0("howoften_", schemaSuffix)
-      
+
+      # drop and recreate the schema
       writeLines(paste("DROPPING DATABASE SCHEMA: ", resultsDatabaseSchema))
       csrtu$dropAndRecreateSchema(resultsDatabaseSchema, connection)
       writeLines(paste("DROPPED DATABASE SCHEMA:  ", resultsDatabaseSchema))
