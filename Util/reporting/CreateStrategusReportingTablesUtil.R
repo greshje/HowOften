@@ -82,6 +82,17 @@ csrtu$createModuleTable <- function(moduleName, moduleFolder, resultsDatabaseSch
   }
 }
 
+csrtu$schemaIsEmpty <- function(resultsDatabaseSchema, connection) {
+  tables <- DatabaseConnector::getTableNames(
+    connection = connection,
+    databaseSchema = resultsDatabaseSchema
+  )
+  if(length(tables) == 0) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
 
 HowOftenResultsUpload <- function() {
   
@@ -112,11 +123,8 @@ HowOftenResultsUpload <- function() {
       
       # Skip over table creation if there are already tables created in
       # the resultsDatabaseSchema
-      tables <- DatabaseConnector::getTableNames(
-        connection = connection,
-        databaseSchema = resultsDatabaseSchema
-      )
-      if (length(tables) == 0) {
+      
+      if (csrtu$schemaIsEmpty(resultsDatabaseSchema, connection)) {
         message("Creating results tables in schema: ", resultsDatabaseSchema)
         for (moduleFolder in moduleFolders) {
           moduleName <- basename(moduleFolder)
