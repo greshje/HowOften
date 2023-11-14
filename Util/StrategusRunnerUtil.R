@@ -169,9 +169,7 @@ StrategusRunnerUtil$executeAnalysis <- function (
     keyringName = StrategusRunnerUtil$keyringName
   )
 
-  browser()
-
-    # copy Results to final location
+  # copy Results to final location
   resultsDir <- file.path (
     resultsLocation, 
     analysisName, 

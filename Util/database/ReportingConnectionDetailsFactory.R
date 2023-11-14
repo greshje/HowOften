@@ -9,17 +9,11 @@
 ReportingConnectionDetailsUtil <- {}
 
 ReportingConnectionDetailsUtil$createConnectionDetails <- function() {
-  # connection parameters
-  dbms <- "postgresql"
-  pathToDriver <- "C:/_YES/databases/postgres/drivers/42.3.3"
-  connectionString <- "jdbc:postgresql://localhost:5432/?user=postgres&password=ohdsi&currentSchema=OHDSI_HOMELESS_COVID_RESULTS_DB"
-  # create the connection details object
-  rtn <- DatabaseConnector::createConnectionDetails (
-    dbms = dbms,
-    pathToDriver = pathToDriver,
-    connectionString = connectionString
+  resultsDatabaseConnectionDetails <- DatabaseConnector::createConnectionDetails(
+    dbms = "postgresql",
+    connectionString = "jdbc:postgresql://localhost:5432/OHDSI_HOMELESS_COVID_RESULTS_DB?user=postgres&password=ohdsi&currentSchema=OHDSI_HOMELESS_COVID_RESULTS_DB",
+    pathToDriver = "D:/_YES/databases/postgres/drivers/42.3.3"
   )
-  # done
-  return(rtn)
+  return(resultsDatabaseConnectionDetails)
 }
 

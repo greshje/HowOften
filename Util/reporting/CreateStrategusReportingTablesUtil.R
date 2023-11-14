@@ -1,5 +1,5 @@
 
-# source("./Util/database/ReportingConnectionDetailsFactory.R")
+source("./Util/database/ReportingConnectionDetailsFactory.R")
 
 CreateStrategusReportingTablesUtil <- {}
 
@@ -7,11 +7,22 @@ csrtu <- CreateStrategusReportingTablesUtil
 
 # ---
 #
+# database connection
+# 
+# --
+
+csrtu$getConnection <- function() {
+  resultsDatabaseConnectionDetails <- ReportingConnectionDetailsUtil$createConnectionDetails()
+  connection <- DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
+}
+
+# ---
+#
 # configuration
 #
 # ---
 
-csrtu$resultsTableFolderRoot <- "C:/_YES/_STRATEGUS/HowOften/Output/covid-nachc-test-02/ERGASIA/strategusOutput"
+csrtu$resultsTableFolderRoot <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/Results/covid_homeless_nachc/NACHC/strategusOutput"
 csrtu$resultsDatabaseSchemaCreationLogFolder <- "C:/temp/_DELETE_ME"
 csrtu$resultsDatabaseSchemaPrefix <- "COVID_HOMELESS_"
 csrtu$resultsDatabaseSchemaSuffixList <- c("NACHC")
@@ -57,21 +68,6 @@ csrtu$initLogging <- function(resultsDatabaseSchemaCreationLogFolder) {
     fileName = file.path(resultsDatabaseSchemaCreationLogFolder, 'results-schema-setup-errorReport.txt'),
     name = "RESULTS_SCHEMA_SETUP_ERROR_LOGGER"
   )
-}
-
-# ---
-#
-# database connection
-# 
-# --
-
-csrtu$getConnection <- function() {
-  resultsDatabaseConnectionDetails <- DatabaseConnector::createConnectionDetails(
-    dbms = "postgresql",
-    connectionString = "jdbc:postgresql://localhost:5432/OHDSI_HOMELESS_COVID_RESULTS_DB?user=postgres&password=ohdsi&currentSchema=OHDSI_HOMELESS_COVID_RESULTS_DB",
-    pathToDriver = "D:/_YES/databases/postgres/drivers/42.3.3"
-  )
-  connection <- DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
 }
 
 # ---

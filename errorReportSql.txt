@@ -2,20 +2,10 @@ DBMS:
 postgresql
 
 Error:
-org.postgresql.util.PSQLException: ERROR: schema "delete_me" does not exist
-  Position: 14
+org.postgresql.util.PSQLException: ERROR: schema "howoften_covid_homeless_nachc" does not exist
 
 SQL:
-CREATE TABLE DELETE_ME.cg_cohort_definition (
-  	 cohort_definition_id BIGINT NOT NULL,
-	 cohort_name VARCHAR,
-	 description VARCHAR,
-	 json TEXT,
-	 sql_command TEXT,
-	 subset_parent BIGINT,
-	 is_subset INT,
-	 subset_definition_id BIGINT
-)
+ANALYZE howoften_covid_homeless_nachc.NA
 
 R version:
 R version 4.3.2 (2023-10-31 ucrt)

@@ -25,8 +25,12 @@
 #    and this script will upload them if a "done" file is found in the
 #    individual <StrategusModule> folder.
 
+source("./Util/database/ReportingConnectionDetailsFactory.R")
+
+browser()
+
 # Set this to root of the results
-resultsFolderRoot <- 'D:/projects/HowOften'
+resultsFolderRoot <- 'D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy'
 
 # Set this to c() if not using the analysis filtering.
 # This will then upload all analyses results found in each
@@ -118,9 +122,9 @@ for (analysis in analysesInResults) {
     databaseFoldersInResults <- databaseFoldersInResultsFiltered
   }
   # Add to the data.frame that contains the list of results to upload
-  dfResultsFolders <- rbind(
+  dfResultsFolders <- rbind (
     dfResultsFolders,
-    data.frame(
+    data.frame (
       analysis = analysis,
       database = databaseFoldersInResults,
       strategusResultsFolder = file.path(resultsFolderRoot, "Results", analysis, databaseFoldersInResults, "strategusOutput")
@@ -133,13 +137,7 @@ if (nrow(dfResultsFolders) == 0) {
 }
 
 # Connect to the database ------------------------------------------------------
-resultsDatabaseConnectionDetails <- DatabaseConnector::createConnectionDetails(
-  dbms = "postgresql",
-  server = Sys.getenv("OHDSI_RESULTS_DB"),
-  user = Sys.getenv("OHDSI_HO_USER"),
-  password = Sys.getenv("OHDSI_HO_PASSWORD")
-)
-
+resultsDatabaseConnectionDetails <- ReportingConnectionDetailsUtil$createConnectionDetails()
 connection <- DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
 
 # Upload results -----------------
@@ -178,7 +176,7 @@ tryCatch({
   for (i in 1:nrow(dfResultsFolders)) {
     resultFolder <- dfResultsFolders[i,]
     message("Loading results for analysis: ", resultFolder$analysis, ", database: ", resultFolder$database, " in ", resultFolder$strategusResultsFolder)
-    resultsDatabaseSchema <- paste0("howoften_", resultFolder$analysis)
+    resultsDatabaseSchema <- resultFolder$analysis
     moduleFolders <- list.dirs(path = resultFolder$strategusResultsFolder, recursive = FALSE)
     for (moduleFolder in moduleFolders) {
       moduleName <- basename(moduleFolder)
@@ -200,6 +198,7 @@ tryCatch({
           }
           specification <- CohortGenerator::readCsv(file = rdmsFile)
           runCheckAndFixCommands = grepl("CohortDiagnostics", moduleName)
+          
           ResultModelManager::uploadResults(
             connection = connection,
             schema = resultsDatabaseSchema,
@@ -212,6 +211,7 @@ tryCatch({
             runCheckAndFixCommands = runCheckAndFixCommands,
             specifications = specification
           )
+          
         }
       }
     }

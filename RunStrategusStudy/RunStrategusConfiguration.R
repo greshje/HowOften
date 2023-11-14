@@ -23,7 +23,7 @@ RunStrategusConfiguration$configure <- function (dvo) {
   # *************************************
   
   # file locations
-  dvo$resultsLocation <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/Output"
+  dvo$resultsLocation <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/Results"
   dvo$outputLocation <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy"
   dvo$loggingOutputLocation <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/loggingOutput"
   # database schemas
