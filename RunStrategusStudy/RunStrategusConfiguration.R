@@ -27,10 +27,10 @@ RunStrategusConfiguration$configure <- function (dvo) {
   dvo$outputLocation <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy"
   dvo$loggingOutputLocation <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/loggingOutput"
   # database schemas
-  dvo$workDatabaseSchema <- "how_often_scratch"
-  dvo$cohortTableName <- "howoften_cohort"
   dvo$cdmDatabaseSchema <- "covid_ohdsi"
-  dvo$sqlRenderTempEmulationSchema <- "how_often_temp"
+  dvo$workDatabaseSchema <- "covid_ohdsi_scratch"
+  dvo$cohortTableName <- "covid_ohdsi_cohort"
+  dvo$sqlRenderTempEmulationSchema <- "covid_ohdsi_temp"
   # minimum number of cells
   dvo$minCellCount <- 5
   # connection info

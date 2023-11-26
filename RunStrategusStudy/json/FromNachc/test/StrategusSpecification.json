@@ -63,7 +63,7 @@
   "moduleSpecifications": [
     {
       "module": "CohortGeneratorModule",
-      "version": "0.1.0",
+      "version": "0.2.2-2",
       "remoteRepo": "github.com",
       "remoteUsername": "ohdsi",
       "settings": {
@@ -225,7 +225,7 @@
             "minPriorObservation": 0,
             "riskWindowStart": 1,
             "startAnchor": "cohort start",
-            "riskWindowEnd": 0,
+            "riskWindowEnd": 180,
             "endAnchor": "cohort end",
             "covariateSettings": {
               "temporal": false,

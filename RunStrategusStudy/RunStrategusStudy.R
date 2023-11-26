@@ -24,9 +24,11 @@ dvo <- StrategusRunnerUtil$initRun()
 #
 # ---
 
+# filePath <- "./RunStrategusStudy/json/FromNachc/nachc-covid-homeless.json"
+filePath <- "C:/_YES/workspace/HowOften/RunStrategusStudy/json/FromNachc/nachc-covid-homeless.json"
 StrategusRunnerUtil$executeAnalysis (
-  "./RunStrategusStudy/json/FromNachc/nachc-covid-homeless.json", 
-  "covid_homeless_nachc", 
+  filePath,
+  "covid_homeless_nachc_test01", 
   dvo
 )
 
