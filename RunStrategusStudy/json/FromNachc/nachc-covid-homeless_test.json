@@ -73,73 +73,8 @@
       "attr_class": ["CohortGeneratorModuleSpecifications", "ModuleSpecifications"]
     },
     {
-      "module": "CohortIncidenceModule",
-      "version": "0.2.0",
-      "remoteRepo": "github.com",
-      "remoteUsername": "ohdsi",
-      "settings": {
-        "irDesign": {
-          "targetDefs": [
-            {
-              "id": 1,
-              "name": "Homeless"
-            },
-            {
-              "id": 2,
-              "name": "Not Homeless"
-            }
-          ],
-          "outcomeDefs": [
-            {
-              "id": 4,
-              "name": "Vaccinated",
-              "cohortId": 3,
-              "cleanWindow": 9999
-            }
-          ],
-          "timeAtRiskDefs": [
-            {
-              "id": 1,
-              "start": {
-                "dateField": "start",
-                "offset": 0
-              },
-              "end": {
-                "dateField": "end",
-                "offset": 0
-              }
-            },
-            {
-              "id": 2,
-              "start": {
-                "dateField": "start",
-                "offset": 0
-              },
-              "end": {
-                "dateField": "start",
-                "offset": 180
-              }
-            }
-          ],
-          "analysisList": [
-            {
-              "targets": [1, 2],
-              "outcomes": 1,
-              "tars": [1, 2]
-            }
-          ],
-          "strataSettings": {
-            "byAge": false,
-            "byGender": true,
-            "byYear": true
-          }
-        }
-      },
-      "attr_class": ["CohortIncidenceModuleSpecifications", "ModuleSpecifications"]
-    },
-    {
       "module": "CohortMethodModule",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "remoteRepo": "github.com",
       "remoteUsername": "ohdsi",
       "settings": {
@@ -153,7 +88,7 @@
               "firstExposureOnly": true,
               "removeDuplicateSubjects": "remove all",
               "restrictToCommonPeriod": false,
-              "washoutPeriod": 183,
+              "washoutPeriod": 0,
               "maxCohortSize": 100000,
               "covariateSettings": {
                 "temporal": false,
@@ -265,7 +200,7 @@
               "firstExposureOnly": true,
               "removeDuplicateSubjects": "remove all",
               "restrictToCommonPeriod": false,
-              "washoutPeriod": 183,
+              "washoutPeriod": 0,
               "maxCohortSize": 100000,
               "covariateSettings": {
                 "temporal": false,

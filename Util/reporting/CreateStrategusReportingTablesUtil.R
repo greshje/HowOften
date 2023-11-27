@@ -206,7 +206,7 @@ HowOftenResultsUpload <- function() {
         # create the module tables
         csrtu$createModuleTables(moduleFolders, resultsDatabaseSchema, connection)
         # create the characterization table
-#        csrtu$createCharacterizationTable(resultsDatabaseSchema, connection)
+        csrtu$createCharacterizationTable(resultsDatabaseSchema, connection)
       } else {
         message("SKIPPING - Results tables already exist")
       }
