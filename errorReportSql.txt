@@ -2,10 +2,19 @@ DBMS:
 postgresql
 
 Error:
-org.postgresql.util.PSQLException: ERROR: schema "howoften_covid_homeless_nachc" does not exist
+org.postgresql.util.PSQLException: ERROR: relation "c_time_to_event" already exists
 
 SQL:
-ANALYZE howoften_covid_homeless_nachc.NA
+CREATE TABLE COVID_HOMELESS_NACHC.c_time_to_event (
+  	 database_id VARCHAR(100),
+	 target_cohort_definition_id BIGINT,
+	 outcome_cohort_definition_id BIGINT,
+	 outcome_type VARCHAR(100),
+	 target_outcome_type VARCHAR(40),
+	 time_to_event INT,
+	 num_events INT,
+	 time_scale VARCHAR(20)
+)
 
 R version:
 R version 4.3.2 (2023-10-31 ucrt)

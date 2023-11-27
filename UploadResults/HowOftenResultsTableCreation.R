@@ -4,16 +4,40 @@
 # Set the resultsTableFolderRoot to the location that holds one database's
 # full results. Since we only need to create tables 1 time per results schema,
 # we can use the same folder to create all of the tables.
-resultsTableFolderRoot <- "E:/HowOften/2023_10_15_HowOften_Results/Results/andreas/truven_mdcd/strategusOutput"
-resultsDatabaseSchemaCreationLogFolder <- "E:/HowOften"
+
+
+
+
+HowOftenResultsUpload <- function() {
+  
+  
+# ---
+#
+# drop and create schema functions
+#
+# ---
+
+dropSchema <- function(schemaName, connection) {
+  writeLines(paste("Droping schema if exists: ", schemaName))
+  sqlString <- paste("drop schema if exists ", schemaName, " cascade")
+  DatabaseConnector::executeSql(connection, sqlString)
+}
+
+createSchema <- function(schemaName, connection) {
+  writeLines(paste("Creating schema: ", schemaName))
+  sqlString <- paste("create schema ", schemaName)
+  DatabaseConnector::executeSql(connection, sqlString)
+}  
+
+dropAndRecreateSchema <- function(schemaName, connection) {
+  dropSchema(schemaName, connection)
+  createSchema(schemaName, connection)
+}  
+
+resultsTableFolderRoot <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/Results/covid_homeless_nachc_test01/NACHC/strategusOutput"
+resultsDatabaseSchemaCreationLogFolder <- "C:/temp/_DELETE_ME"
 resultsDatabaseSchemaSuffixList <- c(
-  "andreas",
-  "azza",
-  "evan",
-  "george",
-  "gowza",
-  "joel",
-  "overall"
+  "NACHC"
 )
 
 # Setup logging ----------------------------------------------------------------
@@ -30,16 +54,16 @@ ParallelLogger::addDefaultErrorReportLogger(
 # Connect to the database ------------------------------------------------------
 resultsDatabaseConnectionDetails <- DatabaseConnector::createConnectionDetails(
   dbms = "postgresql",
-  server = Sys.getenv("OHDSI_RESULTS_DB"),
-  user = Sys.getenv("OHDSI_HO_USER"),
-  password = Sys.getenv("OHDSI_HO_PASSWORD")
+  connectionString = "jdbc:postgresql://localhost:5432/OHDSI_HOMELESS_COVID_RESULTS_DB?user=postgres&password=ohdsi&currentSchema=OHDSI_HOMELESS_COVID_RESULTS_DB",
+  pathToDriver = "D:/_YES/databases/postgres/drivers/42.3.3"
 )
+
 connection <- DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
 
+dropAndRecreateSchema("covid_homeless_nachc", connection)
+
 # Create the tables ------------------------
-
 moduleFolders <- list.dirs(path = resultsTableFolderRoot, recursive = FALSE)
-
 isModuleComplete <- function(moduleFolder) {
   doneFileFound <- (length(list.files(path = moduleFolder, pattern = "done")) > 0)
   isDatabaseMetaDataFolder <- basename(moduleFolder) == "DatabaseMetaData"
@@ -50,15 +74,8 @@ tryCatch({
   # Iterate over the results schema suffixes listed in resultsDatabaseSchemaSuffixList
   # and create the tables for each results schema
   message("Creating result tables based on definitions found in ", resultsTableFolderRoot)
-  
-  # ---
-  # 
-  # THIS IS THE LOOP FOR EACH STUDY
-  #
-  # ---
-  
   for (schemaSuffix in resultsDatabaseSchemaSuffixList) {
-    resultsDatabaseSchema <- paste0("howoften_", schemaSuffix)
+    resultsDatabaseSchema <- paste0("covid_homeless_", schemaSuffix)
     # Skip over table creation if there are already tables created in
     # the resultsDatabaseSchema
     tables <- DatabaseConnector::getTableNames(
@@ -87,15 +104,15 @@ tryCatch({
           }
         }
       }
-      message("Creating empty characterization tables in schema: ", resultsDatabaseSchema)
-      rdmsFile <- "./ResultsUpload/cc_resultsDataModelSpecification.csv"
-      specification <- CohortGenerator::readCsv(file = rdmsFile)
-      sql <- ResultModelManager::generateSqlSchema(csvFilepath = rdmsFile)
-      sql <- SqlRender::render(
-        sql = sql,
-        database_schema = resultsDatabaseSchema
-      )
-      DatabaseConnector::executeSql(connection = connection, sql = sql)
+#      message("Creating empty characterization tables in schema: ", resultsDatabaseSchema)
+#      rdmsFile <- "./UploadResults/cc_resultsDataModelSpecification.csv"
+#      specification <- CohortGenerator::readCsv(file = rdmsFile)
+#      sql <- ResultModelManager::generateSqlSchema(csvFilepath = rdmsFile)
+#      sql <- SqlRender::render(
+#        sql = sql,
+#        database_schema = resultsDatabaseSchema
+#      )
+#      DatabaseConnector::executeSql(connection = connection, sql = sql)
     } else {
       message("SKIPPING - Results tables already exist")
     }
@@ -109,4 +126,10 @@ finally = {
   ParallelLogger::unregisterLogger("RESULTS_SCHEMA_SETUP_FILE_LOGGER")
   ParallelLogger::unregisterLogger("RESULTS_SCHEMA_SETUP_ERROR_LOGGER")
 })
+
+}
+
+# debugonce(HowOftenResultsUpload)
+
+HowOftenResultsUpload()
 

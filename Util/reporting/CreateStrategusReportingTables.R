@@ -1,4 +1,3 @@
-
 source("./Util/reporting/CreateStrategusReportingTablesUtil.R")
 
 rootDir <- "C:/_YES/_STRATEGUS/HowOften/Output/covid-nachc-test-02/ERGASIA/strategusOutput"

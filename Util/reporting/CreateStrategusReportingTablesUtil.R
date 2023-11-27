@@ -1,5 +1,5 @@
 
-source("./Util/database/ReportingConnectionDetailsFactory.R")
+source("./Util/reporting/ReportingConnectionDetailsFactory.R")
 
 CreateStrategusReportingTablesUtil <- {}
 
@@ -22,8 +22,8 @@ csrtu$getConnection <- function() {
 #
 # ---
 
-csrtu$resultsTableFolderRoot <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/Results/covid_homeless_nachc/NACHC/strategusOutput"
-csrtu$resultsDatabaseSchemaCreationLogFolder <- "C:/temp/_DELETE_ME"
+csrtu$resultsTableFolderRoot <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/Results/nachc/NACHC/strategusOutput"
+csrtu$resultsDatabaseSchemaCreationLogFolder <- "C:/temp"
 csrtu$resultsDatabaseSchemaPrefix <- "COVID_HOMELESS_"
 csrtu$resultsDatabaseSchemaSuffixList <- c("NACHC")
 
@@ -97,6 +97,7 @@ csrtu$createModuleTables <- function(moduleFolders, resultsDatabaseSchema, conne
 csrtu$createModuleTable <- function(moduleName, moduleFolder, resultsDatabaseSchema, connection) {
   message("- Creating results for module ", moduleName)
   rdmsFile <- file.path(moduleFolder, "resultsDataModelSpecification.csv")
+  message(rdmsFile)
   if (file.exists(rdmsFile) == FALSE) {
     stop("resultsDataModelSpecification.csv not found in ", moduleFolder)
   } else {
@@ -205,7 +206,7 @@ HowOftenResultsUpload <- function() {
         # create the module tables
         csrtu$createModuleTables(moduleFolders, resultsDatabaseSchema, connection)
         # create the characterization table
-        csrtu$createCharacterizationTable(resultsDatabaseSchema, connection)
+#        csrtu$createCharacterizationTable(resultsDatabaseSchema, connection)
       } else {
         message("SKIPPING - Results tables already exist")
       }

@@ -14,7 +14,7 @@
 #   |       +-- strategusOutput
 #   |         +-- <StrategusModule>
 # 2. The list of <analysis> folders (see above) matches the individual
-#    HowOften analyses. These analyses are stored in the vector
+#    HowOften analyses. These analyses are stored in the vector 
 #    howOftenAnalyses. This script assumes that all of the howOftenAnalyses
 #    have a folder in the results even if no results were calcuated.
 # 3. You may choose to filter the <database> list by using the 
@@ -25,52 +25,27 @@
 #    and this script will upload them if a "done" file is found in the
 #    individual <StrategusModule> folder.
 
-source("./Util/database/ReportingConnectionDetailsFactory.R")
-
 # Set this to root of the results
-resultsFolderRoot <- 'D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy'
+resultsFolderRoot <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy"
 
 # Set this to c() if not using the analysis filtering.
 # This will then upload all analyses results found in each
 # analysis directory
-howOftenAnalysesFilterList <- c(
-  #  "andreas",
-  #  "azza",
-  #  "evan",
-  #  "george",
-  #  "gowza",
-  #  "joel",
-  #  "overall"
-)
+howOftenAnalysesFilterList <- c()
 
 # Set this to c() if not using the database filtering.
 # This will then upload all database results found 
 # in each analysis directory
-databaseFilterList <- c(
-  # "truven_ccae",
-  # "truven_mdcd",
-  # "truven_mdcr",
-  # "iqvia_pharmetrics_plus",
-  # "optum_extended_ses",
-  # "optum_ehr",
-  # "iqvia_amb_emr",
-  # "CUIMC OMOP 2023q3r1",
-  # "ims_australia_lpd",
-  # "ims_france",
-  # "ims_germany",
-  # "jmdc"
-)
+databaseFilterList <- c()
 
 # Traverse results to obtain list of results for upload ------------------------
 dfResultsFolders <- data.frame()
-
 # Get the list of analyses directories in the results
-analysesInResults <- list.dirs (
+analysesInResults <- list.dirs(
   path = file.path(resultsFolderRoot, "Results"),
   recursive = FALSE,
   full.names = FALSE
 )
-
 if (length(howOftenAnalysesFilterList) > 0) {
   howOftenAnalysesFiltered <- intersect(
     x = analysesInResults, 
@@ -120,9 +95,9 @@ for (analysis in analysesInResults) {
     databaseFoldersInResults <- databaseFoldersInResultsFiltered
   }
   # Add to the data.frame that contains the list of results to upload
-  dfResultsFolders <- rbind (
+  dfResultsFolders <- rbind(
     dfResultsFolders,
-    data.frame (
+    data.frame(
       analysis = analysis,
       database = databaseFoldersInResults,
       strategusResultsFolder = file.path(resultsFolderRoot, "Results", analysis, databaseFoldersInResults, "strategusOutput")
@@ -135,7 +110,12 @@ if (nrow(dfResultsFolders) == 0) {
 }
 
 # Connect to the database ------------------------------------------------------
-resultsDatabaseConnectionDetails <- ReportingConnectionDetailsUtil$createConnectionDetails()
+resultsDatabaseConnectionDetails <- DatabaseConnector::createConnectionDetails(
+  dbms = "postgresql",
+  connectionString = "jdbc:postgresql://localhost:5432/OHDSI_HOMELESS_COVID_RESULTS_DB?user=postgres&password=ohdsi&currentSchema=OHDSI_HOMELESS_COVID_RESULTS_DB",
+  pathToDriver = "D:/_YES/databases/postgres/drivers/42.3.3"
+)
+
 connection <- DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
 
 # Upload results -----------------
@@ -144,21 +124,6 @@ isModuleComplete <- function(moduleFolder) {
   isDatabaseMetaDataFolder <- basename(moduleFolder) == "DatabaseMetaData"
   return(doneFileFound || isDatabaseMetaDataFolder)
 }
-
-deletePriorCIResults <- function(con, schemaName, databaseId) {
-  message("- Removing CI Results from ", schemaName, " for databaseId [", databaseId, "]")
-  sql <- "DELETE FROM @schema.ci_incidence_summary WHERE database_id = '@database_id'"
-  DatabaseConnector::renderTranslateExecuteSql(
-    connection = con,
-    sql = sql,
-    schema = schemaName,
-    database_id = databaseId,
-    progressBar = FALSE,
-    reportOverallTime = FALSE
-  )
-  
-}
-
 # Setup logging ----------------------------------------------------------------
 ParallelLogger::clearLoggers()
 ParallelLogger::addDefaultFileLogger(
@@ -174,7 +139,7 @@ tryCatch({
   for (i in 1:nrow(dfResultsFolders)) {
     resultFolder <- dfResultsFolders[i,]
     message("Loading results for analysis: ", resultFolder$analysis, ", database: ", resultFolder$database, " in ", resultFolder$strategusResultsFolder)
-    resultsDatabaseSchema <- resultFolder$analysis
+    resultsDatabaseSchema <- paste0("covid_homeless_", resultFolder$analysis)
     moduleFolders <- list.dirs(path = resultFolder$strategusResultsFolder, recursive = FALSE)
     for (moduleFolder in moduleFolders) {
       moduleName <- basename(moduleFolder)
@@ -186,17 +151,8 @@ tryCatch({
         if (!file.exists(rdmsFile)) {
           stop("resultsDataModelSpecification.csv not found in ", resumoduleFolderltsFolder)
         } else {
-          if (grepl("CohortIncidence", moduleName)) {
-            #read DB ID
-            databaseMeta <- CohortGenerator::readCsv(file=file.path(
-              resultFolder$strategusResultsFolder,
-              "DatabaseMetaData/database_meta_data.csv"))
-            databaseId <- databaseMeta$databaseId
-            deletePriorCIResults(connection, resultsDatabaseSchema, databaseId = databaseId)
-          }
           specification <- CohortGenerator::readCsv(file = rdmsFile)
           runCheckAndFixCommands = grepl("CohortDiagnostics", moduleName)
-          
           ResultModelManager::uploadResults(
             connection = connection,
             schema = resultsDatabaseSchema,
@@ -209,7 +165,6 @@ tryCatch({
             runCheckAndFixCommands = runCheckAndFixCommands,
             specifications = specification
           )
-          
         }
       }
     }
@@ -219,7 +174,7 @@ tryCatch({
   # to improve performance
   distictAnalyses <- unique(dfResultsFolders$analysis)
   for (analysis in distictAnalyses) {
-    resultsDatabaseSchema <- analysis
+    resultsDatabaseSchema <- paste0("covid_homeless_", analysis)
     message("Analyzing all tables in results schema: ", resultsDatabaseSchema)
     sql <- "ANALYZE @schema.@table_name;"
     tableList <- DatabaseConnector::getTableNames(
