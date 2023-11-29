@@ -40,7 +40,7 @@ RunStrategusConfiguration$configure <- function (dvo) {
   dvo$dataPartnerName <- "NACHC"
 
   # *************************************
-  # *** END CONFIGURATION             ***
+  # *** END CONFIGURATION
   # *************************************
   
   # return the configured dvo

@@ -14,6 +14,11 @@
 # 
 # ---
 
+# echo some info about the environment
+print(R.Version())
+print(system("java -version"))
+print(getwd())
+
 # setup the run
 source("./Util/StrategusRunnerUtil.R")
 dvo <- StrategusRunnerUtil$initRun()

@@ -38,13 +38,13 @@ StrategusRunnerConnectionDetailsUtil$createCdmConnectionDetails <- function(dvo)
   }
   
   # create the connection details object
-  rtn <- DatabaseConnector::createConnectionDetails (
+  cdmConnectionDetails <- DatabaseConnector::createConnectionDetails (
     dbms = dvo$dbms,
     pathToDriver = dvo$pathToDriver,
     connectionString = getUrl()
   )
   
-  return(rtn)
-  
+  dvo$cdmConnectionDetails <- cdmConnectionDetails
+
 }
 

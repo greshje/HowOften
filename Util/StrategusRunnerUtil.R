@@ -155,7 +155,7 @@ StrategusRunnerUtil$executeAnalysis <- function (
   resultsLocation <- dvo$resultsLocation
     
   # create the connection details
-  dvo$cdmConnectionDetails <- StrategusRunnerUtil$createCdmConnectionDetails()
+  StrategusRunnerUtil$createCdmConnectionDetails(dvo)
   # init the environment (see functionsForInit.R file for details)
   dvo$executionSettings <- StrategusRunnerUtil$initStratagus(dvo)
   # load the json specification for the study
