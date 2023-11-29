@@ -98,6 +98,9 @@ StrategusRunnerUtil$initRun <- function() {
   dvo <- StrategusRunnerDvo$new()
   dvo <- RunStrategusConfiguration$configure(dvo)
   dvo$init()
+  # echo stratagus module list
+  writeLines("STRATEGUS MODULE LIST:")
+  print(Strategus::getModuleList())
   return(dvo)
 }
 

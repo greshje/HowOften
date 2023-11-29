@@ -10,7 +10,10 @@ source("./Util/database/StrategusRunnerConnectionKeyringFactory.R")
 
 StrategusRunnerConnectionDetailsUtil <- {}
 
-StrategusRunnerConnectionDetailsUtil$createCdmConnectionDetails <- function() {
+StrategusRunnerConnectionDetailsUtil$createCdmConnectionDetails <- function(dvo) {
+  
+  # cast dvo to the correct type
+  class(dvo) <- "StrategusRunnerDvo"
   
   # create connection details params
   url <- "jdbc:databricks://nachc-databricks.cloud.databricks.com:443/default;transportMode=http;ssl=1;httpPath=sql/protocolv1/o/3956472157536757/0123-223459-leafy532;AuthMech=3;UseNativeQuery=1;UID=token;PWD="

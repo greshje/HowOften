@@ -19,51 +19,12 @@
         }
       ],
       "attr_class": ["CohortDefinitionSharedResources", "SharedResources"]
-    },
-    {
-      "negativeControlOutcomes": {
-        "negativeControlOutcomeCohortSet": [
-          {
-            "cohortId": "1001",
-            "cohortName": "Essential hypertension",
-            "outcomeConceptId": " 59621000"
-          },
-          {
-            "cohortId": "1002",
-            "cohortName": "Hyperlipidemia",
-            "outcomeConceptId": " 55822004"
-          },
-          {
-            "cohortId": "1003",
-            "cohortName": "Fever",
-            "outcomeConceptId": "386661006"
-          },
-          {
-            "cohortId": "1004",
-            "cohortName": "Shoulder joint pain",
-            "outcomeConceptId": "267949000"
-          },
-          {
-            "cohortId": "1005",
-            "cohortName": "Polyneuropathy",
-            "outcomeConceptId": " 42345000"
-          },
-          {
-            "cohortId": "1006",
-            "cohortName": "Nasal congestion",
-            "outcomeConceptId": " 68235000"
-          }
-        ],
-        "occurrenceType": "all",
-        "detectOnDescendants": true
-      },
-      "attr_class": ["NegativeControlOutcomeSharedResources", "SharedResources"]
     }
   ],
   "moduleSpecifications": [
     {
       "module": "CohortGeneratorModule",
-      "version": "0.2.1",
+      "version": "0.2.2-2",
       "remoteRepo": "github.com",
       "remoteUsername": "ohdsi",
       "settings": {
