@@ -114,7 +114,7 @@
               "firstExposureOnly": true,
               "removeDuplicateSubjects": "remove all",
               "restrictToCommonPeriod": false,
-              "washoutPeriod": 183,
+              "washoutPeriod": 0,
               "maxCohortSize": 100000,
               "covariateSettings": {
                 "temporal": false,
@@ -226,7 +226,7 @@
               "firstExposureOnly": true,
               "removeDuplicateSubjects": "remove all",
               "restrictToCommonPeriod": false,
-              "washoutPeriod": 183,
+              "washoutPeriod": 0,
               "maxCohortSize": 100000,
               "covariateSettings": {
                 "temporal": false,
