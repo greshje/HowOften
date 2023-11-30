@@ -119,7 +119,7 @@ CreateStrategusResultsTablesUtil = R6Class (
   
     createCharacterizationTable = function(resultsDatabaseSchema, connection) {
       message("Creating empty characterization tables in schema: ", resultsDatabaseSchema)
-      rdmsFile = "./UploadResults/cc_resultsDataModelSpecification.csv"
+      rdmsFile = "./impl/uploadresults/cc_resultsDataModelSpecification.csv"
       specification = CohortGenerator::readCsv(file = rdmsFile)
       sql = ResultModelManager::generateSqlSchema(csvFilepath = rdmsFile)
       sql = SqlRender::render(
