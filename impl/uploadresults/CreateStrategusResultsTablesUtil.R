@@ -218,8 +218,4 @@ CreateStrategusResultsTablesUtil = R6Class (
 )
 
 
-util = CreateStrategusResultsTablesUtil$new()
-util$createResultsTables()
-
-
 
