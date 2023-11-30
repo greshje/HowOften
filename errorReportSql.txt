@@ -1,0 +1,42 @@
+DBMS:
+postgresql
+
+Error:
+org.postgresql.util.PSQLException: ERROR: relation "cg_cohort_definition" already exists
+
+SQL:
+CREATE TABLE COVID_HOMELESS_NACHC.cg_cohort_definition (
+  	 cohort_definition_id BIGINT NOT NULL,
+	 cohort_name VARCHAR,
+	 description VARCHAR,
+	 json TEXT,
+	 sql_command TEXT,
+	 subset_parent BIGINT,
+	 is_subset INT,
+	 subset_definition_id BIGINT
+)
+
+R version:
+R version 4.3.2 (2023-10-31 ucrt)
+
+Platform:
+x86_64-w64-mingw32
+
+Attached base packages:
+- stats
+- graphics
+- grDevices
+- utils
+- datasets
+- methods
+- base
+
+Other attached packages:
+- CirceR (1.3.1)
+- Strategus (0.1.0)
+- CohortGenerator (0.8.1)
+- DatabaseConnector (6.2.4)
+- usethis (2.2.2)
+- keyring (1.3.1)
+- remotes (2.4.2.1)
+- R6 (2.5.1)
