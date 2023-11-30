@@ -1,6 +1,6 @@
 # ---
 # 
-# ReportingConnectionDetailsFactory
+# ConnectionDetailsFactoryForReporting.R
 # This script creates the DatabaseConnector connectionDetails objects used for reporting. 
 # Use this code as is or substitute with your own. 
 #
