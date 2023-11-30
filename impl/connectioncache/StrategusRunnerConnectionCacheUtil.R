@@ -58,7 +58,6 @@ StrategusRunnerConnectionCacheUtil$getExistingKeyrings <- function () {
 
 StrategusRunnerConnectionCacheUtil$createKeyring <- function (keyringName) {
   # create the keyring if it does not exist.
-  class(dvo) <- "StrategusRunnerDvo"
   allKeyrings <- keyring::keyring_list()
   if (!(keyringName %in% allKeyrings$keyring)) {
     print(paste("Keyring not found, creating it now: ", keyringName))
@@ -85,9 +84,8 @@ StrategusRunnerConnectionCacheUtil$deleteKeyring <- function (keyringName) {
 #
 # ---
 
-StrategusRunnerConnectionCacheUtil$storeConnectionDetails <- function(dvo) {
-  # get the dvo and the keyringName
-  class(dvo) <- "StrategusRunnerDvo"
+StrategusRunnerConnectionCacheUtil$storeConnectionDetails <- function(runParams) {
+  # get the keyringName
   keyringName = StrategusRunnerUtil$keyringName
   # set up the keyring
   StrategusRunnerConnectionCacheUtil$checkEnv()
@@ -95,8 +93,8 @@ StrategusRunnerConnectionCacheUtil$storeConnectionDetails <- function(dvo) {
   StrategusRunnerConnectionCacheUtil$getExistingKeyrings()
   # save the cdm connection details for strategus
   Strategus::storeConnectionDetails(
-    connectionDetails = dvo$cdmConnectionDetails,
-    connectionDetailsReference = dvo$dataPartnerName,
+    connectionDetails = runParams$cdmConnectionDetails,
+    connectionDetailsReference = RunConfiguration$dataPartnerName,
     keyringName = keyringName
   )
 }

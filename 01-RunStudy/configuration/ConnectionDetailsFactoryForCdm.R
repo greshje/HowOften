@@ -10,25 +10,18 @@ source("./impl/database/StrategusRunnerConnectionKeyringFactory.R")
 
 StrategusRunnerConnectionDetailsUtil <- {}
 
-StrategusRunnerConnectionDetailsUtil$createCdmConnectionDetails <- function(dvo) {
-  
-  # cast dvo to the correct type
-  class(dvo) <- "StrategusRunnerDvo"
-  
+StrategusRunnerConnectionDetailsUtil$createCdmConnectionDetails <- function() {
   # create connection details params
   url <- "jdbc:databricks://nachc-databricks.cloud.databricks.com:443/default;transportMode=http;ssl=1;httpPath=sql/protocolv1/o/3956472157536757/0123-223459-leafy532;AuthMech=3;UseNativeQuery=1;UID=token;PWD="
   keyringName <- "databricks_keyring"
   serviceName <- "production"
   userName <- "token"
-  
   # alias for keyring functions
   srkf <- StrategusRunnerConnectionKeyringFactory
-  
   # get the token from the keyring
   getToken <- function () {
     return(srkf$getPassword(keyringName,serviceName,userName))
   }
-  
   # concatinate the url and the token
   getUrl <- function () {
     url <- url
@@ -36,15 +29,12 @@ StrategusRunnerConnectionDetailsUtil$createCdmConnectionDetails <- function(dvo)
       paste(url, getToken(), sep = "")
     )  
   }
-  
   # create the connection details object
   cdmConnectionDetails <- DatabaseConnector::createConnectionDetails (
-    dbms = dvo$dbms,
-    pathToDriver = dvo$pathToDriver,
+    dbms = RunConfiguration$dbms,
+    pathToDriver = RunConfiguration$pathToDriver,
     connectionString = getUrl()
   )
-  
-  dvo$cdmConnectionDetails <- cdmConnectionDetails
-
+  return(cdmConnectionDetails)
 }
 

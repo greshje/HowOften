@@ -1,10 +1,10 @@
 library(Characterization)
 
 source("./Util/StrategusRunnerUtil.R")
-dvo <- StrategusRunnerUtil$initRun()
-dvo$cdmConnectionDetails <- StrategusRunnerConnectionDetailsUtil$createCdmConnectionDetails(dvo)
+StrategusRunnerUtil$initRun()
+RunConfiguration$cdmConnectionDetails <- StrategusRunnerConnectionDetailsUtil$createCdmConnectionDetails()
 
-connectionDetails <- dvo$cdmConnectionDetails
+connectionDetails <- RunConfiguration$cdmConnectionDetails
 
 targetIds <- c(1,2)
 outcomeIds <- c(3)

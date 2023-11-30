@@ -15,8 +15,8 @@ source("./impl/lib/StrategusRunnerLibUtil.R")
 source("./impl/connectioncache/StrategusRunnerConnectionCacheUtil.R")
 source("./01-RunStudy/configuration/ConnectionDetailsFactoryForCdm.R")
 source("./impl/database/StrategusRunnerConnectionKeyringFactory.R")
-source("./impl/dvo/StrategusRunnerDvo.R")
 source("./01-RunStudy/configuration/Configuration.R")
+source("./impl/runstudy/RunParams.R")
 
 StrategusRunnerUtil <- {}
 
@@ -96,13 +96,10 @@ StrategusRunnerUtil$initRun <- function() {
   # init strategus keyring stuff
   StrategusRunnerUtil$checkEnv()
   # configuration
-  dvo <- StrategusRunnerDvo$new()
-  dvo <- Configuration$configure(dvo)
-  dvo$init()
+  options(sqlRenderTempEmulationSchema = RunConfiguration$sqlRenderTempEmulationSchema)
   # echo stratagus module list
   writeLines("STRATEGUS MODULE LIST:")
   print(Strategus::getModuleList())
-  return(dvo)
 }
 
 # ---
@@ -111,18 +108,16 @@ StrategusRunnerUtil$initRun <- function() {
 #
 # ---
 
-StrategusRunnerUtil$createExecutionsSettings <- function(dvo) {
-  class(dvo) <- "StrategusRunnerDvo"
-  executionSettings <- Strategus::createCdmExecutionSettings(
-    connectionDetailsReference = dvo$dataPartnerName,
-    workDatabaseSchema = dvo$workDatabaseSchema,
-    cdmDatabaseSchema = dvo$cdmDatabaseSchema,
-    cohortTableNames = CohortGenerator::getCohortTableNames(cohortTable = dvo$cohortTableName),
-    workFolder = file.path(dvo$outputLocation, dvo$dataPartnerName, "strategusWork"),
-    resultsFolder = file.path(dvo$outputLocation, dvo$dataPartnerName, "strategusOutput"),
-    minCellCount = dvo$minCellCount
+StrategusRunnerUtil$createExecutionsSettings <- function() {
+  RunParams$executionSettings <- Strategus::createCdmExecutionSettings(
+    connectionDetailsReference = RunConfiguration$dataPartnerName,
+    workDatabaseSchema = RunConfiguration$workDatabaseSchema,
+    cdmDatabaseSchema = RunConfiguration$cdmDatabaseSchema,
+    cohortTableNames = CohortGenerator::getCohortTableNames(cohortTable = RunConfiguration$cohortTableName),
+    workFolder = file.path(RunConfiguration$outputLocation, RunConfiguration$dataPartnerName, "strategusWork"),
+    resultsFolder = file.path(RunConfiguration$outputLocation, RunConfiguration$dataPartnerName, "strategusOutput"),
+    minCellCount = RunConfiguration$minCellCount
   )
-  return(executionSettings)
 }
 
 # ---
@@ -131,12 +126,11 @@ StrategusRunnerUtil$createExecutionsSettings <- function(dvo) {
 #
 # ---
 
-StrategusRunnerUtil$initStratagus <- function(dvo) {
-  class(dvo) <- "StrategusRunnerDvo"
-  StrategusRunnerUtil$storeConnectionDetails(dvo)
-  dvo$executionSettings <- StrategusRunnerUtil$createExecutionsSettings(dvo)
-  StrategusRunnerUtil$testConnection(dvo)
-  return(dvo$executionSettings)
+StrategusRunnerUtil$initStratagus <- function(runParams) {
+  StrategusRunnerUtil$storeConnectionDetails(runParams)
+  RunConfiguration$executionSettings <- StrategusRunnerUtil$createExecutionsSettings()
+  StrategusRunnerUtil$testConnection(runParams)
+  return(RunConfiguration$executionSettings)
 }
 
 # ---
@@ -147,28 +141,27 @@ StrategusRunnerUtil$initStratagus <- function(dvo) {
 
 StrategusRunnerUtil$executeAnalysis <- function (
     analysisFile, 
-    analysisName, 
-    dvo) {
+    analysisName) {
 
-  class(dvo) <- "StrategusRunnerDvo"
-  executionSettings <- dvo$executionSettings
-  outputLocation <- dvo$outputLocation
-  resultsLocation <- dvo$resultsLocation
+  executionSettings <- StrategusRunnerUtil$createExecutionsSettings()
+  outputLocation <- RunConfiguration$outputLocation
+  resultsLocation <- RunConfiguration$resultsLocation
+  dataPartnerName <- RunConfiguration$dataPartnerName
     
   # create the connection details
-  StrategusRunnerUtil$createCdmConnectionDetails(dvo)
+  RunParams$cdmConnectionDetails <- StrategusRunnerUtil$createCdmConnectionDetails()
   # init the environment (see functionsForInit.R file for details)
-  dvo$executionSettings <- StrategusRunnerUtil$initStratagus(dvo)
+  executionSettings <- StrategusRunnerUtil$initStratagus(RunParams)
   # load the json specification for the study
   analysisSpecifications <- ParallelLogger::loadSettingsFromJson(fileName = analysisFile)
   
   # execute stratagus
   Strategus::execute(
     analysisSpecifications = analysisSpecifications,
-    executionSettings = dvo$executionSettings,
+    executionSettings = executionSettings,
     executionScriptFolder = file.path(
-      dvo$outputLocation, 
-      dvo$dataPartnerName, 
+      outputLocation, 
+      dataPartnerName, 
       "strategusExecution"),
     keyringName = StrategusRunnerUtil$keyringName
   )
@@ -177,13 +170,13 @@ StrategusRunnerUtil$executeAnalysis <- function (
   resultsDir <- file.path (
     resultsLocation, 
     analysisName, 
-    dvo$dataPartnerName)
+    RunConfiguration$dataPartnerName)
   if (dir.exists(resultsDir)) {
     unlink(resultsDir, recursive = TRUE)
   }
   dir.create(file.path(resultsDir), recursive = TRUE)
   file.copy(
-    file.path(dvo$outputLocation, dvo$dataPartnerName, "strategusOutput"),
+    file.path(RunConfiguration$outputLocation, RunConfiguration$dataPartnerName, "strategusOutput"),
     file.path(resultsDir), recursive = TRUE
   )
   
@@ -197,11 +190,10 @@ StrategusRunnerUtil$executeAnalysis <- function (
 #
 # ---
 
-StrategusRunnerUtil$testConnection <- function(dvo) {
-  class(dvo) <- "StrategusRunnerDvo"
-  testConnection <- DatabaseConnector::connect(dvo$cdmConnectionDetails)
+StrategusRunnerUtil$testConnection <- function(runParams) {
+  testConnection <- DatabaseConnector::connect(runParams$cdmConnectionDetails)
   success <- DatabaseConnector::querySql(testConnection, "select 1 as one")
-  success
+  print(success)
   DatabaseConnector::disconnect(testConnection)
   if (success != 1) {
     stop("We were not able to create the database connection for the given connectionDetails.")
