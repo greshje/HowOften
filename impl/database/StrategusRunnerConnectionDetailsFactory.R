@@ -6,7 +6,7 @@
 #
 # ---
 
-source("./Util/database/StrategusRunnerConnectionKeyringFactory.R")
+source("./impl/database/StrategusRunnerConnectionKeyringFactory.R")
 
 StrategusRunnerConnectionDetailsUtil <- {}
 

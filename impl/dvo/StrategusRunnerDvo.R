@@ -4,7 +4,7 @@
 #
 # ---
 
-source("./Util/lib/StrategusRunnerLibUtil.R")
+source("./impl/lib/StrategusRunnerLibUtil.R")
 library(R6)
 
 StrategusRunnerDvo <- R6Class (

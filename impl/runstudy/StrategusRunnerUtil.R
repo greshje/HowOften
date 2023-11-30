@@ -1,6 +1,7 @@
 # ---
 #
-# variables and functions for this project
+# This script consolidates the utilities functions of the other scripts
+# here for one stop shopping.  
 #
 # ---
 
@@ -10,12 +11,12 @@
 #
 # ---
 
-source("./Util/lib/StrategusRunnerLibUtil.R")
-source("./Util/connectioncache/StrategusRunnerConnectionCacheUtil.R")
-source("./Util/database/StrategusRunnerConnectionDetailsFactory.R")
-source("./Util/database/StrategusRunnerConnectionKeyringFactory.R")
-source("./Util/dvo/StrategusRunnerDvo.R")
-source("./RunStrategusStudy/RunStrategusConfiguration.R")
+source("./impl/lib/StrategusRunnerLibUtil.R")
+source("./impl/connectioncache/StrategusRunnerConnectionCacheUtil.R")
+source("./impl/database/StrategusRunnerConnectionDetailsFactory.R")
+source("./impl/database/StrategusRunnerConnectionKeyringFactory.R")
+source("./impl/dvo/StrategusRunnerDvo.R")
+source("./01-RunStudy/Configuration.R")
 
 StrategusRunnerUtil <- {}
 
@@ -96,7 +97,7 @@ StrategusRunnerUtil$initRun <- function() {
   StrategusRunnerUtil$checkEnv()
   # configuration
   dvo <- StrategusRunnerDvo$new()
-  dvo <- RunStrategusConfiguration$configure(dvo)
+  dvo <- Configuration$configure(dvo)
   dvo$init()
   # echo stratagus module list
   writeLines("STRATEGUS MODULE LIST:")

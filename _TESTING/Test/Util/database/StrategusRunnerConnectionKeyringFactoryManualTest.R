@@ -5,7 +5,7 @@
 # ---
 
 # load the source and create alias kf
-source("./Util/database/StrategusRunnerConnectionKeyringFactory.R")
+source("./impl/database/StrategusRunnerConnectionKeyringFactory.R")
 srkf <- StrategusRunnerConnectionKeyringFactory
 
 # create the keyring (new and existing use cases)

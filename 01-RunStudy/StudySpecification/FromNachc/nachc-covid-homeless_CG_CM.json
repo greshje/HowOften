@@ -19,51 +19,12 @@
         }
       ],
       "attr_class": ["CohortDefinitionSharedResources", "SharedResources"]
-    },
-    {
-      "negativeControlOutcomes": {
-        "negativeControlOutcomeCohortSet": [
-          {
-            "cohortId": "1001",
-            "cohortName": "Essential hypertension",
-            "outomeConceptId": " 59621000"
-          },
-          {
-            "cohortId": "1002",
-            "cohortName": "Hyperlipidemia",
-            "outomeConceptId": " 55822004"
-          },
-          {
-            "cohortId": "1003",
-            "cohortName": "Fever",
-            "outomeConceptId": "386661006"
-          },
-          {
-            "cohortId": "1004",
-            "cohortName": "Shoulder joint pain",
-            "outomeConceptId": "267949000"
-          },
-          {
-            "cohortId": "1005",
-            "cohortName": "Polyneuropathy",
-            "outomeConceptId": " 42345000"
-          },
-          {
-            "cohortId": "1006",
-            "cohortName": "Nasal congestion",
-            "outomeConceptId": " 68235000"
-          }
-        ],
-        "occurrenceType": "all",
-        "detectOnDescendants": true
-      },
-      "attr_class": ["NegativeControlOutcomeSharedResources", "SharedResources"]
     }
   ],
   "moduleSpecifications": [
     {
       "module": "CohortGeneratorModule",
-      "version": "0.2.1",
+      "version": "0.2.2-2",
       "remoteRepo": "github.com",
       "remoteUsername": "ohdsi",
       "settings": {
@@ -71,264 +32,6 @@
         "generateStats": true
       },
       "attr_class": ["CohortGeneratorModuleSpecifications", "ModuleSpecifications"]
-    },
-    {
-      "module": "CohortDiagnosticsModule",
-      "version": "0.1.0",
-      "remoteRepo": "github.com",
-      "remoteUsername": "ohdsi",
-      "settings": {
-        "runInclusionStatistics": true,
-        "runIncludedSourceConcepts": true,
-        "runOrphanConcepts": true,
-        "runTimeSeries": false,
-        "runVisitContext": true,
-        "runBreakdownIndexEvents": true,
-        "runIncidenceRate": true,
-        "runCohortRelationship": true,
-        "runTemporalCohortCharacterization": true,
-        "temporalCovariateSettings": {
-          "temporal": true,
-          "temporalSequence": false,
-          "DemographicsGender": true,
-          "DemographicsAge": true,
-          "DemographicsAgeGroup": true,
-          "DemographicsRace": true,
-          "DemographicsEthnicity": true,
-          "DemographicsIndexYear": true,
-          "DemographicsIndexMonth": true,
-          "DemographicsPriorObservationTime": true,
-          "DemographicsPostObservationTime": true,
-          "DemographicsTimeInCohort": true,
-          "DemographicsIndexYearMonth": true,
-          "ConditionOccurrence": true,
-          "ConditionEraStart": true,
-          "ConditionEraOverlap": true,
-          "ConditionEraGroupOverlap": true,
-          "DrugEraStart": true,
-          "DrugEraGroupOverlap": true,
-          "ProcedureOccurrence": true,
-          "DeviceExposure": true,
-          "Measurement": true,
-          "Observation": true,
-          "CharlsonIndex": true,
-          "Dcsi": true,
-          "Chads2": true,
-          "Chads2Vasc": true,
-          "temporalStartDays": [-9999, -365, -180, -30, -365, -30, 0, 1, 31, -9999],
-          "temporalEndDays": [0, 0, 0, 0, -31, -1, 0, 30, 365, 9999],
-          "includedCovariateConceptIds": [],
-          "addDescendantsToInclude": false,
-          "excludedCovariateConceptIds": [],
-          "addDescendantsToExclude": false,
-          "includedCovariateIds": [],
-          "attr_class": "covariateSettings",
-          "attr_fun": "getDbDefaultCovariateData"
-        },
-        "minCharacterizationMean": 0.01,
-        "irWashoutPeriod": 0,
-        "incremental": false
-      },
-      "attr_class": ["CohortDiagnosticsModuleSpecifications", "ModuleSpecifications"]
-    },
-    {
-      "module": "CohortIncidenceModule",
-      "version": "0.2.0",
-      "remoteRepo": "github.com",
-      "remoteUsername": "ohdsi",
-      "settings": {
-        "irDesign": {
-          "targetDefs": [
-            {
-              "id": 1,
-              "name": "Celecoxib"
-            },
-            {
-              "id": 2,
-              "name": "Diclofenac"
-            },
-            {
-              "id": 4,
-              "name": "Celecoxib Age >= 30"
-            },
-            {
-              "id": 5,
-              "name": "Diclofenac Age >= 30"
-            }
-          ],
-          "outcomeDefs": [
-            {
-              "id": 1,
-              "name": "GI bleed",
-              "cohortId": 3,
-              "cleanWindow": 9999
-            }
-          ],
-          "timeAtRiskDefs": [
-            {
-              "id": 1,
-              "start": {
-                "dateField": "start",
-                "offset": 0
-              },
-              "end": {
-                "dateField": "end",
-                "offset": 0
-              }
-            },
-            {
-              "id": 2,
-              "start": {
-                "dateField": "start",
-                "offset": 0
-              },
-              "end": {
-                "dateField": "start",
-                "offset": 365
-              }
-            }
-          ],
-          "analysisList": [
-            {
-              "targets": [1, 2, 4, 5],
-              "outcomes": 1,
-              "tars": [1, 2]
-            }
-          ],
-          "strataSettings": {
-            "byAge": false,
-            "byGender": true,
-            "byYear": true
-          }
-        }
-      },
-      "attr_class": ["CohortIncidenceModuleSpecifications", "ModuleSpecifications"]
-    },
-    {
-      "module": "CharacterizationModule",
-      "version": "0.4.0",
-      "remoteRepo": "github.com",
-      "remoteUsername": "ohdsi",
-      "settings": {
-        "timeToEventSettings": [
-          {
-            "targetIds": [1, 2],
-            "outcomeIds": 3,
-            "attr_class": "timeToEventSettings"
-          }
-        ],
-        "dechallengeRechallengeSettings": [
-          {
-            "targetCohortDefinitionIds": [1, 2],
-            "outcomeCohortDefinitionIds": 3,
-            "dechallengeStopInterval": 30,
-            "dechallengeEvaluationWindow": 30,
-            "attr_class": "dechallengeRechallengeSettings"
-          }
-        ],
-        "aggregateCovariateSettings": [
-          {
-            "targetIds": [1, 2],
-            "outcomeIds": 3,
-            "minPriorObservation": 0,
-            "riskWindowStart": 1,
-            "startAnchor": "cohort start",
-            "riskWindowEnd": 0,
-            "endAnchor": "cohort end",
-            "covariateSettings": {
-              "temporal": false,
-              "temporalSequence": false,
-              "DemographicsGender": true,
-              "DemographicsAgeGroup": true,
-              "DemographicsRace": true,
-              "DemographicsEthnicity": true,
-              "DemographicsIndexYear": true,
-              "DemographicsIndexMonth": true,
-              "ConditionGroupEraLongTerm": true,
-              "ConditionGroupEraShortTerm": true,
-              "DrugGroupEraLongTerm": true,
-              "DrugGroupEraShortTerm": true,
-              "DrugGroupEraOverlapping": true,
-              "ProcedureOccurrenceLongTerm": true,
-              "ProcedureOccurrenceShortTerm": true,
-              "DeviceExposureLongTerm": true,
-              "DeviceExposureShortTerm": true,
-              "MeasurementLongTerm": true,
-              "MeasurementShortTerm": true,
-              "MeasurementRangeGroupLongTerm": true,
-              "ObservationLongTerm": true,
-              "ObservationShortTerm": true,
-              "CharlsonIndex": true,
-              "Dcsi": true,
-              "Chads2": true,
-              "Chads2Vasc": true,
-              "includedCovariateConceptIds": [],
-              "includedCovariateIds": [],
-              "addDescendantsToInclude": false,
-              "excludedCovariateConceptIds": [],
-              "addDescendantsToExclude": false,
-              "shortTermStartDays": -30,
-              "mediumTermStartDays": -180,
-              "endDays": 0,
-              "longTermStartDays": -365,
-              "attr_class": "covariateSettings",
-              "attr_fun": "getDbDefaultCovariateData"
-            },
-            "attr_class": "aggregateCovariateSettings"
-          },
-          {
-            "targetIds": [1, 2],
-            "outcomeIds": 3,
-            "minPriorObservation": 0,
-            "riskWindowStart": 1,
-            "startAnchor": "cohort start",
-            "riskWindowEnd": 365,
-            "endAnchor": "cohort end",
-            "covariateSettings": {
-              "temporal": false,
-              "temporalSequence": false,
-              "DemographicsGender": true,
-              "DemographicsAgeGroup": true,
-              "DemographicsRace": true,
-              "DemographicsEthnicity": true,
-              "DemographicsIndexYear": true,
-              "DemographicsIndexMonth": true,
-              "ConditionGroupEraLongTerm": true,
-              "ConditionGroupEraShortTerm": true,
-              "DrugGroupEraLongTerm": true,
-              "DrugGroupEraShortTerm": true,
-              "DrugGroupEraOverlapping": true,
-              "ProcedureOccurrenceLongTerm": true,
-              "ProcedureOccurrenceShortTerm": true,
-              "DeviceExposureLongTerm": true,
-              "DeviceExposureShortTerm": true,
-              "MeasurementLongTerm": true,
-              "MeasurementShortTerm": true,
-              "MeasurementRangeGroupLongTerm": true,
-              "ObservationLongTerm": true,
-              "ObservationShortTerm": true,
-              "CharlsonIndex": true,
-              "Dcsi": true,
-              "Chads2": true,
-              "Chads2Vasc": true,
-              "includedCovariateConceptIds": [],
-              "includedCovariateIds": [],
-              "addDescendantsToInclude": false,
-              "excludedCovariateConceptIds": [],
-              "addDescendantsToExclude": false,
-              "shortTermStartDays": -30,
-              "mediumTermStartDays": -180,
-              "endDays": 0,
-              "longTermStartDays": -365,
-              "attr_class": "covariateSettings",
-              "attr_fun": "getDbDefaultCovariateData"
-            },
-            "attr_class": "aggregateCovariateSettings"
-          }
-        ],
-        "attr_class": "characterizationSettings"
-      },
-      "attr_class": ["CharacterizationModuleSpecifications", "ModuleSpecifications"]
     },
     {
       "module": "CohortMethodModule",
@@ -346,7 +49,7 @@
               "firstExposureOnly": true,
               "removeDuplicateSubjects": "remove all",
               "restrictToCommonPeriod": false,
-              "washoutPeriod": 183,
+              "washoutPeriod": 0,
               "maxCohortSize": 100000,
               "covariateSettings": {
                 "temporal": false,
@@ -458,7 +161,7 @@
               "firstExposureOnly": true,
               "removeDuplicateSubjects": "remove all",
               "restrictToCommonPeriod": false,
-              "washoutPeriod": 183,
+              "washoutPeriod": 0,
               "maxCohortSize": 100000,
               "covariateSettings": {
                 "temporal": false,
@@ -689,7 +392,7 @@
                 "attr_class": "outcome"
               }
             ],
-            "excludedCovariateConceptIds": [1118084, 1124300],
+            "excludedCovariateConceptIds": [2381, 58084],
             "attr_class": "targetComparatorOutcomes"
           },
           {
@@ -745,7 +448,7 @@
                 "attr_class": "outcome"
               }
             ],
-            "excludedCovariateConceptIds": [1118084, 1124300],
+            "excludedCovariateConceptIds": [2381, 58084],
             "attr_class": "targetComparatorOutcomes"
           }
         ],

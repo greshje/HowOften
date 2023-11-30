@@ -190,8 +190,15 @@ HowOftenResultsUpload <- function() {
     # ---
     
     for (schemaSuffix in resultsDatabaseSchemaSuffixList) {
+      
       resultsDatabaseSchema <- paste(resultsDatabaseSchemaPrefix, schemaSuffix, sep = "")
+
+      # ---
+      #
       # drop and recreate the schema
+      #
+      # ---
+      
       writeLines(paste("DROPPING DATABASE SCHEMA: ", resultsDatabaseSchema))
       csrtu$dropAndRecreateSchema(resultsDatabaseSchema, connection)
       writeLines(paste("DROPPED DATABASE SCHEMA:  ", resultsDatabaseSchema))

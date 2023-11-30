@@ -4,7 +4,7 @@
 #
 # ---
 
-source("./Util/lib/StrategusRunnerLibUtil.R")
+source("./impl/lib/StrategusRunnerLibUtil.R")
 StrategusRunnerLibUtil$removePackagesInstalledHere()
 rm(list = ls())
 rstudioapi::restartSession()

@@ -4,17 +4,17 @@
 #
 # - Update this file to use your parameters
 #   (only change values between the START CONFIGURATION and END CONFIGURATION comments)
-# - Update ./Util/database/StrategusRunnerConnectionDetailsFactory.R
-# - Update ./Util/database/StrategusRunnerReportingConnectionDetailsFactory.R
+# - Update ./impl/database/StrategusRunnerConnectionDetailsFactory.R
+# - Update ./impl/database/StrategusRunnerReportingConnectionDetailsFactory.R
 #   (this step is only required if you are uploading results data)
 # 
 # ---
 
-source("./Util/dvo/StrategusRunnerDvo.R")
+source("./impl/dvo/StrategusRunnerDvo.R")
 
-RunStrategusConfiguration <- {}
+Configuration <- {}
 
-RunStrategusConfiguration$configure <- function (dvo) {
+Configuration$configure <- function (dvo) {
   # set the type of the data value object
   class(dvo) <- "StrategusRunnerDvo"
 

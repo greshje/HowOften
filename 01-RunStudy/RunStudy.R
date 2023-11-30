@@ -5,9 +5,9 @@
 #
 # Before running this script:
 #   - Define your configuration:
-#     Update ./RunStrategusStudy/RunStrategusConfiguration.R
+#     Update ./01-RunStudy/Configuration.R
 #   - Define your database connection:
-#     Update ./Util/database/StrategusRunnerConnectionDetailsFactory.R
+#     Update ./impl/database/StrategusRunnerConnectionDetailsFactory.R
 #   - Use your study definition:
 #     Update the call to StrategusRunnerUtil$executeAnalysis below 
 #     to use your json file and the name you want for the output folder.  
@@ -20,7 +20,7 @@ print(system("java -version"))
 print(getwd())
 
 # setup the run
-source("./Util/StrategusRunnerUtil.R")
+source("./impl/runstudy/StrategusRunnerUtil.R")
 dvo <- StrategusRunnerUtil$initRun()
 
 # ---
@@ -29,11 +29,12 @@ dvo <- StrategusRunnerUtil$initRun()
 #
 # ---
 
-# filePath <- "./RunStrategusStudy/json/FromNachc/nachc-covid-homeless.json"
-filePath <- "C:/_YES/workspace/HowOften/RunStrategusStudy/json/FromNachc/nachc-covid-homeless.json"
-StrategusRunnerUtil$executeAnalysis (
-  filePath,
-  "covid_homeless_nachc_test01", 
-  dvo
-)
+specRoot <- "C:/_YES/workspace/HowOften/01-RunStudy/StudySpecification/FromNachc/"
+
+# run nachc study
+StrategusRunnerUtil$executeAnalysis (paste0(specRoot,"nachc-covid-homeless.json"),"nachc",dvo)
+
+
+
+
 
