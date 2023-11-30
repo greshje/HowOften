@@ -1,5 +1,5 @@
 source("./impl/lib/StrategusRunnerLibUtil.R")
-source("./02-UploadResults/configuration/ReportingConnectionDetailsFactory.R")
+source("./02-UploadResults/configuration/ConnectionDetailsFactoryForReporting.R")
 library(R6)
 
 CreateStrategusResultsTablesUtil = R6Class (
