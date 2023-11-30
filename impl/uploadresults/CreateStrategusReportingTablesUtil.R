@@ -1,5 +1,5 @@
 
-source("./Util/reporting/ReportingConnectionDetailsFactory.R")
+source("03-Uploadresults/ReportingConnectionDetailsFactory.R")
 
 CreateStrategusReportingTablesUtil <- {}
 
