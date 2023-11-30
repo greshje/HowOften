@@ -1,6 +1,6 @@
 # ---
 # 
-# StrategusRunnerConnectionDetailsUtil
+# ConnectionDetailsFactoryForCdm.R
 # This script creates the DatabaseConnector connectionDetails objects used for the CDM. 
 # Use this code as is or substitute with your own. 
 #

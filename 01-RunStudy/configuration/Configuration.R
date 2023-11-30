@@ -1,13 +1,8 @@
 # ---
 #
-# One of three touch points to run strategus:
-#
-# - Update this file to use your parameters
+# Update this file to use your parameters
 #   (only change values between the START CONFIGURATION and END CONFIGURATION comments)
-# - Update ./impl/database/StrategusRunnerConnectionDetailsFactory.R
-# - Update ./impl/database/StrategusRunnerReportingConnectionDetailsFactory.R
-#   (this step is only required if you are uploading results data)
-# 
+#
 # ---
 
 source("./impl/dvo/StrategusRunnerDvo.R")

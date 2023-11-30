@@ -13,10 +13,10 @@
 
 source("./impl/lib/StrategusRunnerLibUtil.R")
 source("./impl/connectioncache/StrategusRunnerConnectionCacheUtil.R")
-source("./impl/database/StrategusRunnerConnectionDetailsFactory.R")
+source("./01-RunStudy/configuration/ConnectionDetailsFactoryForCdm.R")
 source("./impl/database/StrategusRunnerConnectionKeyringFactory.R")
 source("./impl/dvo/StrategusRunnerDvo.R")
-source("./01-RunStudy/Configuration.R")
+source("./01-RunStudy/configuration/Configuration.R")
 
 StrategusRunnerUtil <- {}
 

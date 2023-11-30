@@ -1,4 +1,5 @@
 source("./impl/lib/StrategusRunnerLibUtil.R")
+source("./02-UploadResults/configuration/ReportingConnectionDetailsFactory.R")
 library(R6)
 
 CreateStrategusResultsTablesUtil = R6Class (
@@ -165,36 +166,26 @@ CreateStrategusResultsTablesUtil = R6Class (
     #
     # ---
     
-    createResultsTables = function() {
-      
+    createResultsTables = function(dropExisting = FALSE) {
       # init logging
       self$initLogging(self$resultsDatabaseSchemaCreationLogFolder)
       # get a database connection
       connection = self$getConnection()
       # get the modules (studies)
       moduleFolders = list.dirs(path = self$resultsTableFolderRoot, recursive = FALSE)
-  
       tryCatch({
-  
         # echo status
         message("Creating result tables based on definitions found in ", self$resultsTableFolderRoot)
-  
-        # ---
-        #
         # create a separate schema for each data partner
-        #
-        # ---
-        
         for (schemaSuffix in self$resultsDatabaseSchemaSuffixList) {
-          
           resultsDatabaseSchema = paste(self$resultsDatabaseSchemaPrefix, schemaSuffix, sep = "")
-
-          # ---
-          #
+          # drop and recreate the schema
+          if(dropExisting == TRUE) {
+            writeLines(paste("DROPPING DATABASE SCHEMA: ", resultsDatabaseSchema))
+            self$dropAndRecreateSchema(resultsDatabaseSchema, connection)
+            writeLines(paste("DROPPED DATABASE SCHEMA:  ", resultsDatabaseSchema))
+          }
           # create the data tables if the schema is empty
-          #
-          # ---
-          
           if (self$schemaIsEmpty(resultsDatabaseSchema, connection)) {
             # create the module tables
             self$createModuleTables(moduleFolders, resultsDatabaseSchema, connection)
