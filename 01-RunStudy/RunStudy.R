@@ -29,10 +29,10 @@ dvo <- StrategusRunnerUtil$initRun()
 #
 # ---
 
-specRoot <- "./01-RunStudy/configuration/specifications/FromNachc/"
+specRoot <- "./01-RunStudy/configuration/specifications/"
 
 # run nachc study
-StrategusRunnerUtil$executeAnalysis (paste0(specRoot,"nachc-covid-homeless.json"),"nachc",dvo)
+StrategusRunnerUtil$executeAnalysis (paste0(specRoot,"FromNachc/nachc-covid-homeless.json"),"nachc",dvo)
 
 
 
