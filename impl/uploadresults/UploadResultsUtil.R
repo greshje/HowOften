@@ -25,7 +25,8 @@
 #    and this script will upload them if a "done" file is found in the
 #    individual <StrategusModule> folder.
 
-
+source("./impl/lib/StrategusRunnerLibUtil.R")
+source("./02-UploadResults/configuration/ConnectionDetailsFactoryForReporting.R")
 
 UploadResultsUtil <- {}
 
@@ -116,13 +117,12 @@ UploadResultsUtil$uploadResults <- function () {
   }
 
   # Connect to the database ------------------------------------------------------
-  resultsDatabaseConnectionDetails <- DatabaseConnector::createConnectionDetails(
-    dbms = "postgresql",
-    connectionString = "jdbc:postgresql://localhost:5432/OHDSI_HOMELESS_COVID_RESULTS_DB?user=postgres&password=ohdsi&currentSchema=OHDSI_HOMELESS_COVID_RESULTS_DB",
-    pathToDriver = "D:/_YES/databases/postgres/drivers/42.3.3"
-  )
-
-  connection <- DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
+  getConnection <- function() {
+    resultsDatabaseConnectionDetails = ReportingConnectionDetailsUtil$createConnectionDetails()
+    connection = DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
+  }
+  
+  connection <- getConnection()
 
   # Upload results -----------------
   isModuleComplete <- function(moduleFolder) {

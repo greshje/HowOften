@@ -43,4 +43,15 @@ RunConfiguration$resultsDatabaseSchemaCreationLogFolder = "C:/temp"
 RunConfiguration$resultsDatabaseSchemaPrefix = "covid_homeless_"
 RunConfiguration$resultsDatabaseSchemaSuffixList = c("nachc")
 
+# ---
+#
+# UploadResults
+# These are the variables used to upload the results of the study.  
+# (i.e. by UploadResults.R and code called from there)
+#
+# ---
+
+resultsFolderRoot <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy"
+howOftenAnalysesFilterList <- c()
+databaseFilterList <- c()
 
