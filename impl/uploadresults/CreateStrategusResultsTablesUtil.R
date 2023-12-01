@@ -6,6 +6,53 @@ CreateStrategusResultsTablesUtil = R6Class (
   classname = "CreateStrategusResultsTablesUtil",
   public = list (
 
+    # -------------------------------------------------------------------------
+    # Implementation details
+    # -------------------------------------------------------------------------
+
+    # ---
+    #
+    # configuration
+    #
+    # ---
+  
+    resultsTableFolderRoot = RunConfiguration$resultsTableFolderRoot,
+    resultsDatabaseSchemaCreationLogFolder = RunConfiguration$resultsDatabaseSchemaCreationLogFolder,
+    resultsDatabaseSchemaPrefix = RunConfiguration$resultsDatabaseSchemaPrefix,
+    resultsDatabaseSchemaSuffixList = RunConfiguration$resultsDatabaseSchemaSuffixList,
+  
+    # ---
+    #
+    # logging
+    # 
+    # ---
+  
+    initLogging = function(resultsDatabaseSchemaCreationLogFolder) {
+      # stdout logging
+      ParallelLogger::clearLoggers()
+      ParallelLogger::addDefaultFileLogger(
+        fileName = file.path(resultsDatabaseSchemaCreationLogFolder, "results-schema-setup-log.txt"),
+        name = "RESULTS_SCHEMA_SETUP_FILE_LOGGER"
+      )
+      # stderr logging
+      ParallelLogger::addDefaultErrorReportLogger(
+        fileName = file.path(resultsDatabaseSchemaCreationLogFolder, 'results-schema-setup-errorReport.txt'),
+        name = "RESULTS_SCHEMA_SETUP_ERROR_LOGGER"
+      )
+    },
+  
+    # ---
+    #
+    # did the module complete
+    #
+    # ---
+  
+    isModuleComplete = function(moduleFolder) {
+      doneFileFound = (length(list.files(path = moduleFolder, pattern = "done")) > 0)
+      isDatabaseMetaDataFolder = basename(moduleFolder) == "DatabaseMetaData"
+      return(doneFileFound || isDatabaseMetaDataFolder)
+    },
+  
     # ---
     #
     # database connection
@@ -16,17 +63,6 @@ CreateStrategusResultsTablesUtil = R6Class (
       resultsDatabaseConnectionDetails = ReportingConnectionDetailsUtil$createConnectionDetails()
       connection = DatabaseConnector::connect(connectionDetails = resultsDatabaseConnectionDetails)
     },
-  
-    # ---
-    #
-    # configuration
-    #
-    # ---
-  
-    resultsTableFolderRoot = "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/Results/nachc/NACHC/strategusOutput",
-    resultsDatabaseSchemaCreationLogFolder = "C:/temp",
-    resultsDatabaseSchemaPrefix = "covid_homeless_",
-    resultsDatabaseSchemaSuffixList = c("nachc"),
   
     # ---
     #
@@ -53,26 +89,6 @@ CreateStrategusResultsTablesUtil = R6Class (
   
     # ---
     #
-    # logging
-    # 
-    # ---
-  
-    initLogging = function(resultsDatabaseSchemaCreationLogFolder) {
-      # stdout logging
-      ParallelLogger::clearLoggers()
-      ParallelLogger::addDefaultFileLogger(
-        fileName = file.path(resultsDatabaseSchemaCreationLogFolder, "results-schema-setup-log.txt"),
-        name = "RESULTS_SCHEMA_SETUP_FILE_LOGGER"
-      )
-      # stderr logging
-      ParallelLogger::addDefaultErrorReportLogger(
-        fileName = file.path(resultsDatabaseSchemaCreationLogFolder, 'results-schema-setup-errorReport.txt'),
-        name = "RESULTS_SCHEMA_SETUP_ERROR_LOGGER"
-      )
-    },
-  
-    # ---
-    #
     # create a table for each module
     #
     # ---
@@ -91,7 +107,7 @@ CreateStrategusResultsTablesUtil = R6Class (
       
     # ---
     #
-    # create a table for a module
+    # create a table for a single module
     #
     # ---
   
@@ -115,6 +131,7 @@ CreateStrategusResultsTablesUtil = R6Class (
     # ---
     #
     # create a characterization table
+    # (not sure why this is a one-off)
     #
     # ---
   
@@ -128,18 +145,6 @@ CreateStrategusResultsTablesUtil = R6Class (
         database_schema = resultsDatabaseSchema
       )
       DatabaseConnector::executeSql(connection = connection, sql = sql)
-    },
-  
-    # ---
-    #
-    # did the module complete
-    #
-    # ---
-  
-    isModuleComplete = function(moduleFolder) {
-      doneFileFound = (length(list.files(path = moduleFolder, pattern = "done")) > 0)
-      isDatabaseMetaDataFolder = basename(moduleFolder) == "DatabaseMetaData"
-      return(doneFileFound || isDatabaseMetaDataFolder)
     },
   
     # ---
@@ -160,6 +165,10 @@ CreateStrategusResultsTablesUtil = R6Class (
       }
     },
   
+    # -------------------------------------------------------------------------
+    # Interface: This is the core functionality of this class.  
+    # -------------------------------------------------------------------------
+
     # ---
     #
     # create results tables
