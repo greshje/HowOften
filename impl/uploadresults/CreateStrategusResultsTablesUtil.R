@@ -1,4 +1,5 @@
 source("./impl/lib/StrategusRunnerLibUtil.R")
+source("./01-RunStudy/configuration/Configuration.R")
 source("./02-UploadResults/configuration/ConnectionDetailsFactoryForReporting.R")
 library(R6)
 

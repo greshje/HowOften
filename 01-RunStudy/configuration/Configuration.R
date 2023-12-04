@@ -51,7 +51,7 @@ RunConfiguration$resultsDatabaseSchemaSuffixList = c("nachc")
 #
 # ---
 
-resultsFolderRoot <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy"
-howOftenAnalysesFilterList <- c()
-databaseFilterList <- c()
+RunConfiguration$resultsFolderRoot <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy"
+RunConfiguration$howOftenAnalysesFilterList <- c()
+RunConfiguration$databaseFilterList <- c()
 
