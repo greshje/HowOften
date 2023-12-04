@@ -17,7 +17,6 @@ CreateStrategusResultsTablesUtil = R6Class (
     #
     # ---
   
-    resultsTableFolderRoot = RunConfiguration$resultsTableFolderRoot,
     resultsDatabaseSchemaCreationLogFolder = RunConfiguration$resultsDatabaseSchemaCreationLogFolder,
     resultsDatabaseSchemaPrefix = RunConfiguration$resultsDatabaseSchemaPrefix,
     resultsDatabaseSchemaSuffixList = RunConfiguration$resultsDatabaseSchemaSuffixList,
@@ -176,16 +175,17 @@ CreateStrategusResultsTablesUtil = R6Class (
     #
     # ---
     
-    createResultsTables = function(dropExisting = FALSE) {
-      # init logging
+    createResultsTables = function(analysisName, dropExisting = FALSE) {
+      # init 
       self$initLogging(self$resultsDatabaseSchemaCreationLogFolder)
+      config <- RunConfiguration$init(analysisName)
       # get a database connection
       connection = self$getConnection()
       # get the modules (studies)
-      moduleFolders = list.dirs(path = self$resultsTableFolderRoot, recursive = FALSE)
+      moduleFolders = list.dirs(path = config$resultsTableFolderRoot, recursive = FALSE)
       tryCatch({
         # echo status
-        message("Creating result tables based on definitions found in ", self$resultsTableFolderRoot)
+        message("Creating result tables based on definitions found in ", config$resultsTableFolderRoot)
         # create a separate schema for each data partner
         for (schemaSuffix in self$resultsDatabaseSchemaSuffixList) {
           resultsDatabaseSchema = paste(self$resultsDatabaseSchemaPrefix, schemaSuffix, sep = "")

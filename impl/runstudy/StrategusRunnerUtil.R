@@ -146,11 +146,12 @@ StrategusRunnerUtil$executeAnalysis <- function (
   outputLocation <- RunConfiguration$outputLocation
   resultsLocation <- RunConfiguration$resultsLocation
   dataPartnerName <- RunConfiguration$dataPartnerName
-    
+  
   # create the connection details
-  RunParams$cdmConnectionDetails <- StrategusRunnerUtil$createCdmConnectionDetails()
+  RunConfiguration$cdmConnectionDetails <- StrategusRunnerUtil$createCdmConnectionDetails()
   # init the environment (see functionsForInit.R file for details)
-  executionSettings <- StrategusRunnerUtil$initStratagus(RunParams)
+  executionSettings <- StrategusRunnerUtil$initStratagus(RunConfiguration)
+  RunConfiguration$init(analysisName)
   # load the json specification for the study
   analysisSpecifications <- ParallelLogger::loadSettingsFromJson(fileName = analysisFile)
   
