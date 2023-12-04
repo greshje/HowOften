@@ -15,7 +15,6 @@ source("./impl/lib/StrategusRunnerLibUtil.R")
 source("./impl/connectioncache/StrategusRunnerConnectionCacheUtil.R")
 source("./01-RunStudy/configuration/ConnectionDetailsFactoryForCdm.R")
 source("./impl/database/StrategusRunnerConnectionKeyringFactory.R")
-source("./01-RunStudy/configuration/Configuration.R")
 source("./impl/runstudy/RunParams.R")
 
 StrategusRunnerUtil <- {}

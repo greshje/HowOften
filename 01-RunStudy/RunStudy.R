@@ -5,7 +5,7 @@
 #
 # Before running this script:
 #   - Define your configuration:
-#     Update ./01-RunStudy/configuration/Configuration.R
+#     Update ./01-RunStudy/configuration/UserConfiguration.R
 #   - Define your database connection:
 #     Update ./01-RunStudy/configuration/ConnectionDetailsFactoryForCdm.R
 #   - Use your study definition:

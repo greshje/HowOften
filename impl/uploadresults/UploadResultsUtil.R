@@ -26,6 +26,7 @@
 #    individual <StrategusModule> folder.
 
 source("./impl/lib/StrategusRunnerLibUtil.R")
+source("./impl/runstudy/RunParams.R")
 source("./02-UploadResults/configuration/ConnectionDetailsFactoryForReporting.R")
 
 UploadResultsUtil <- {}
@@ -33,17 +34,16 @@ UploadResultsUtil <- {}
 UploadResultsUtil$uploadResults <- function () {
 
   # Set this to root of the results
-  resultsFolderRoot <- "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy"
-
+  resultsFolderRoot <- RunConfiguration$resultsFolderRoot
   # Set this to c() if not using the analysis filtering.
   # This will then upload all analyses results found in each
   # analysis directory
-  howOftenAnalysesFilterList <- c()
+  howOftenAnalysesFilterList <- RunConfiguration$howOftenAnalysesFilterList
 
   # Set this to c() if not using the database filtering.
   # This will then upload all database results found 
   # in each analysis directory
-  databaseFilterList <- c()
+  databaseFilterList <- RunConfiguration$databaseFilterList
 
   # Traverse results to obtain list of results for upload ------------------------
   dfResultsFolders <- data.frame()
@@ -145,7 +145,7 @@ UploadResultsUtil$uploadResults <- function () {
     for (i in 1:nrow(dfResultsFolders)) {
       resultFolder <- dfResultsFolders[i,]
       message("Loading results for analysis: ", resultFolder$analysis, ", database: ", resultFolder$database, " in ", resultFolder$strategusResultsFolder)
-      resultsDatabaseSchema <- paste0("covid_homeless_", resultFolder$analysis)
+      resultsDatabaseSchema <- paste0(RunConfiguration$resultsDatabaseSchemaPrefix, resultFolder$analysis)
       moduleFolders <- list.dirs(path = resultFolder$strategusResultsFolder, recursive = FALSE)
       for (moduleFolder in moduleFolders) {
         moduleName <- basename(moduleFolder)
@@ -180,7 +180,7 @@ UploadResultsUtil$uploadResults <- function () {
     # to improve performance
     distictAnalyses <- unique(dfResultsFolders$analysis)
     for (analysis in distictAnalyses) {
-      resultsDatabaseSchema <- paste0("covid_homeless_", analysis)
+      resultsDatabaseSchema <- paste0(RunConfiguration$resultsDatabaseSchemaPrefix, analysis)
       message("Analyzing all tables in results schema: ", resultsDatabaseSchema)
       sql <- "ANALYZE @schema.@table_name;"
       tableList <- DatabaseConnector::getTableNames(
