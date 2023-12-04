@@ -19,11 +19,6 @@ RunConfiguration$dbms = "spark"
 RunConfiguration$dataPartnerName <- "NACHC"
 # file locations
 RunConfiguration$outputLocation <-          "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy"
-RunConfiguration$resultsFolderRoot <-       "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy"
-RunConfiguration$resultsLocation <-         "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/Results"
-RunConfiguration$loggingOutputLocation <-   "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/loggingOutput"
-RunConfiguration$resultsTableFolderRoot =   "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy/Results/nachc/NACHC/strategusOutput"
-RunConfiguration$resultsDatabaseSchemaCreationLogFolder = "C:/temp"
 RunConfiguration$pathToDriver=              "D:\\_YES_2023-05-28\\workspace\\SosExamples\\_COVID\\02-data-diagnostics\\drivers\\databricks\\"
 # database schemas
 RunConfiguration$cdmDatabaseSchema <-               "covid_ohdsi"

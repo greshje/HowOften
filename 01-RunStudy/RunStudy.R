@@ -14,6 +14,9 @@
 # 
 # ---
 
+# clear the environment
+rm(list = ls())
+
 # echo some info about the environment
 print(R.Version())
 print(system("java -version"))

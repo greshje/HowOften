@@ -108,7 +108,7 @@ StrategusRunnerUtil$initRun <- function() {
 # ---
 
 StrategusRunnerUtil$createExecutionsSettings <- function() {
-  RunParams$executionSettings <- Strategus::createCdmExecutionSettings(
+  RunConfiguration$executionSettings <- Strategus::createCdmExecutionSettings(
     connectionDetailsReference = RunConfiguration$dataPartnerName,
     workDatabaseSchema = RunConfiguration$workDatabaseSchema,
     cdmDatabaseSchema = RunConfiguration$cdmDatabaseSchema,
