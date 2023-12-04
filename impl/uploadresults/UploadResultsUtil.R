@@ -34,7 +34,7 @@ UploadResultsUtil <- {}
 UploadResultsUtil$uploadResults <- function () {
 
   # Set this to root of the results
-  resultsFolderRoot <- RunConfiguration$resultsFolderRoot
+  resultsFolderRoot <- RunConfiguration$outputLocation
   # Set this to c() if not using the analysis filtering.
   # This will then upload all analyses results found in each
   # analysis directory
