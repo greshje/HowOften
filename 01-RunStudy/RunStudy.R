@@ -34,9 +34,31 @@ StrategusRunnerUtil$initRun()
 
 specRoot <- "./01-RunStudy/configuration/specifications/"
 
-# run nachc study
-StrategusRunnerUtil$executeAnalysis (paste0(specRoot,"FromNachc/nachc-covid-homeless.json"),"nachc")
+# StrategusRunnerUtil$executeAnalysis (paste0(specRoot,"FromNachc/nachc-covid-homeless.json"),"nachc")
 
+for(i in 1:length(studiesToRun)) {
+  study <- studiesToRun[[i]]
+  studyFile <- study[[1]]
+  studyName <- study[[2]]
+  writeLines("")
+  writeLines("")
+  writeLines("")
+  writeLines("")
+  writeLines("")
+  writeLines("* ---")
+  writeLines("*")
+  writeLines(paste0("* RUNNING STUDY: ", studyName))
+  writeLines(paste0("* Using file: ", studyFile))
+  writeLines("*")
+  writeLines("* ---")
+  writeLines("")
+  writeLines("")
+  writeLines("")
+  StrategusRunnerUtil$executeAnalysis (studyFile, studyName)
+  writeLines("")
+  writeLines("")
+  writeLines("")
+}
 
 
 

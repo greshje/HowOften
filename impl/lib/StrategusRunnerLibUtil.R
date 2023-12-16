@@ -68,6 +68,19 @@ StrategusRunnerLibUtil$removePackage <- function(pkgName) {
   }
 }
 
+StrategusRunnerLibUtil$forceRemovePackage <- function(pkgName) {
+  tryCatch({
+    devtools::unload(pkgname)
+  }, error = function(e) {
+    writeLines(paste0("COULD NOT UNLOAD PACKAGE: ", pkgName))
+  })
+  tryCatch({
+    StrategusRunnerLibUtil$removePackage(pkgName)
+  }, error = function(e) {
+    writeLines(paste0("COULD NOT REMOVE PACKAGE: ", pkgName))
+  })
+}
+
 # ---
 #
 # remove libraries that are installed here
@@ -100,12 +113,15 @@ StrategusRunnerLibUtil$initLibs <- function() {
     StrategusRunnerLibUtil$installFromCran("remotes", "2.4.2.1")
     StrategusRunnerLibUtil$installFromCran("keyring", "1.3.1")
     StrategusRunnerLibUtil$installFromCran("usethis", "2.2.2")
+    StrategusRunnerLibUtil$installFromCran("dplyr", "1.1.4")
     StrategusRunnerLibUtil$installFromCran("R6", "2.5.1")
     StrategusRunnerLibUtil$installFromCran("DatabaseConnector", "6.2.4")
+    
     
     # installs from github
     StrategusRunnerLibUtil$installFromGithub("OHDSI/Strategus", "v0.1.0")
     StrategusRunnerLibUtil$installFromGithub("OHDSI/CohortGenerator", "v0.8.1")
+    StrategusRunnerLibUtil$installFromGithub("OHDSI/CohortMethod", "v5.1.0")
     StrategusRunnerLibUtil$installFromGithub("OHDSI/CirceR", "v1.3.1")
     
     # from cran

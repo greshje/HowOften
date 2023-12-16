@@ -33,6 +33,15 @@ RunConfiguration$databaseFilterList <-              c()
 # minimum number of cells
 RunConfiguration$minCellCount <- 5
 
+# ---
+#
+# Define what studies you would like to run
+#
+# ---
 
+specRoot <- "./01-RunStudy/configuration/specifications/FromNachc/"
+studiesToRun <- list(
+    list(paste0(specRoot, "nachc-covid-homeless.json"), "NACHC_TEST_2023_12_15")
+)
 
 
