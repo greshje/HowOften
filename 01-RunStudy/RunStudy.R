@@ -35,7 +35,7 @@ StrategusRunnerUtil$initRun()
 specRoot <- "./01-RunStudy/configuration/specifications/"
 
 # run nachc study
-StrategusRunnerUtil$executeAnalysis (paste0(specRoot,"FromNachc/nachc-covid-homeless_CG-ONLY.json"),"nachc")
+StrategusRunnerUtil$executeAnalysis (paste0(specRoot,"FromNachc/nachc-covid-homeless.json"),"nachc")
 
 
 
