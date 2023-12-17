@@ -89,13 +89,13 @@ StrategusRunnerLibUtil$forceRemovePackage <- function(pkgName) {
 
 StrategusRunnerLibUtil$removePackagesInstalledHere <- function() {
   # from cran
-  StrategusRunnerLibUtil$removePackage("keyring")
-  StrategusRunnerLibUtil$removePackage("usethis")
-  StrategusRunnerLibUtil$removePackage("DatabaseConnector")
+  StrategusRunnerLibUtil$forceRemovePackage("keyring")
+  StrategusRunnerLibUtil$forceRemovePackage("usethis")
+  StrategusRunnerLibUtil$forceRemovePackage("DatabaseConnector")
   # from github
-  StrategusRunnerLibUtil$removePackage("Strategus")
-  StrategusRunnerLibUtil$removePackage("CohortGenerator")
-  StrategusRunnerLibUtil$removePackage("CirceR")
+  StrategusRunnerLibUtil$forceRemovePackage("Strategus")
+  StrategusRunnerLibUtil$forceRemovePackage("CohortGenerator")
+  StrategusRunnerLibUtil$forceRemovePackage("CirceR")
   # done
   StrategusRunnerLibUtil$setIsInit(FALSE)
 }

@@ -39,9 +39,9 @@ RunConfiguration$minCellCount <- 5
 #
 # ---
 
-specRoot <- "./01-RunStudy/configuration/specifications/FromNachc/"
+specRoot <- "./01-RunStudy/configuration/specifications/FromHowOften/"
 studiesToRun <- list(
-    list(paste0(specRoot, "nachc-covid-homeless.json"), "NACHC_TEST_2023_12_15")
+    list(paste0(specRoot, "howoften_azza.json"), "azza")
 )
 
 
