@@ -41,7 +41,12 @@ RunConfiguration$minCellCount <- 5
 
 specRoot <- "./01-RunStudy/configuration/specifications/FromHowOften/"
 studiesToRun <- list(
-    list(paste0(specRoot, "howoften_azza.json"), "azza")
+  list(paste0(specRoot, "howoften_azza.json"), "azza"),
+  list(paste0(specRoot, "howoften_evan.json"), "evan"),
+  list(paste0(specRoot, "howoften_george.json"), "george"),
+  list(paste0(specRoot, "howoften_gowza.json"), "gowza"),
+  list(paste0(specRoot, "howoften_joel.json"), "joel"),
+  list(paste0(specRoot, "howoften_overall.json"), "overall")
 )
 
 

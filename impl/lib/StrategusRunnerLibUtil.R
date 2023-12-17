@@ -122,6 +122,7 @@ StrategusRunnerLibUtil$initLibs <- function() {
     StrategusRunnerLibUtil$installFromGithub("OHDSI/Strategus", "v0.1.0")
     StrategusRunnerLibUtil$installFromGithub("OHDSI/CohortGenerator", "v0.8.1")
     StrategusRunnerLibUtil$installFromGithub("OHDSI/CohortMethod", "v5.1.0")
+    StrategusRunnerLibUtil$installFromGithub("OHDSI/CohortIncidence", "v3.2.0")
     StrategusRunnerLibUtil$installFromGithub("OHDSI/CirceR", "v1.3.1")
     
     # from cran

@@ -25,6 +25,7 @@ print(getwd())
 # setup the run
 source("./impl/runstudy/StrategusRunnerUtil.R")
 StrategusRunnerUtil$initRun()
+Strategus::getModuleList()
 
 # ---
 #
@@ -32,8 +33,7 @@ StrategusRunnerUtil$initRun()
 #
 # ---
 
-specRoot <- "./01-RunStudy/configuration/specifications/"
-
+# specRoot <- "./01-RunStudy/configuration/specifications/"
 # StrategusRunnerUtil$executeAnalysis (paste0(specRoot,"FromNachc/nachc-covid-homeless.json"),"nachc")
 
 for(i in 1:length(studiesToRun)) {
