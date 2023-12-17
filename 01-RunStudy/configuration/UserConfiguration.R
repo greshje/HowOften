@@ -18,8 +18,8 @@ RunConfiguration$dbms = "spark"
 # data source name
 RunConfiguration$dataPartnerName <- "NACHC"
 # file locations
-RunConfiguration$outputLocation <-          "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy"
-RunConfiguration$pathToDriver=              "D:\\_YES_2023-05-28\\workspace\\SosExamples\\_COVID\\02-data-diagnostics\\drivers\\databricks\\"
+RunConfiguration$outputLocation <-  "D:/_YES/_STRATEGUS/CovidHomelessnessNetworkStudy"
+RunConfiguration$pathToDriver=      "D:\\_YES_2023-05-28\\workspace\\SosExamples\\_COVID\\02-data-diagnostics\\drivers\\databricks\\"
 # database schemas
 RunConfiguration$cdmDatabaseSchema <-               "covid_ohdsi"
 RunConfiguration$workDatabaseSchema <-              "covid_ohdsi_scratch"
